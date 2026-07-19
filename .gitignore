@@ -14,8 +14,14 @@ metahorse-fansite_20260716_v1_3.html
 site-horses-#*.js
 site-horses_v0.1.js
 
-# ローカル動作確認用スクリプト（配信には無関係）
+# ローカル動作確認・公開用スクリプト（配信には無関係）
 serve.ps1
+update.ps1
+
+# エディタ等が自動生成するバックアップファイル（git add -A で誤って
+# 拾われないよう、update.ps1の汎用化に合わせて追加）
+*.bak
+*.bak.*
 
 # 用途不明の一時ファイル・誤って置かれたファイル
 Claude Setup.exe
