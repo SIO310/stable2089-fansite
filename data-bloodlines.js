@@ -1,0 +1,28 @@
+// METAHORSE bloodline辞書 - 公式WP準拠
+// type / 体色(英語名) / 天気(◎×) / ビジュアルエフェクト / mood方向性ワード
+window.BLOODLINES = {
+  "Halo":           {type:"Flame🔥",     body_color:"Deep Red",       weather:{best:"HEAT",        worst:"HEAVY RAIN"}, effect:"炎の軌跡を引きながら燃え盛るように疾走", mood:["炎","焔","深紅","燃","紅蓮"]},
+  "Stay Gold":      {type:"Fight👊",     body_color:"Orange",         weather:{best:"HEAT",        worst:"BLIZZARD"},   effect:"拳の幻影をまといパンチを打ち込むように加速", mood:["拳","闘志","橙","熱拳","鉄拳"]},
+  "Mr.Prospector":  {type:"Water💧",     body_color:"Cobalt Blue",    weather:{best:"HEAVY RAIN",  worst:"HEAT"},       effect:"水しぶきを撒き、青い波濤をまとう", mood:["水","波","蒼","しぶき","流麗"]},
+  "Mr. Prospector": {type:"Water💧",     body_color:"Cobalt Blue",    weather:{best:"HEAVY RAIN",  worst:"HEAT"},       effect:"水しぶきを撒き、青い波濤をまとう", mood:["水","波","蒼","しぶき","流麗"]},
+  "Partholon":      {type:"Wood🌲",      body_color:"Grass Green",    weather:{best:"HEAVY RAIN",  worst:"BLIZZARD"},   effect:"翠のオーラをまとい、駆け抜けた軌跡に若草を芽吹かせる", mood:["草","翠","若葉","風","新緑"]},
+  "Never Bend":     {type:"Dark😈",      body_color:"Black",          weather:{best:"STORM",       worst:"HEAT"},       effect:"闇のオーラに包まれて夜を切り裂く", mood:["闇","夜","影","漆黒","静寂"]},
+  "Roberto":        {type:"Wind🌬️",    body_color:"Yellow Green",   weather:{best:"HEAVY RAIN",  worst:"STORM"},      effect:"風の渦を巻き起こし、軌跡が霞む", mood:["風","疾風","渦","薫風","抜ける"]},
+  "Zeddaan":        {type:"Esper🧠",     body_color:"Jade Green",     weather:{best:"STORM",       worst:"HEAVY RAIN"}, effect:"体を中心に縦の魔法陣を宙に描き、円環をまとって駆ける", mood:["魔","紋","翡翠","賢","識"]},
+  "The Tetrarch":   {type:"Beast🦍",     body_color:"Ponceau",        weather:{best:"HEAT",        worst:"BLIZZARD"},   effect:"獣の幻影を背負い、咆哮とともに突進", mood:["獣","咆哮","猛","深紅","荒"]},
+  "Seattle Slew":   {type:"Frozen⛄",    body_color:"Sky Blue",       weather:{best:"BLIZZARD",    worst:"HEAT"},       effect:"氷の結晶を散らし冷気の尾を引く", mood:["氷","結晶","空色","冷","凍"]},
+  "Mill Reef":      {type:"Electric⚡",  body_color:"Medium Yellow",  weather:{best:"HEAVY RAIN",  worst:"HEAT"},       effect:"雷光と火花を放ちながらコースを駆ける", mood:["雷","電","黄","閃光","火花"]},
+  "Caro":           {type:"Holly🌟",     body_color:"White",          weather:{best:"HEAT",        worst:"STORM"},      effect:"白く輝きつつ、幾重もの黄金の光輪を後方に残して疾走。頂点では頭上にも光輪が宿る", mood:["光","白","聖","清","気品"]},
+  "Nureyev":        {type:"Poison🤢",    body_color:"Violet",         weather:{best:"BLIZZARD",    worst:"HEAVY RAIN"}, effect:"紫の毒霧を撒き、地面を侵食しながら走る", mood:["毒","紫","侵","蝕","妖"]},
+  "Northern Dancer":{type:"Sound🎶",     body_color:"Nude",           weather:{best:"STORM",       worst:"HEAVY RAIN"}, effect:"音波の波紋を空気に刻みながら駆ける", mood:["音","響","旋律","波紋","奏"]},
+  "Blushing Groom": {type:"Normal😀",    body_color:"Burnt Umber",    weather:{best:"-",           worst:"-"},          effect:"装飾なし、純粋な走りで勝負", mood:["素","純","王道","真摯","本流"]},
+  "Sadler's Wells": {type:"Ground⛰️",   body_color:"Earth Yellow",   weather:{best:"STORM",       worst:"BLIZZARD"},   effect:"地面を抉りながら岩石を背後に噴き上げる", mood:["土","岩","大地","抉","褐"]},
+  "Round Table":    {type:"Time🕓",      body_color:"Ultramarine",    weather:{best:"STORM",       worst:"BLIZZARD"},   effect:"時計の紋様を描きながら時間を操るように走る", mood:["時","刻","針","群青","定刻"]},
+  "French Deputy":  {type:"Steel🦾",     body_color:"Silver",         weather:{best:"BLIZZARD",    worst:"HEAT"},       effect:"鋼の輝きを放ち重厚な走りを刻む", mood:["鋼","鉄","銀","重厚","鈍光"]},
+  "Native Dancer":  {type:"Star💫",      body_color:"Lemon Yellow",   weather:{best:"-",           worst:"-"},          effect:"星屑をまとい、光線のように疾走", mood:["星","煌","光","金","眩"]},
+  "Forty Niner":    {type:"Sword⚔️",    body_color:"Rose",           weather:{best:"BLIZZARD",    worst:"HEAVY RAIN"}, effect:"剣の閃光を残し、刃のような走りで斬り裂く", mood:["刃","薔薇","ロゼ","斬","切先"]},
+  "Northern Taste": {type:"Glass🪟",     body_color:"Pale Purple",    weather:{best:"BLIZZARD",    worst:"STORM"},      effect:"ガラスの煌めきを纏い透明な軌跡を残す", mood:["硝子","薄紫","透","煌","儚"]},
+  "Danzig":         {type:"Mist🌫️",    body_color:"Acid Blue",      weather:{best:"HEAVY RAIN",  worst:"STORM"},      effect:"霧のヴェールをまとい姿が滲むように疾走", mood:["霧","ヴェール","滲","淡","蒼"]},
+  "Lyphard":        {type:"Butterfly🦋",body_color:"Pink",           weather:{best:"HEAT",        worst:"STORM"},      effect:"蝶の鱗粉を散らし、舞うように軽やかに走る", mood:["蝶","桜","舞","軽","可憐"]},
+  "Nijinsky":       {type:"Dragon🐉",   body_color:"Ocher",          weather:{best:"-",           worst:"-"},          effect:"竜の影を背に従え、空気そのものを震わせる", mood:["竜","黄土","震","古色","威容"]},
+};

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STABLE 2089 — METAHORSE 非公式ファンサイト v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#060913; --panel:#0B1120; --line:#12203A;
+  --cyan:#2EE6D6; --magenta:#FF3DA6; --violet:#8B2FD9; --amber:#F5D90A; --jade:#2BE6A0;
+  --txt:#E8F1F2; --sub:#8FA3B8;
+  --disp:'Chakra Petch',sans-serif; --body:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--txt);font-family:var(--body);line-height:1.8;overflow-x:hidden}
+::selection{background:var(--magenta);color:#fff}
+
+/* scanline overlay */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;
+  background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.12) 2px 4px);opacity:.5}
+
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--disp);letter-spacing:.06em}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:24px;
+  padding:14px 24px;background:rgba(6,9,19,.72);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .logo{font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.18em;color:var(--cyan)}
+nav .logo span{color:var(--magenta)}
+nav ul{display:flex;gap:20px;list-style:none;margin-left:auto}
+nav ul a{font-size:13px;color:var(--sub);letter-spacing:.1em}
+nav ul a:hover{color:var(--cyan);text-decoration:none}
+
+/* hero — パノラマ写真を主役に、マゼンタ〜紫グラデを色調シェードとして重ねる
+   （公式Missionページ準拠のトーン）。シアンはグリッド/アクセントのみに限定 */
+#hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(139,47,217,.5), transparent 62%),
+    radial-gradient(90% 70% at 84% 18%, rgba(255,61,166,.3), transparent 60%),
+    linear-gradient(180deg, rgba(6,9,19,.25), rgba(6,9,19,.55)),
+    var(--hero-img, none) var(--hero-x,50%) 38%/cover no-repeat,
+    var(--void);}
+.hero-bg .floor{position:absolute;left:-30%;right:-30%;bottom:0;height:46%;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(46,230,214,.22) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, rgba(46,230,214,.13) 0 1px, transparent 1px 42px);
+  transform:perspective(320px) rotateX(62deg);
+  transform-origin:bottom;
+  mask-image:linear-gradient(180deg, transparent, #000 40%);
+  -webkit-mask-image:linear-gradient(180deg, transparent, #000 40%);
+}
+#hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(6,9,19,.92))}
+.hero-inner{position:relative;z-index:2;padding:0 24px 10svh;max-width:1080px;margin:0 auto;width:100%}
+.tag{font-family:var(--disp);font-size:12px;letter-spacing:.4em;color:var(--amber);margin-bottom:12px}
+.hero-inner h1{font-size:clamp(32px,6.4vw,64px);font-weight:700;line-height:1.14;
+  color:var(--txt);text-shadow:0 0 26px rgba(255,61,166,.35);max-width:680px}
+.hero-inner h1 em{font-style:normal;color:var(--cyan)}
+.hero-sub{font-family:var(--disp);font-size:14px;letter-spacing:.2em;color:var(--cyan);margin-top:10px}
+.hero-inner p{margin-top:14px;color:var(--sub);max-width:560px;font-size:15px}
+.hint{position:absolute;right:24px;bottom:16px;z-index:2;font-size:11px;color:var(--sub);letter-spacing:.15em}
+.hint::after{content:"";display:inline-block;width:1px;height:16px;background:var(--sub);margin-left:8px;vertical-align:middle;animation:scrollDown 1.6s ease-in-out infinite}
+@keyframes scrollDown{0%{opacity:0;transform:translateY(-4px)}50%{opacity:1}100%{opacity:0;transform:translateY(8px)}}
+
+/* sections */
+section{max-width:1080px;margin:0 auto;padding:88px 24px;position:relative}
+.head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+section h2{font-size:clamp(24px,4vw,36px)}
+section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px;
+  background:linear-gradient(90deg,var(--magenta),var(--cyan))}
+.lead{color:var(--sub);font-size:14px;margin-top:16px;max-width:640px}
+.nowrap{white-space:nowrap}
+
+/* 見出し帯バナー：固定パノラマ背景＋黒パネルのスライドイン＋テキストのフォーカスイン。
+   世界（背景）は動かさず、手前の情報パネルだけが動く「VJSのHUD」的演出。
+   奇数セクション＝見せ場は右1/3・パネルは左から（data-side="left"）、
+   偶数セクション＝見せ場は左1/3・パネルは右から（data-side="right"）で交互にする。 */
+.hbanner{position:relative;width:100%;height:clamp(76px,14vw,140px);overflow:hidden;
+  margin-bottom:28px;border:1px solid var(--line);background:var(--panel)}
+.hbanner-bg{position:absolute;inset:0;background-image:var(--banner-img);
+  background-size:cover;background-position:var(--banner-x,50%) var(--banner-y,30%);
+  transform:scale(var(--banner-zoom,1));transform-origin:var(--banner-x,50%) var(--banner-y,30%);
+  filter:brightness(var(--banner-bright,1))}
+.hbanner-panel{position:absolute;top:0;bottom:0;width:var(--panel-w,66%);display:flex;align-items:center;
+  background:rgba(6,9,19,.78);transition:transform .8s cubic-bezier(.16,.84,.44,1)}
+.hbanner[data-side="left"] .hbanner-panel{left:0;transform:translateX(-100%);
+  justify-content:flex-start;padding:0 22px 0 26px;border-right:1px solid var(--cyan);
+  box-shadow:2px 0 10px rgba(46,230,214,.5)}
+.hbanner[data-side="right"] .hbanner-panel{right:0;transform:translateX(100%);
+  justify-content:flex-end;padding:0 26px 0 22px;border-left:1px solid var(--magenta);
+  box-shadow:-2px 0 10px rgba(255,61,166,.5)}
+.hbanner.in-view .hbanner-panel{transform:translateX(0)}
+.hbanner-text{font-family:var(--disp);color:#fff;font-size:clamp(12px,2.2vw,19px);
+  letter-spacing:.5em;white-space:nowrap;opacity:0;
+  filter:blur(6px);
+  transition:filter .6s ease .7s, opacity .6s ease .7s, letter-spacing .6s ease .7s}
+.hbanner.in-view .hbanner-text{opacity:1;filter:blur(0);letter-spacing:.1em}
+@media(max-width:720px){
+  /* パネル34%（mission/guides）は英語コピーが窮屈になるため、スマホ帯だけ広げる。
+     --panel-wはJSからインライン設定されるため、上書きには!importantが必要 */
+  #hbanner-mission, #hbanner-guides{--panel-w:58% !important}
+  .hbanner-text{font-size:clamp(9.5px,2.8vw,13px);letter-spacing:.28em}
+  .hbanner.in-view .hbanner-text{letter-spacing:.05em}
+  section h2{font-size:clamp(21px,6.2vw,32px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hbanner-panel{transition:none}
+  .hbanner-text{transition:none;opacity:1;filter:blur(0);letter-spacing:.1em}
+}
+
+/* mission / world */
+#mission .quote{margin-top:26px;border-left:2px solid var(--cyan);padding:4px 0 4px 18px;color:var(--txt);font-size:14px}
+#mission .quote cite{display:block;margin-top:8px;font-size:11px;color:var(--sub);font-style:normal;letter-spacing:.03em}
+
+/* today's horse：ホログラムカード風の反射掃引＋hover/tap時のマゼンタ発光＋わずかな厚み表現。
+   掃引バンドはtranslateX＋skewを1つのtransformにまとめて剛体として動かす。left等の
+   レイアウトプロパティでは静止時にスキューの分だけカード端からはみ出す不具合があったため */
+.horse-card{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(180px,250px) 1fr;gap:28px;margin-top:36px;
+  border:1px solid var(--line);border-top-color:rgba(255,255,255,.14);border-bottom-color:rgba(0,0,0,.5);
+  background:var(--panel);padding:24px;
+  box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .3s,box-shadow .3s,transform .25s}
+.horse-card:hover,.horse-card:active{border-color:rgba(255,61,166,.55);
+  transform:translateY(-2px);
+  box-shadow:0 16px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.07), 0 0 22px rgba(255,61,166,.22)}
+/* 常時ループだと「キラキラ」しすぎるとの指摘（2026-07-19）で、hover/tap時のみ
+   1回再生する方式に変更。静止時はtranslateX(-320%)の位置で完全に待機させる */
+.hc-sweep{position:absolute;top:-4%;left:0;width:34%;height:108%;pointer-events:none;
+  background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.16) 45%, rgba(46,230,214,.14) 50%, transparent 100%);
+  transform:translateX(-320%) skewX(-16deg)}
+.horse-card:hover .hc-sweep,.horse-card:active .hc-sweep{
+  animation:hcSweep 1s ease-in-out}
+@keyframes hcSweep{
+  0%{transform:translateX(-320%) skewX(-16deg)}
+  100%{transform:translateX(420%) skewX(-16deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hc-sweep{animation:none;display:none}
+}
+.horse-visual{aspect-ratio:1;max-width:250px;align-self:start;border:1px dashed rgba(46,230,214,.4);display:flex;align-items:center;
+  justify-content:center;color:var(--sub);font-size:12px;letter-spacing:.1em;text-align:center;padding:12px;
+  background:radial-gradient(circle at 50% 60%,rgba(139,47,217,.12),transparent 70%)}
+.horse-visual img{width:100%;height:100%;object-fit:cover}
+.horse-meta .no{font-family:var(--disp);color:var(--amber);font-size:12px;letter-spacing:.3em}
+.horse-meta h3{font-size:26px;margin:6px 0 14px;color:var(--cyan)}
+.horse-meta dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px}
+.horse-meta dt{color:var(--sub);font-family:var(--disp);letter-spacing:.1em}
+.horse-meta .review{margin-top:16px;font-size:14px;border-left:2px solid var(--magenta);padding-left:14px;color:var(--txt)}
+/* X投稿リンク：値がある投稿のみ表示（感想・リプライはXに集約する狙い） */
+.x-link{display:inline-block;margin-top:14px;font-family:var(--disp);font-size:11px;
+  letter-spacing:.1em;color:var(--sub);border:1px solid var(--line);padding:6px 12px;transition:.2s}
+.x-link:hover{color:var(--cyan);border-color:var(--cyan);text-decoration:none}
+
+/* 図鑑・アーカイブ：番号順リスト⇄血統別まとめ タブ切替 */
+.view-toggle{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
+.vtab{font-family:var(--disp);font-size:12px;letter-spacing:.15em;padding:9px 18px;
+  border:1px solid var(--line);background:transparent;color:var(--sub);cursor:pointer;transition:.2s}
+.vtab:hover{color:var(--cyan)}
+.vtab.active{border-color:var(--cyan);color:var(--cyan);background:rgba(46,230,214,.08)}
+
+/* bloodlines 図鑑グリッド：案1「データベース風」＋案2のhover/tap発光を統合。
+   絵文字は廃止（SF調と合わないため）、体色は左端の縦ラインで表現する。
+   --chip/--chip-glowは各カードにJSからインラインで設定（体色の実カラー） */
+.bl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px;margin-top:28px}
+.bl-card{border:1px solid var(--line);background:var(--panel);padding:16px 16px 14px 20px;cursor:pointer;
+  text-align:left;transition:.2s;position:relative;color:var(--txt);font-family:inherit;
+  min-height:104px;display:flex;flex-direction:column;overflow:hidden}
+.bl-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--chip,var(--line));box-shadow:0 0 6px var(--chip,transparent)}
+.bl-card:hover,.bl-card:focus-visible,.bl-card:active{border-color:var(--chip,var(--magenta));
+  transform:translateY(-3px);box-shadow:0 0 18px var(--chip-glow,rgba(255,61,166,.25));outline:none}
+.bl-card h3{font-size:17px;color:var(--txt);font-weight:600;margin:0 0 6px;letter-spacing:.03em}
+.bl-card .bl-type-label{display:block;font-family:var(--disp);font-size:10.5px;color:var(--sub);
+  letter-spacing:.16em;text-transform:uppercase}
+/* 血統名が2行に折り返しても下の要素と重ならないよう、position:absoluteではなく
+   flexの通常フローに乗せてmargin-top:autoで下端に押し出す（v1.11） */
+.bl-card .bl-count{margin-top:auto;padding-top:8px;text-align:right;font-family:var(--disp);
+  font-size:9.5px;letter-spacing:.08em;color:var(--amber)}
+/* auto-fill(minmax 168px)だと390px幅程度のスマホでは1カラムに落ちてしまうため、
+   スマホ帯は2カラムを明示指定して固定する */
+@media(max-width:520px){
+  .bl-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .bl-card{padding:14px 12px 12px 16px;min-height:96px}
+  .bl-card h3{font-size:15px}
+}
+
+/* archive: 全頭コンパクトリスト（クリックで詳細モーダル）。今日の一頭カードと同じ
+   掃引グレア＋発光を展開するが、全行が同時に光ると騒がしいので周期を長くし、
+   行ごとにanimation-delayをJSでずらす（負のdelayで初期表示から位相をばらけさせる） */
+.arch-count{margin-top:24px;font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub)}
+.archive-list{margin-top:10px;display:flex;flex-direction:column}
+.arch-card{position:relative;overflow:hidden;display:grid;grid-template-columns:64px 96px 1fr auto;gap:14px;align-items:center;width:100%;
+  border:none;border-bottom:1px solid var(--line);background:transparent;padding:6px 8px;cursor:pointer;
+  text-align:left;color:var(--txt);font-family:inherit;transition:background .15s,box-shadow .2s}
+.arch-card:first-child{border-top:1px solid var(--line)}
+.arch-card:hover,.arch-card:focus-visible,.arch-card:active{background:rgba(46,230,214,.06);
+  box-shadow:inset 0 0 0 1px rgba(46,230,214,.4);outline:none}
+/* 常時ループだと頭数が増えるほど同時に光る行が増えて騒がしくなるとの指摘（2026-07-19）で、
+   今日の一頭カードと同じくhover/tap時のみ1回再生する方式に統一 */
+.arch-card::before{content:"";position:absolute;top:-40%;left:0;width:18%;height:180%;pointer-events:none;
+  background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.13) 45%, rgba(46,230,214,.12) 50%, transparent 100%);
+  transform:translateX(-260%) skewX(-16deg)}
+.arch-card:hover::before,.arch-card:focus-visible::before,.arch-card:active::before{
+  animation:acSweep 1s ease-in-out}
+@keyframes acSweep{
+  0%{transform:translateX(-260%) skewX(-16deg)}
+  100%{transform:translateX(700%) skewX(-16deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .arch-card::before{animation:none;display:none}
+}
+.arch-card .no{font-family:var(--disp);color:var(--amber);font-size:11px;letter-spacing:.1em}
+.arch-card .date{font-size:11px;color:var(--sub)}
+.arch-card h4{font-size:14px;color:var(--cyan);font-weight:600;display:inline}
+.arch-card .tags{font-size:12px;color:var(--sub);justify-self:end;white-space:nowrap}
+.arch-empty{margin-top:28px;color:var(--sub);font-size:13px;border:1px dashed var(--line);padding:20px;text-align:center}
+@media(max-width:600px){
+  .arch-card{grid-template-columns:56px 1fr auto}
+  .arch-card .date{display:none}
+}
+/* あなたの一頭、募集：フォームURL未設定時は非表示（枠のみ実装） */
+.submit-cta{margin-top:44px;border:1px solid var(--line);background:var(--panel);
+  padding:24px;text-align:center}
+.submit-cta p{font-size:14px;color:var(--txt);margin-bottom:14px}
+.submit-cta a{display:inline-block;font-family:var(--disp);font-size:12px;letter-spacing:.15em;
+  color:var(--cyan);border:1px solid var(--cyan);padding:10px 22px;background:rgba(46,230,214,.05);transition:.2s}
+.submit-cta a:hover{background:var(--cyan);color:var(--void);text-decoration:none}
+
+/* position:fixed（ビューポート基準）にしないとドキュメント上部を基準に配置され、
+   ページ下方で開いたとき背後が最上部までスクロールしてしまう */
+dialog#bloodModal{border:1px solid var(--cyan);background:var(--panel);color:var(--txt);
+  max-width:600px;width:90%;max-height:82vh;overflow-y:auto;padding:26px;
+  position:fixed;inset:0;margin:auto;box-shadow:0 0 40px rgba(46,230,214,.25)}
+dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px)}
+#modalClose{position:absolute;top:10px;right:14px;background:none;border:none;color:var(--sub);
+  font-size:22px;line-height:1;cursor:pointer;z-index:1}
+#modalClose:hover{color:var(--cyan)}
+#modalBody h3{color:var(--cyan);font-size:20px;margin-bottom:4px}
+#modalBody .sub{font-family:var(--disp);font-size:11px;letter-spacing:.18em;color:var(--sub)}
+.mb-block{margin-top:14px}
+.mb-label{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--amber);margin-bottom:6px}
+#modalBody p{font-size:13px;color:var(--txt)}
+#modalBody ul{padding-left:18px;font-size:13px;color:var(--sub)}
+#modalBody .m-horse{background:none;border:none;padding:0;font:inherit;color:var(--cyan);cursor:pointer}
+#modalBody .m-horse:hover,#modalBody .m-horse:focus-visible{color:var(--magenta);outline:none}
+
+/* 競馬カード風モーダル（アーカイブ1頭の詳細）：開いた瞬間に画像・馬名・紹介文が一望できる構成。
+   今日の一頭カードと揃えて、上辺を明るく・下辺を暗くした境界線＋二層box-shadowで
+   わずかな厚みを出す（3Dチルト等は使わない） */
+.pm-card{display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:20px;align-items:start;
+  border:1px solid var(--line);border-top-color:rgba(255,255,255,.14);border-bottom-color:rgba(0,0,0,.5);
+  background:rgba(255,255,255,.015);padding:14px;
+  box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
+  transition:transform .25s,box-shadow .25s}
+.pm-card:hover{transform:translateY(-2px);
+  box-shadow:0 16px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.07)}
+.pm-card.no-img{grid-template-columns:1fr}
+.pm-visual{aspect-ratio:1;overflow:hidden;border:1px solid var(--line);background:var(--void)}
+.pm-visual img{width:100%;height:100%;object-fit:cover;display:block}
+.pm-meta .tags{font-size:12px;color:var(--sub);margin:6px 0 10px}
+.pm-review{font-size:13px;color:var(--txt);border-left:2px solid var(--magenta);padding-left:12px}
+@media(max-width:520px){
+  .pm-card{grid-template-columns:1fr}
+  .pm-visual{aspect-ratio:auto;max-height:40vh}
+}
+
+/* guides：ready:trueのカードのみタップ可能（図鑑詳細モーダルと同じ#bloodModalを再利用） */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:36px}
+.gcard{border:1px solid var(--line);background:var(--panel);padding:22px;position:relative;transition:.25s;
+  font:inherit;text-align:left;color:inherit;width:100%}
+.gcard::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;
+  background:linear-gradient(90deg,var(--cyan),transparent);opacity:0;transition:.25s}
+.gcard.ready{cursor:pointer}
+.gcard.ready:hover,.gcard.ready:focus-visible{border-color:rgba(46,230,214,.5);transform:translateY(-3px);outline:none}
+.gcard.ready:hover::before,.gcard.ready:focus-visible::before{opacity:1}
+.gcard h3{font-size:16px;color:var(--txt);margin-bottom:8px}
+.gcard p{font-size:13px;color:var(--sub)}
+.gcard .soon{display:inline-block;margin-top:12px;font-family:var(--disp);font-size:10px;
+  letter-spacing:.2em;color:var(--amber);border:1px solid rgba(245,217,10,.4);padding:3px 8px}
+/* 攻略記事モーダルの本文（見出し＋段落のみ。装飾は最小限） */
+#modalBody p + p{margin-top:10px}
+
+/* 復帰者ガイド：離脱後の変化を時系列で並べる縦タイムライン */
+.rg-timeline{margin-top:36px}
+.rg-item{position:relative;padding:0 0 26px 26px;border-left:2px solid var(--line);margin-left:5px}
+.rg-item:last-child{border-left-color:transparent;padding-bottom:0}
+.rg-item::before{content:"";position:absolute;left:-6px;top:2px;width:11px;height:11px;border-radius:50%;
+  background:var(--void);border:2px solid var(--cyan)}
+.rg-item.latest::before{border-color:var(--amber)}
+.rg-item h3{font-size:15px;color:var(--txt);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.rg-item .tag-new{font-family:var(--disp);font-size:9px;letter-spacing:.15em;color:var(--amber);
+  border:1px solid rgba(245,217,10,.4);padding:2px 7px}
+.rg-item p{font-size:13px;color:var(--sub)}
+.rg-steps{margin-top:44px;border:1px solid var(--line);background:var(--panel);padding:22px}
+.rg-steps h3{font-family:var(--disp);font-size:13px;letter-spacing:.18em;color:var(--amber);margin-bottom:14px}
+.rg-steps ol{padding-left:20px}
+.rg-steps li{font-size:13px;color:var(--txt);margin:6px 0}
+.rg-steps .rg-empty{font-size:13px;color:var(--sub)}
+
+/* links & footer */
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.links a{border:1px solid var(--line);padding:10px 16px;transition:.2s;
+  display:inline-flex;flex-direction:column;gap:3px}
+.links a:hover{border-color:var(--cyan);text-decoration:none}
+.links a .lname{font-family:var(--disp);font-size:14px;color:var(--txt);letter-spacing:.03em}
+.links a:hover .lname{color:var(--cyan)}
+.links a .lnote{font-size:11px;color:var(--sub)}
+.sublabel{font-family:var(--disp);font-size:11px;letter-spacing:.3em;color:var(--sub);margin-top:36px}
+footer{border-top:1px solid var(--line);padding:36px 24px 48px;text-align:center;color:var(--sub);font-size:12px}
+footer .disc{max-width:560px;margin:0 auto 14px}
+footer b{color:var(--txt)}
+
+@media(max-width:720px){
+  nav ul{display:none}
+  .horse-card{grid-template-columns:1fr}
+  .horse-visual{margin:0 auto;width:min(250px,70vw)}
+  #hero{min-height:98svh}
+  .hero-bg{--hero-x:20%}
+  .hero-inner h1{font-size:clamp(28px,9vw,40px)}
+}
+@media(prefers-reduced-motion:reduce){
+  body::after{display:none}
+  .hint::after{animation:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">STABLE<span>2089</span></div>
+  <ul>
+    <li><a href="#mission">世界観</a></li>
+    <li><a href="#today">今日の一頭</a></li>
+    <li><a href="#archive" data-tab="list">アーカイブ</a></li>
+    <li><a href="#archive" data-tab="blood">図鑑</a></li>
+    <li><a href="#guides">攻略情報</a></li>
+    <li><a href="#return-guide">復帰ガイド</a></li>
+    <li><a href="#links">リンク</a></li>
+  </ul>
+</nav>
+
+<div id="hero">
+  <div class="hero-bg" id="heroBg" aria-hidden="true">
+    <div class="floor"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="tag">A.D.2089 — VIRTUAL JOCKEY SYSTEM ONLINE</div>
+    <h1>WITH METAHORSE.</h1>
+    <p class="hero-sub">OWN IT. ENJOY IT.</p>
+    <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。今日も、走らせよう。</p>
+  </div>
+  <div class="hint">SCROLL</div>
+</div>
+
+<section id="mission">
+  <div class="hbanner" id="hbanner-mission" data-side="left"></div>
+  <div class="head-row">
+    <div>
+      <h2>2089年、ブロックチェーンの牧場から。</h2>
+      <p class="lead">
+        METAHORSEは「誰もがブロックチェーン技術を理解し使えるようになる、遊び心のある方法」を掲げて生まれたNFTレースホースゲーム。
+        A.D.2089、荒廃と繁栄が同居する電脳都市で、プレイヤーは自分の馬（Virtual Jockey System）を育て、<span class="nowrap">レースに送り出す。</span>
+      </p>
+      <div class="quote">
+        “METAHORSE's mission is to create a playful and user-friendly way for the general public to understand and adopt
+        block-chain technology. METAHORSE uses NFT racehorses as a tool to entertain and learn for the future of gaming
+        and virtual reality.”
+        <cite>— METAHORSE公式ドキュメント「3. Mission」より（非公式和訳・要約）</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="today">
+  <div class="hbanner" id="hbanner-today" data-side="right"></div>
+  <div class="head-row">
+    <div>
+      <h2>今日の一頭</h2>
+      <p class="lead">X（@SIO310meta）で連載中のNFT馬紹介シリーズ。最新の一頭をここに掲載。過去分は<span class="nowrap">アーカイブへ。</span></p>
+    </div>
+  </div>
+  <div class="horse-card">
+    <div class="hc-sweep" aria-hidden="true"></div>
+    <div class="horse-visual" id="horseImg">馬のスクリーンショットをここに<br>（site-horses.js の該当エントリの img を差し替え）</div>
+    <div class="horse-meta">
+      <div class="no" id="hNo"></div>
+      <h3 id="hName"></h3>
+      <dl>
+        <dt>血統</dt><dd id="hBlood"></dd>
+        <dt>脚質</dt><dd id="hStyle"></dd>
+      </dl>
+      <p class="review" id="hReview"></p>
+      <div id="hXLink"></div>
+    </div>
+  </div>
+</section>
+
+<section id="archive">
+  <div class="hbanner" id="hbanner-archive" data-side="left"></div>
+  <div class="head-row">
+    <div>
+      <h2>図鑑・アーカイブ</h2>
+      <p class="lead">これまでの「今日の一頭」をNo.順の全頭リストで、または<span class="nowrap">23血統ごとの図鑑で。</span>タップすると<span class="nowrap">詳細が開く。</span></p>
+    </div>
+  </div>
+  <div class="view-toggle" role="tablist">
+    <button class="vtab active" data-view="list" type="button">番号順リスト</button>
+    <button class="vtab" data-view="blood" type="button">血統別まとめ</button>
+  </div>
+  <div id="listView">
+    <div class="arch-count" id="archCount"></div>
+    <div id="archiveList" class="archive-list"></div>
+  </div>
+  <div id="bloodView" hidden>
+    <div class="bl-grid" id="bloodGrid"></div>
+  </div>
+  <div class="submit-cta" id="submitCta" hidden>
+    <p>あなたの愛馬も紹介しませんか？</p>
+    <a id="submitCtaLink" href="#" target="_blank" rel="noopener">応募フォームへ</a>
+  </div>
+</section>
+
+<dialog id="bloodModal">
+  <button id="modalClose" aria-label="閉じる">×</button>
+  <div id="modalBody"></div>
+</dialog>
+
+<section id="guides">
+  <div class="hbanner" id="hbanner-guides" data-side="left"></div>
+  <div class="head-row">
+    <div>
+      <h2>攻略情報</h2>
+      <p class="lead">2089年の勝ち方。基礎から経済圏まで、<span class="nowrap">プレイヤー目線でまとめる。</span></p>
+    </div>
+  </div>
+  <div class="grid" id="guideGrid"></div>
+</section>
+
+<section id="return-guide">
+  <div class="hbanner" id="hbanner-returnGuide" data-side="right"></div>
+  <div class="head-row">
+    <div>
+      <h2>復帰者ガイド</h2>
+      <p class="lead">久しぶりの人も、これから戻る人も。最近の変化と<span class="nowrap">再開のヒントをまとめました。</span></p>
+    </div>
+  </div>
+  <div class="rg-timeline" id="rgTimeline"></div>
+  <div class="rg-steps">
+    <h3>復帰の手順</h3>
+    <div id="rgSteps"></div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="hbanner" id="hbanner-links" data-side="right"></div>
+  <div class="head-row">
+    <div>
+      <h2>リンク</h2>
+    </div>
+  </div>
+  <div class="sublabel">OFFICIAL</div>
+  <div class="links" id="officialLinks"></div>
+  <div class="sublabel">FAN</div>
+  <div class="links" id="fanLinks"></div>
+</section>
+
+<footer>
+  <p class="disc">当サイトは<b>非公式のファンサイト</b>です。掲載内容は個人の見解であり、運営とは関係ありません。<br>画像等の著作権は各権利者に帰属します。</p>
+  <p>運営：<a href="https://x.com/SIO310meta" target="_blank" rel="noopener">たろ @SIO310meta</a>　|　site v1.0</p>
+</footer>
+
+<script src="data-bloodlines.js"></script>
+<script src="data-pedigree.js"></script>
+<script src="site-horses.js"></script>
+<script>
+/* ================= 編集エリア（ここだけ触ればOK） ================= */
+// ready:trueにすると記事本文モーダルが開くようになる（図鑑詳細と同じ#bloodModalを再利用）。
+// bodyは改行区切りのプレーンテキスト。空行で段落を分ける（例："1段落目\n\n2段落目"）。
+// 本文は後からたろが記入予定のため、現状は全てready:false（未執筆）で据え置き。
+const GUIDES = [
+  {t:"血統とレース適性", d:"血統ごとの得意距離・馬場・天候の傾向を整理。", ready:false, body:""},
+  {t:"ステータスの読み方", d:"Spd等の数値の見方と、注目に値するラインの見極め方。", ready:false, body:""},
+  {t:"KUDA育成のすすめ", d:"EXPとKUDAで弱い馬を戦力化する育成ルート。", ready:false, body:""},
+  {t:"バーンガチャ活用術", d:"HORSE→アーマー/スキン変換の判断基準。", ready:false, body:""},
+  {t:"View-Fi の使い方", d:"1日5回の広告視聴と、ログイン制限の注意点。", ready:false, body:""},
+  {t:"初心者ガイド", d:"2089年の世界へようこそ。最初の一週間でやること。", ready:false, body:""}
+];
+// プレイヤーの行動順（遊ぶ→調べる→買う→読む→基盤→まとめ）に並べる。
+// セクション見出し側で既にOFFICIALと示しているため、個々のdには「公式」を使わない
+const OFFICIAL_LINKS = [
+  {t:"METAHORSE", u:"https://metahorse.racing/login", d:"プレイ / ログイン"},
+  {t:"KYH", u:"https://kyh.head-2-head.net/ja/", d:"馬データ検索"},
+  {t:"vvvvv.my", u:"https://www.vvvvv.my/ja/", d:"NFTマーケット"},
+  {t:"ホワイトペーパー", u:"https://head2head.gitbook.io/metahorse", d:"仕様ドキュメント"},
+  {t:"ADIL Chain", u:"https://adilchain.io/", d:"$ADILの基盤チェーン"},
+  {t:"Linktree", u:"https://linktr.ee/metahorse_official", d:"各種リンクまとめ"},
+  {t:"YouTube", u:"https://www.youtube.com/@METAHORSEofficial2089", d:"紹介動画"}
+];
+const FAN_LINKS = [
+  {t:"METAHORSE FAN SHOP", u:"https://metahorsefanshop.square.site", d:"有志によるファン制作グッズ"},
+  {t:"WE LOVE METAHORSE", u:"https://youtube.com/@welovemetahorse", d:"ギルドリーグなどの配信"}
+];
+// 「あなたの一頭、募集」フォーム導線。GoogleフォームなどのURLを入れると
+// アーカイブ下部に導線が表示される。空欄の間は非表示（枠のみ実装、文言はたろ確定待ち）
+const SUBMISSION_FORM_URL = '';
+// 復帰者ガイド：離脱後に変わったことを古い順に並べる（最新はlatest:trueでNEWバッジ）
+const RETURN_TIMELINE = [
+  {t:"★の低い馬もアーマー/スキンで戦力化できるように", d:"生来適性（TURF/LONGなど★1〜3）が低い馬でも、アーマーやスキンで補強すれば勝率を上げられるようになった。"},
+  {t:"ギルド所属・馬預けの恩恵", d:"ギルドに所属する、または馬を預けることで、勝率UP・経験値ボーナス・レベルアップ割引などの恩恵が受けられるようになった。"},
+  {t:"ガチャの種類が増加", d:"以前より多くの種類のガチャが用意されている。"},
+  {t:"天候などレース要素の追加", d:"天候をはじめ、レースの勝敗に影響する要素が新たに加わった。"},
+  {t:"国別コースでのデバフ", d:"韓国馬用コースでは日本馬に、日本馬用コースでは韓国馬にデバフがかかるようになった。"},
+  {t:"View-Fi導入", d:"1日5回まで、広告視聴とログインに応じて特典が得られる仕組み「View-Fi」が導入された。", latest:true}
+];
+// 復帰の具体的な手順（ログイン方法や確認すべき画面など）はたろが記入予定。
+// {step:"手順のテキスト"} の形でここに追加すると表示される。空のままなら準備中表示になる。
+const RETURN_STEPS = [
+];
+// ヒーロー背景と見出し帯バナーは同じパノラマ画像を共用し、サイト全体の世界観に
+// 一体感を出す（v1.5）。「今日の一頭」以外は馬NFTのポートレートを出さない方針だが、
+// このパノラマ内の遠景の馬影一頭は環境の一部＝サイトの手がかりとして意図的に許容
+//（たろの判断、2026-07-17）。画像未設定の間はヒーローはCSSのグラデのみで表示。
+const HERO_BG_IMAGE = 'assets/hero-panorama.png';
+// 見出し帯バナー（v1.5→v1.7）：ヒーローと同じ画像を全セクション共通で使う。
+// 各セクションの見せ場は x/y（background-position）+ zoom（scale倍率、1=無拡大）+
+// brightness（filter補正、1=無補正、暗い部分は1.1〜1.3程度で持ち上げ）+
+// panel（黒パネルの幅。見せ場が主役の帯は34%程度に狭めて画像を広く見せる）の5点で調整。
+// labelが帯に表示される英語コピー（旧・ピンクeyebrowの重複表示は廃止しv1.6で統合）。
+const HEADING_BANNER_IMAGE = HERO_BG_IMAGE;
+// 【v1.7版の設定（このブロックと丸ごと差し替えれば1発で戻せます）】
+// const HEADING_BANNER_FOCUS = {
+//   mission: {label:'WORLD / MISSION', x:'52%', y:'80%', zoom:1.25, brightness:1.35, panel:'34%'},
+//   today: {label:'ONE DAY, ONE HORSE.', x:'14%', y:'36%', zoom:1.4, brightness:1.0, panel:'66%'},
+//   archive: {label:'MY HORSE, MY PRIDE.', x:'97%', y:'28%', zoom:1.2, brightness:1.1, panel:'66%'},
+//   guides: {label:'RACING INTEL', x:'56%', y:'48%', zoom:1.35, brightness:1.2, panel:'34%', side:'right'},
+//   returnGuide: {label:'WE ARE OWNERS.', x:'75%', y:'60%', zoom:1.2, brightness:1.2, panel:'66%', side:'left'},
+//   links: {label:'RIDE WITH US — A.D.2089', x:'6%', y:'8%', zoom:1.3, brightness:1.05, panel:'66%', side:'right'}
+// };
+// v1.8：guides/returnGuideは意味リンクする見せ場が画像の反対側にあったため
+// data-side自体を入れ替え（HTML側のdata-side属性も変更済み）。左右交互のリズムは
+// 崩れるが意味リンク優先（たろ承認済み、2026-07-17）。linksはzoomを下げて飛行船群を収めた
+const HEADING_BANNER_FOCUS = {
+  // 牧場＋遠景の馬（右端〜2/3）。ヒーローの"あの一頭"の再登場という物語
+  mission: {label:'WORLD / MISSION', x:'52%', y:'80%', zoom:1.25, brightness:1.35, panel:'34%'},
+  // 夕陽。ONE DAY（一日）の象徴として太陽を見せる
+  today: {label:'ONE DAY, ONE HORSE.', x:'14%', y:'36%', zoom:1.4, brightness:1.0, panel:'66%'},
+  // 右端の展望タワー。MY PRIDE＝誇り高くそびえるもの
+  archive: {label:'MY HORSE, MY PRIDE.', x:'97%', y:'28%', zoom:1.2, brightness:1.1, panel:'66%'},
+  // 競馬場は画像の右寄りにあるため、パネルを左から出して右2/3に堂々と見せる
+  guides: {label:'RACING INTEL', x:'62%', y:'48%', zoom:1.3, brightness:1.2, panel:'34%'},
+  // 川（水辺）は画像の左寄りにあるため、パネルを右から出して左1/3に見せる。
+  // 太陽そのものは入れず、夕陽に照らされた川面と橋のシルエットのみを見せる
+  returnGuide: {label:'WE ARE OWNERS.', x:'22%', y:'58%', zoom:1.4, brightness:1.15, panel:'66%'},
+  // 左上の飛行船・ドローン群。zoomを下げて広めに見せることで複数の機影を収めた
+  links: {label:'RIDE WITH US — A.D.2089', x:'12%', y:'10%', zoom:1.05, brightness:1.05, panel:'66%'}
+};
+// 血統別まとめのデータは data-bloodlines.js（23血統の特徴）と
+// data-pedigree.js（「実在の代表名馬」の紹介文 PEDIGREE_BIOS）から自動生成
+// 図鑑カードの体色チップ用。公式の体色名 → 近似カラーコード
+const BODY_COLOR_HEX = {
+  "Deep Red":"#8B0000","Orange":"#FF8C1A","Cobalt Blue":"#0047AB","Grass Green":"#4CAF50",
+  "Black":"#1A1A1A","Yellow Green":"#9ACD32","Jade Green":"#00A86B","Ponceau":"#C7372F",
+  "Sky Blue":"#87CEEB","Medium Yellow":"#FFD34E","White":"#F5F5F0","Violet":"#7F00FF",
+  "Nude":"#E3BC9A","Burnt Umber":"#8A3324","Earth Yellow":"#E1A95F","Ultramarine":"#3F00FF",
+  "Silver":"#C0C0C0","Lemon Yellow":"#FFF44F","Rose":"#FF007F","Pale Purple":"#C9A0DC",
+  "Acid Blue":"#3AC7E0","Pink":"#FFC0CB","Ocher":"#CC7722"
+};
+/* ================================================================ */
+
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const posts = (typeof HORSE_POSTS!=='undefined' ? HORSE_POSTS.slice() : []);
+posts.sort((a,b)=> (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+const PEDIGREE_BIOS = (typeof window.PEDIGREE_BIOS!=='undefined') ? window.PEDIGREE_BIOS : {};
+
+// 投稿にxUrl（Xの該当ポストURL）があるときだけリンクを出す。
+// 感想・リプライは静的サイトのコメント欄の代わりにXへ集約する狙い
+function xLinkHtml(h){
+  return h && h.xUrl ? '<a class="x-link" href="'+h.xUrl+'" target="_blank" rel="noopener">Xでこの投稿を見る →</a>' : '';
+}
+
+// ---- 今日の一頭 ----
+(function renderToday(){
+  const latest = posts[0];
+  if(!latest) return;
+  document.getElementById('hNo').textContent = latest.serial || '';
+  document.getElementById('hName').textContent = latest.name || '';
+  document.getElementById('hBlood').textContent = latest.blood || '';
+  document.getElementById('hStyle').textContent = latest.style || '';
+  document.getElementById('hReview').textContent = latest.body || '';
+  document.getElementById('hXLink').innerHTML = xLinkHtml(latest);
+  if(latest.img){
+    document.getElementById('horseImg').innerHTML = '<img src="'+latest.img+'" alt="'+escapeHtml(latest.name)+'">';
+  }
+})();
+
+// ---- ヒーロービジュアル（馬NFTを含まない環境画像。未設定時はCSSのネオングリッドで代替） ----
+(function renderHero(){
+  const bg = document.getElementById('heroBg');
+  bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
+})();
+
+// ---- 攻略カード ----
+// 改行区切りのプレーンテキストを段落<p>に変換（空行=段落区切り、単一改行=<br>）
+function bodyToHtml(body){
+  if(!body) return '';
+  return String(body).split(/\n[ \t]*\n/).map(para=>
+    '<p>'+escapeHtml(para.trim()).replace(/\n/g,'<br>')+'</p>'
+  ).join('');
+}
+function openGuideModal(g){
+  document.getElementById('modalBody').innerHTML = '<h3>'+escapeHtml(g.t)+'</h3>'+bodyToHtml(g.body);
+  bloodModal.showModal();
+}
+document.getElementById('guideGrid').innerHTML = GUIDES.map((g,i)=>
+  '<'+(g.ready?'button':'div')+' class="gcard'+(g.ready?' ready':'')+'"'
+  +(g.ready?' type="button" data-i="'+i+'"':'')
+  +'><h3>'+escapeHtml(g.t)+'</h3><p>'+escapeHtml(g.d)+'</p>'
+  +(g.ready?'':'<span class="soon">COMING SOON</span>')
+  +'</'+(g.ready?'button':'div')+'>'
+).join('');
+document.getElementById('guideGrid').addEventListener('click', e=>{
+  const card = e.target.closest('.gcard.ready');
+  if(card) openGuideModal(GUIDES[+card.dataset.i]);
+});
+
+// ---- 復帰者ガイド ----
+document.getElementById('rgTimeline').innerHTML = RETURN_TIMELINE.map(i=>
+  '<div class="rg-item'+(i.latest?' latest':'')+'"><h3>'+escapeHtml(i.t)+(i.latest?'<span class="tag-new">NEW</span>':'')+'</h3><p>'+escapeHtml(i.d)+'</p></div>'
+).join('');
+document.getElementById('rgSteps').innerHTML = RETURN_STEPS.length
+  ? '<ol>'+RETURN_STEPS.map(s=>'<li>'+escapeHtml(s.step)+'</li>').join('')+'</ol>'
+  : '<p class="rg-empty">準備中（具体的な復帰手順は近日追加）</p>';
+
+// ---- リンク（公式／ファン。各リンクに一言説明を添える） ----
+function renderLinks(id, list){
+  document.getElementById(id).innerHTML = list.map(l=>
+    '<a href="'+l.u+'" target="_blank" rel="noopener">'
+    +'<span class="lname">'+escapeHtml(l.t)+'</span>'
+    +(l.d ? '<span class="lnote">'+escapeHtml(l.d)+'</span>' : '')+'</a>').join('');
+}
+renderLinks('officialLinks', OFFICIAL_LINKS);
+renderLinks('fanLinks', FAN_LINKS);
+
+// ---- 「あなたの一頭、募集」フォーム導線（URL未設定時は非表示） ----
+if(SUBMISSION_FORM_URL){
+  document.getElementById('submitCtaLink').href = SUBMISSION_FORM_URL;
+  document.getElementById('submitCta').hidden = false;
+}
+
+// 血統名の表記ゆれ吸収（"Mr.Prospector" と "Mr. Prospector" など、空白差を無視して比較）
+function normBlood(s){ return String(s||'').replace(/\s+/g,''); }
+// 血統図鑑カードのhover/tap発光用：体色hex → 半透明rgba（グロー用）
+function hexToRgba(hex, a){
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex||'');
+  if(!m) return 'rgba(255,61,166,'+a+')';
+  const n = parseInt(m[1],16);
+  return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
+}
+
+// ---- アーカイブ：全頭リスト（No.順・クリックで詳細モーダル） ----
+// 頭数が増えても行を足すだけのフラットな構造。1行＝1頭、開くまで本文は出さない。
+(function renderArchiveList(){
+  const el = document.getElementById('archiveList');
+  if(!posts.length){
+    el.outerHTML = '<div class="arch-empty" id="archiveList">まだ投稿がありません。site-horses.js に追加されると自動で一覧表示されます。</div>';
+    return;
+  }
+  const serialNum = h => parseInt(String(h.serial||'').replace(/\D/g,''),10) || 0;
+  // 新しい馬（番号の大きい方）を先頭に表示
+  const sorted = posts.slice().sort((a,b)=> serialNum(b)-serialNum(a));
+  document.getElementById('archCount').textContent = 'ALL '+sorted.length+' HORSES';
+  el.innerHTML = sorted.map((h,i)=>
+    '<button class="arch-card" type="button" data-i="'+i+'">'
+    +'<span class="no">'+escapeHtml(h.serial)+'</span>'
+    +'<span class="date">'+escapeHtml(h.date)+'</span>'
+    +'<span><h4>'+escapeHtml(h.name)+'</h4></span>'
+    +'<span class="tags">'+escapeHtml(h.blood)+' ／ '+escapeHtml(h.style)+'</span>'
+    +'</button>'
+  ).join('');
+  el.addEventListener('click', e=>{
+    const btn = e.target.closest('.arch-card');
+    if(btn) openPostModal(sorted[+btn.dataset.i]);
+  });
+})();
+
+// ---- 血統図鑑（メインコンテンツ：23血統の並列カード） ----
+(function renderBloodlines(){
+  const el = document.getElementById('bloodGrid');
+  const BL = (typeof window.BLOODLINES!=='undefined') ? window.BLOODLINES : {};
+  const seen = new Set();
+  const names = Object.keys(BL).filter(n=>{
+    const key = normBlood(n);
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  el.innerHTML = names.map(n=>{
+    const bl = BL[n];
+    const disp = n==='Mr.Prospector' ? 'Mr. Prospector' : n;
+    // 絵文字を除いたタイプ名のみ（例："Flame🔥" → "Flame"）。CSS側でuppercase表示
+    const typeName = bl.type.replace(/\p{Extended_Pictographic}+/gu,'').trim();
+    const count = posts.filter(h=>normBlood(h.blood)===normBlood(n)).length;
+    const chip = BODY_COLOR_HEX[bl.body_color] || '#8FA3B8';
+    return '<button class="bl-card" type="button" data-name="'+escapeHtml(n)+'" style="--chip:'+chip+';--chip-glow:'+hexToRgba(chip,.35)+'">'
+      +'<h3>'+escapeHtml(disp)+'</h3>'
+      +'<span class="bl-type-label">'+escapeHtml(typeName)+' / '+escapeHtml(bl.body_color)+'</span>'
+      +(count ? '<span class="bl-count">登場 '+count+'頭</span>' : '')
+      +'</button>';
+  }).join('');
+  el.addEventListener('click', e=>{
+    const btn = e.target.closest('.bl-card');
+    if(btn) openModal(btn.dataset.name, 'blood');
+  });
+})();
+
+// ---- 番号順リスト ⇄ 血統別まとめ タブ切替 ----
+function switchView(view){
+  document.querySelectorAll('.vtab').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
+  document.getElementById('listView').hidden = view!=='list';
+  document.getElementById('bloodView').hidden = view!=='blood';
+}
+document.querySelectorAll('.vtab').forEach(btn=>{
+  btn.addEventListener('click', ()=>switchView(btn.dataset.view));
+});
+// navの「血統図鑑」「アーカイブ」は同じセクションに飛び、対応するタブを開く
+document.querySelectorAll('nav a[data-tab]').forEach(a=>{
+  a.addEventListener('click', ()=>switchView(a.dataset.tab));
+});
+
+// ---- 血統モーダル ----
+const bloodModal = document.getElementById('bloodModal');
+function openModal(name, kind){
+  const bl = (typeof window.BLOODLINES!=='undefined') ? window.BLOODLINES[name] : null;
+  const disp = normBlood(name)==='Mr.Prospector' ? 'Mr. Prospector' : name;
+  const matches = posts.filter(h=>normBlood(h.blood)===normBlood(name));
+  // 天候の得意/苦手。エフェクト説明は総評の種明かしになるため表示しない
+  const weather = (bl && bl.weather && bl.weather.best!=='-')
+    ? '◎ '+escapeHtml(bl.weather.best)+'　×'+' '+escapeHtml(bl.weather.worst)
+    : '天候の影響なし';
+  document.getElementById('modalBody').innerHTML =
+    '<h3>'+escapeHtml(disp)+'</h3>'
+    +'<div class="mb-block"><div class="mb-label">タイプ・体色</div>'
+    +(bl ? '<p>'+escapeHtml(bl.type)+'／'+escapeHtml(bl.body_color)+'</p>' : '<p>データなし</p>')
+    +'</div>'
+    +'<div class="mb-block"><div class="mb-label">天候</div><p>'+weather+'</p></div>'
+    +'<div class="mb-block"><div class="mb-label">実在の代表名馬</div>'
+    +'<p>'+escapeHtml(PEDIGREE_BIOS[name] || 'データ準備中（実系譜確定後にここへ掲載予定）')+'</p></div>'
+    +'<div class="mb-block"><div class="mb-label">過去「今日の一頭」掲載馬</div>'
+    +(matches.length ? '<ul>'+matches.map(h=>'<li><button class="m-horse" type="button" data-serial="'+escapeHtml(h.serial)+'">'+escapeHtml(h.serial)+' '+escapeHtml(h.name)+'（'+escapeHtml(h.date)+'）</button></li>').join('')+'</ul>' : '<p>まだ掲載馬なし</p>')
+    +'</div>';
+  bloodModal.showModal();
+}
+// モーダル内の掲載馬名をタップ → その馬の紹介モーダルへ切り替え
+document.getElementById('modalBody').addEventListener('click', e=>{
+  const btn = e.target.closest('.m-horse');
+  if(!btn) return;
+  const post = posts.find(h=>h.serial===btn.dataset.serial);
+  if(post) openPostModal(post);
+});
+
+// ---- アーカイブ行の詳細モーダル（投稿1件分） ----
+// 競馬カード風：PCは画像を左・データ右の横組み、開いた瞬間に馬名・画像・紹介文が一望できる構成
+function openPostModal(h){
+  if(!h) return;
+  const hasImg = !!h.img;
+  document.getElementById('modalBody').innerHTML =
+    '<div class="pm-card'+(hasImg?'':' no-img')+'">'
+    +(hasImg ? '<div class="pm-visual"><img src="'+h.img+'" alt="'+escapeHtml(h.name)+'"></div>' : '')
+    +'<div class="pm-meta">'
+    +'<div class="sub">'+escapeHtml(h.serial)+'　'+escapeHtml(h.date)+'</div>'
+    +'<h3>'+escapeHtml(h.name)+'</h3>'
+    +'<div class="tags">'+escapeHtml(h.blood)+' ／ '+escapeHtml(h.style)+'</div>'
+    +'<p class="pm-review">'+escapeHtml(h.body)+'</p>'
+    +xLinkHtml(h)
+    +'</div>'
+    +'</div>';
+  bloodModal.showModal();
+}
+document.getElementById('modalClose').addEventListener('click', ()=>bloodModal.close());
+bloodModal.addEventListener('click', e=>{ if(e.target===bloodModal) bloodModal.close(); });
+
+// ---- 見出し帯バナー：世界（背景）は固定のまま、手前の黒パネルとテキストだけが動く ----
+(function setupHeadingBanners(){
+  const slots = document.querySelectorAll('.hbanner');
+  slots.forEach(slot=>{
+    const key = slot.id.replace('hbanner-','');
+    const cfg = HEADING_BANNER_FOCUS[key] || {};
+    slot.style.setProperty('--banner-img', 'url("'+HEADING_BANNER_IMAGE+'")');
+    slot.style.setProperty('--banner-x', cfg.x || '50%');
+    slot.style.setProperty('--banner-y', cfg.y || '30%');
+    slot.style.setProperty('--banner-zoom', cfg.zoom != null ? cfg.zoom : 1);
+    slot.style.setProperty('--banner-bright', cfg.brightness != null ? cfg.brightness : 1);
+    slot.style.setProperty('--panel-w', cfg.panel || '66%');
+    slot.innerHTML = '<div class="hbanner-bg"></div>'
+      +'<div class="hbanner-panel"><span class="hbanner-text">'+escapeHtml(cfg.label || '')+'</span></div>';
+  });
+  if(reducedMotion || !('IntersectionObserver' in window)){
+    slots.forEach(s=>s.classList.add('in-view'));
+    return;
+  }
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in-view'); io.unobserve(en.target); }
+    });
+  }, {threshold:.3});
+  slots.forEach(s=>io.observe(s));
+})();
+
+</script>
+</body>
+</html>

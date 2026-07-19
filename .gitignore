@@ -1,0 +1,26 @@
+# サイト本体（index.html / data-*.js / site-horses.js / assets/）以外の
+# 作業用ファイルは公開リポジトリに含めない（2026-07-19、たろ確認済み）
+
+# CCへの作業指示書・作業ログ
+cc-instruction_*.md
+fansite-spec_*.md
+METAHORSE_プロジェクト情報.md
+
+# 旧バージョンのスナップショット／バックアップ
+metahorse-fansite_*_backup.html
+metahorse-fansite_20260705_v0_1.html
+metahorse-fansite_20260706_v0_2.html
+metahorse-fansite_20260716_v1_3.html
+site-horses-#*.js
+site-horses_v0.1.js
+
+# ローカル動作確認用スクリプト（配信には無関係）
+serve.ps1
+
+# 用途不明の一時ファイル・誤って置かれたファイル
+Claude Setup.exe
+m_003_01_02_05_02.png
+
+# ツール／エディタ関連
+.claude/
+.vite/
