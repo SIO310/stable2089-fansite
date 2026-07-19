@@ -21,6 +21,9 @@ serve.ps1
 Claude Setup.exe
 m_003_01_02_05_02.png
 
+# QRコード：イベント配布用素材。サイトには埋め込まないため非公開のまま
+assets/qr-*.png
+
 # ツール／エディタ関連
 .claude/
 .vite/
