@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-07-19時点、投稿済み39頭）
+// METAHORSE Dashboardからの自動書き出し（2026-07-20時点、投稿済み40頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -449,5 +449,16 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
     body: `Cobalt Blueの体色が水しぶきを撒き、蒼い波濤をまといながらダートの長距離を疾走する。先行の位置取りから中盤へ向かうピンクの蹄が、紫バイザーの繊細な戦術眼と織りなす軌跡。2113戦を刻む中堅が示す勝率12%は知る人ぞ知る実力者の証、Lv10の育成途上、善戦を重ねる姿にアーサー王の名が宿る。Mr.Prospector系の波が電脳トラックを満たすとき、観衆は次なる飛躍を予感する。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_003_01_02_05_02.png",
     xUrl: "https://x.com/SIO310meta/status/2078428613620478463?s=20"
+  },
+  {
+    serial: "No.040",
+    name: "ARCHITECT",
+    blood: "Zeddaan",
+    style: "逃げ",
+    rank: "SSS",
+    date: "2026-07-20",
+    body: `激情のピンクバイザーがゲート5番・8番から炸裂する瞬間、黄の蹄で先頭を奪い去る逃げの軌跡。Jade Greenの体を中心に縦の魔法陣を宙に描き、円環をまとって疾走する建築家。6360戦を刻むベテランの勝率27%は第一線級の証、翡翠の魔法陣が芝を駆け抜ける軌跡に、知性の余韻が響く。その先に、設計図は完成する。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_007_05_02_03_01.png",
+    xUrl: ""
   }
 ];
