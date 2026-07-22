@@ -78,6 +78,17 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
 .lead{color:var(--sub);font-size:14px;margin-top:16px;max-width:640px}
 .nowrap{white-space:nowrap}
 
+/* NEWS：ヒーロー直下の控えめな更新情報バー。最新3件のみ、装飾は最小限（図鑑・ヒーローの主役を奪わない） */
+.news-bar{max-width:1080px;margin:0 auto;padding:22px 24px 0;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.news-bar[hidden]{display:none}
+.news-label{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--amber);flex-shrink:0}
+.news-bar ul{list-style:none;display:flex;flex-direction:column;gap:4px;flex:1;min-width:200px}
+.news-bar li{font-size:12px;color:var(--sub);display:flex;gap:10px;align-items:baseline}
+.news-bar time{font-family:var(--disp);font-size:11px;color:var(--cyan);flex-shrink:0}
+@media(max-width:720px){
+  .news-bar{flex-direction:column;gap:6px;padding:18px 20px 0}
+}
+
 /* 見出し帯バナー：固定パノラマ背景＋黒パネルのスライドイン＋テキストのフォーカスイン。
    世界（背景）は動かさず、手前の情報パネルだけが動く「VJSのHUD」的演出。
    奇数セクション＝見せ場は右1/3・パネルは左から（data-side="left"）、
@@ -141,8 +152,14 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
   0%{transform:translateX(-320%) skewX(-16deg)}
   100%{transform:translateX(420%) skewX(-16deg)}
 }
+/* アーカイブ／図鑑の馬詳細モーダル(.pm-card)にも同じキラリ効果を展開（速度・強さは.hc-sweepと共通） */
+.pm-sweep{position:absolute;top:-4%;left:0;width:34%;height:108%;pointer-events:none;
+  background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.16) 45%, rgba(46,230,214,.14) 50%, transparent 100%);
+  transform:translateX(-320%) skewX(-16deg)}
+.pm-card:hover .pm-sweep,.pm-card:active .pm-sweep{
+  animation:hcSweep 1s ease-in-out}
 @media(prefers-reduced-motion:reduce){
-  .hc-sweep{animation:none;display:none}
+  .hc-sweep,.pm-sweep{animation:none;display:none}
 }
 .horse-visual{aspect-ratio:1;max-width:250px;align-self:start;border:1px dashed rgba(46,230,214,.4);display:flex;align-items:center;
   justify-content:center;color:var(--sub);font-size:12px;letter-spacing:.1em;text-align:center;padding:12px;
@@ -260,7 +277,7 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 /* 競馬カード風モーダル（アーカイブ1頭の詳細）：開いた瞬間に画像・馬名・紹介文が一望できる構成。
    今日の一頭カードと揃えて、上辺を明るく・下辺を暗くした境界線＋二層box-shadowで
    わずかな厚みを出す（3Dチルト等は使わない） */
-.pm-card{display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:20px;align-items:start;
+.pm-card{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:20px;align-items:start;
   border:1px solid var(--line);border-top-color:rgba(255,255,255,.14);border-bottom-color:rgba(0,0,0,.5);
   background:rgba(255,255,255,.015);padding:14px;
   box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
@@ -306,9 +323,23 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 .rg-item p{font-size:13px;color:var(--sub)}
 .rg-steps{margin-top:44px;border:1px solid var(--line);background:var(--panel);padding:22px}
 .rg-steps h3{font-family:var(--disp);font-size:13px;letter-spacing:.18em;color:var(--amber);margin-bottom:14px}
-.rg-steps ol{padding-left:20px}
-.rg-steps li{font-size:13px;color:var(--txt);margin:6px 0}
+.rg-steps .mb-block:first-child{margin-top:0}
 .rg-steps .rg-empty{font-size:13px;color:var(--sub)}
+
+/* アップデート履歴：METAHORSE本体の変更点を時系列で積み上げる置き場（初期5件＋もっと見る） */
+#updatesList{margin-top:32px;display:flex;flex-direction:column;gap:14px}
+.upd-item{display:flex;gap:14px;align-items:baseline;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.upd-item:last-child{border-bottom:none;padding-bottom:0}
+.upd-item time{font-family:var(--disp);font-size:11px;color:var(--cyan);flex-shrink:0;min-width:88px}
+.upd-item p{font-size:13px;color:var(--txt)}
+@media(max-width:520px){
+  .upd-item{flex-direction:column;gap:4px}
+  .upd-item time{min-width:0}
+}
+.updates-more{display:block;margin:24px auto 0;font-family:var(--disp);font-size:11px;letter-spacing:.15em;
+  color:var(--sub);border:1px solid var(--line);padding:8px 22px;background:none;cursor:pointer;transition:.2s}
+.updates-more[hidden]{display:none}
+.updates-more:hover{color:var(--cyan);border-color:var(--cyan)}
 
 /* links & footer */
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
@@ -348,6 +379,7 @@ footer b{color:var(--txt)}
     <li><a href="#archive" data-tab="blood">図鑑</a></li>
     <li><a href="#guides">攻略情報</a></li>
     <li><a href="#return-guide">復帰ガイド</a></li>
+    <li><a href="#updates">更新履歴</a></li>
     <li><a href="#links">リンク</a></li>
   </ul>
 </nav>
@@ -363,6 +395,11 @@ footer b{color:var(--txt)}
     <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。今日も、走らせよう。</p>
   </div>
   <div class="hint">SCROLL</div>
+</div>
+
+<div class="news-bar" id="newsBar" hidden>
+  <span class="news-label">NEWS</span>
+  <ul id="newsList"></ul>
 </div>
 
 <section id="mission">
@@ -464,6 +501,18 @@ footer b{color:var(--txt)}
   </div>
 </section>
 
+<section id="updates">
+  <div class="hbanner" id="hbanner-updates" data-side="left"></div>
+  <div class="head-row">
+    <div>
+      <h2>アップデート履歴</h2>
+      <p class="lead">METAHORSEのシステム・イベントの変更点を、時系列で<span class="nowrap">積み上げていきます。</span></p>
+    </div>
+  </div>
+  <div id="updatesList"></div>
+  <button class="updates-more" id="updatesMore" type="button" hidden>もっと見る</button>
+</section>
+
 <section id="links">
   <div class="hbanner" id="hbanner-links" data-side="right"></div>
   <div class="head-row">
@@ -487,6 +536,12 @@ footer b{color:var(--txt)}
 <script src="site-horses.js"></script>
 <script>
 /* ================= 編集エリア（ここだけ触ればOK） ================= */
+// NEWS：ヒーロー直下に最新3件のみ表示（配列が空ならセクションごと非表示）。新しい順に並べること。
+const NEWS = [
+  {date:'2026-07-22', text:'復帰の手順を追加しました'},
+  {date:'2026-07-20', text:'View-Fiの使い方を公開しました'},
+  {date:'2026-07-19', text:'攻略情報4本を公開しました'}
+];
 // ready:trueにすると記事本文モーダルが開くようになる（図鑑詳細と同じ#bloodModalを再利用）。
 // bodyは改行区切りのプレーンテキスト。空行で段落を分ける（例："1段落目\n\n2段落目"）。
 // 5項目（天候と血統〜／ステータス／KUDA育成／バーンガチャ／View-Fi）は本文反映済みでready:true。
@@ -527,9 +582,22 @@ const RETURN_TIMELINE = [
   {t:"国別コースでのデバフ", d:"韓国馬用コースでは日本馬に、日本馬用コースでは韓国馬にデバフがかかるようになった。コース誤りに注意！ただし、テクニックとして使用することも・・・"},
   {t:"View-Fi導入", d:"1日5回まで、広告視聴とログインに応じて特典が得られる仕組み「View-Fi」が導入された。", latest:true}
 ];
-// 復帰の具体的な手順（ログイン方法や確認すべき画面など）はたろが記入予定。
-// {step:"手順のテキスト"} の形でここに追加すると表示される。空のままなら準備中表示になる。
+// 復帰の具体的な手順。{t:見出し, body:本文（bodyToHtmlと同じ改行/リンク記法）}の形。
+// 空配列のままなら準備中表示になる。
 const RETURN_STEPS = [
+  {t:"まずはログインしてみる", body:"[METAHORSE](https://metahorse.racing/login)にアクセスしてみてください。ログイン方法は以前と同じで、head2headアカウント、またはMetaMaskが使えます。長く離れていても、アカウントと保有NFTはそのまま残っています。\n\nパスワードが分からない場合は、ログイン画面の「Forgot Password?」から再設定を試してみてください。"},
+  {t:"愛馬の状態を確認する", body:"ログインできたら、手持ちの馬を見てみましょう。パラメータ、★の構成、レベル。当時と変わっていない愛馬が待っています。"},
+  {t:"何が変わったかを知る", body:"上の「最近の変化」に目を通してみてください。天候、アーマー、ギルド、ガチャ——離れている間に、できることが増えています。\n\n見覚えのないボタンが増えているかもしれません。画面構成やゲームミュージックも変わっているかも。その変化ごと、楽しんでみてください。"},
+  {t:"一度、走らせてみる", body:"難しいことは後回しで大丈夫です。まずは1レース、エントリーしてみてください。勝てなくても構いません。"},
+  {t:"分からないことがあれば", body:"[攻略情報](#guides)に、育成やバーンガチャの判断基準をまとめています。[ホワイトペーパー](https://head2head.gitbook.io/metahorse)にも詳しい情報があります。"}
+];
+// アップデート履歴：METAHORSE本体の変更点を時系列(新しい順)で積み上げる置き場。
+// dateが空文字の項目は日付欄を表示しない。初期表示5件＋「もっと見る」で全件展開。
+const UPDATES = [
+  {date:'', text:'月間ランキング報酬'},
+  {date:'', text:'Special Race'},
+  {date:'', text:'ニューレコード（記録更新でリワード。クラス7なら300KUDA）'},
+  {date:'', text:'Jackpot（レース開始時にアイコンが表示され、ゴール後に特定の着順へアイテム付与。まれにシルバーチケットなども）'}
 ];
 // ヒーロー背景と見出し帯バナーは同じパノラマ画像を共用し、サイト全体の世界観に
 // 一体感を出す（v1.5）。「今日の一頭」以外は馬NFTのポートレートを出さない方針だが、
@@ -567,7 +635,9 @@ const HEADING_BANNER_FOCUS = {
   // 太陽そのものは入れず、夕陽に照らされた川面と橋のシルエットのみを見せる
   returnGuide: {label:'WE ARE OWNERS.', x:'22%', y:'58%', zoom:1.4, brightness:1.15, panel:'66%'},
   // 左上の飛行船・ドローン群。zoomを下げて広めに見せることで複数の機影を収めた
-  links: {label:'RIDE WITH US — A.D.2089', x:'12%', y:'10%', zoom:1.05, brightness:1.05, panel:'66%'}
+  links: {label:'RIDE WITH US — A.D.2089', x:'12%', y:'10%', zoom:1.05, brightness:1.05, panel:'66%'},
+  // 中央やや左寄りの高層タワー群（積み上がる街並み＝積み上がる変更履歴のイメージ）
+  updates: {label:'THE WORLD KEEPS MOVING.', x:'38%', y:'25%', zoom:1.15, brightness:1.15, panel:'66%'}
 };
 // 血統別まとめのデータは data-bloodlines.js（23血統の特徴）と
 // data-pedigree.js（「実在の代表名馬」の紹介文 PEDIGREE_BIOS）から自動生成
@@ -617,9 +687,21 @@ function xLinkHtml(h){
   bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
 })();
 
+// ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示） ----
+(function renderNews(){
+  const bar = document.getElementById('newsBar');
+  const items = NEWS.slice(0, 3);
+  if(!items.length) return;
+  document.getElementById('newsList').innerHTML = items.map(n=>
+    '<li>'+(n.date?'<time>'+escapeHtml(n.date)+'</time>':'')+escapeHtml(n.text)+'</li>'
+  ).join('');
+  bar.hidden = false;
+})();
+
 // ---- 攻略カード ----
 // 改行区切りのプレーンテキストを段落<p>に変換（空行=段落区切り、単一改行=<br>）
-// [表示テキスト](URL) 記法をリンクとして扱う。安全のため、リンクをプレースホルダに
+// [表示テキスト](URL) 記法をリンクとして扱う。URLはhttps?://（外部・新規タブ）または
+// #で始まるページ内アンカー（同タブ内ジャンプ）のみ許可。安全のため、リンクをプレースホルダに
 // 退避 → 残りの文をescapeHtml → 最後にプレースホルダを<a>に復元、の順で処理する
 // （本文中に紛れ込んだ<や>等はこれまで通り無害化される）
 // 段落全体が「## 見出し」のみの場合は小見出しとして扱う（血統モーダルと共通の.mb-labelを流用）
@@ -629,14 +711,15 @@ function bodyToHtml(body){
     const heading = para.trim().match(/^##\s+(.+)$/);
     if(heading) return '<div class="mb-label">'+escapeHtml(heading[1])+'</div>';
     const links = [];
-    const withPlaceholders = para.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (m,text,url)=>{
+    const withPlaceholders = para.replace(/\[([^\]]+)\]\(((?:https?:\/\/|#)[^\s)]+)\)/g, (m,text,url)=>{
       links.push({text, url});
       return '@@LINK'+(links.length-1)+'@@';
     });
     let html = escapeHtml(withPlaceholders.trim()).replace(/\n/g,'<br>');
     html = html.replace(/@@LINK(\d+)@@/g, (m,i)=>{
       const l = links[+i];
-      return '<a href="'+escapeHtml(l.url)+'" target="_blank" rel="noopener">'+escapeHtml(l.text)+'</a>';
+      const external = /^https?:\/\//.test(l.url);
+      return '<a href="'+escapeHtml(l.url)+'"'+(external?' target="_blank" rel="noopener"':'')+'>'+escapeHtml(l.text)+'</a>';
     });
     return '<p>'+html+'</p>';
   }).join('');
@@ -662,8 +745,28 @@ document.getElementById('rgTimeline').innerHTML = RETURN_TIMELINE.map(i=>
   '<div class="rg-item'+(i.latest?' latest':'')+'"><h3>'+escapeHtml(i.t)+(i.latest?'<span class="tag-new">NEW</span>':'')+'</h3><p>'+escapeHtml(i.d)+'</p></div>'
 ).join('');
 document.getElementById('rgSteps').innerHTML = RETURN_STEPS.length
-  ? '<ol>'+RETURN_STEPS.map(s=>'<li>'+escapeHtml(s.step)+'</li>').join('')+'</ol>'
+  ? RETURN_STEPS.map((s,i)=>'<div class="mb-block"><div class="mb-label">'+(i+1)+'. '+escapeHtml(s.t)+'</div>'+bodyToHtml(s.body)+'</div>').join('')
   : '<p class="rg-empty">準備中（具体的な復帰手順は近日追加）</p>';
+
+// ---- アップデート履歴（初期5件＋「もっと見る」で全件展開） ----
+(function renderUpdates(){
+  const list = document.getElementById('updatesList');
+  const moreBtn = document.getElementById('updatesMore');
+  const INITIAL = 5;
+  function renderItems(items){
+    list.innerHTML = items.map(u=>
+      '<div class="upd-item">'+(u.date?'<time>'+escapeHtml(u.date)+'</time>':'')+'<p>'+escapeHtml(u.text)+'</p></div>'
+    ).join('');
+  }
+  renderItems(UPDATES.slice(0, INITIAL));
+  if(UPDATES.length > INITIAL){
+    moreBtn.hidden = false;
+    moreBtn.addEventListener('click', ()=>{
+      renderItems(UPDATES);
+      moreBtn.hidden = true;
+    });
+  }
+})();
 
 // ---- リンク（公式／ファン。各リンクに一言説明を添える） ----
 function renderLinks(id, list){
@@ -799,6 +902,7 @@ function openPostModal(h){
   const hasImg = !!h.img;
   document.getElementById('modalBody').innerHTML =
     '<div class="pm-card'+(hasImg?'':' no-img')+'">'
+    +'<div class="pm-sweep" aria-hidden="true"></div>'
     +(hasImg ? '<div class="pm-visual"><img src="'+h.img+'" alt="'+escapeHtml(h.name)+'"></div>' : '')
     +'<div class="pm-meta">'
     +'<div class="sub">'+escapeHtml(h.serial)+'　'+escapeHtml(h.date)+'</div>'
