@@ -310,21 +310,6 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 /* 攻略記事モーダルの本文（見出し＋段落のみ。装飾は最小限） */
 #modalBody p + p{margin-top:10px}
 
-/* 復帰者ガイド：離脱後の変化を時系列で並べる縦タイムライン */
-.rg-timeline{margin-top:36px}
-.rg-item{position:relative;padding:0 0 26px 26px;border-left:2px solid var(--line);margin-left:5px}
-.rg-item:last-child{border-left-color:transparent;padding-bottom:0}
-.rg-item::before{content:"";position:absolute;left:-6px;top:2px;width:11px;height:11px;border-radius:50%;
-  background:var(--void);border:2px solid var(--cyan)}
-.rg-item.latest::before{border-color:var(--amber)}
-.rg-item h3{font-size:15px;color:var(--txt);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.rg-item .tag-new{font-family:var(--disp);font-size:9px;letter-spacing:.15em;color:var(--amber);
-  border:1px solid rgba(245,217,10,.4);padding:2px 7px}
-.rg-item p{font-size:13px;color:var(--sub)}
-.rg-steps{margin-top:44px;border:1px solid var(--line);background:var(--panel);padding:22px}
-.rg-steps h3{font-family:var(--disp);font-size:13px;letter-spacing:.18em;color:var(--amber);margin-bottom:14px}
-.rg-steps .mb-block:first-child{margin-top:0}
-.rg-steps .rg-empty{font-size:13px;color:var(--sub)}
 
 /* アップデート履歴：METAHORSE本体の変更点を時系列で積み上げる置き場（初期5件＋もっと見る） */
 #updatesList{margin-top:32px;display:flex;flex-direction:column;gap:14px}
@@ -379,7 +364,7 @@ footer b{color:var(--txt)}
     <li><a href="#archive" data-tab="blood">図鑑</a></li>
     <li><a href="#guides">攻略情報</a></li>
     <li><a href="#return-guide">復帰ガイド</a></li>
-    <li><a href="#updates">更新履歴</a></li>
+    <li id="navUpdates" hidden><a href="#updates">更新履歴</a></li>
     <li><a href="#links">リンク</a></li>
   </ul>
 </nav>
@@ -494,14 +479,10 @@ footer b{color:var(--txt)}
       <p class="lead">久しぶりの人も、これから戻る人も。最近の変化と<span class="nowrap">再開のヒントをまとめました。</span></p>
     </div>
   </div>
-  <div class="rg-timeline" id="rgTimeline"></div>
-  <div class="rg-steps">
-    <h3>復帰の手順</h3>
-    <div id="rgSteps"></div>
-  </div>
+  <div class="grid" id="returnGrid"></div>
 </section>
 
-<section id="updates">
+<section id="updates" hidden>
   <div class="hbanner" id="hbanner-updates" data-side="left"></div>
   <div class="head-row">
     <div>
@@ -555,16 +536,16 @@ const GUIDES = [
   {t:"View-Fiの使い方", d:"視聴報酬の仕組みと、外部視聴の注意点", ready:true, body:"View-Fiの視聴には報酬が発生します。自身が受け取る分のほか、一部は運営にも分配されます。プレイヤーがエコシステムの強化に貢献できる、画期的なシステムです。\n\n## 登録手順\n\nアンバサダーのMaximum Impactさんが、noteで詳しく解説されています。\n→ [登録手順の解説（note）](https://note.com/maxblog/n/n3c49b035f8c3)\n\n## 注意点\n\nMETAHORSE内で広告を視聴するとアイテムを獲得できますが、METAHORSE外での視聴には注意が必要です。視聴回数には1日あたりの上限があり、METAHORSE外で使い切ってしまうと、その日ゲーム内で視聴できなくなる場合があります。\n\n→ [プロデューサー・イワマ氏のポスト](https://x.com/IwamaTatsuya/status/2067543634296369325)"},
   {t:"初心者ガイド", d:"2089年の世界へようこそ。最初の一週間でやること。", ready:false, body:""}
 ];
-// プレイヤーの行動順（遊ぶ→調べる→買う→読む→基盤→まとめ）に並べる。
+// 並び順は2026-07-22指示で指定順に変更（プレイ→仕様→マーケット→データ検索→基盤→動画→まとめ）。
 // セクション見出し側で既にOFFICIALと示しているため、個々のdには「公式」を使わない
 const OFFICIAL_LINKS = [
   {t:"METAHORSE", u:"https://metahorse.racing/login", d:"プレイ / ログイン"},
-  {t:"KYH", u:"https://kyh.head-2-head.net/ja/", d:"馬データ検索"},
-  {t:"vvvvv.my", u:"https://www.vvvvv.my/ja/", d:"NFTマーケット"},
   {t:"ホワイトペーパー", u:"https://head2head.gitbook.io/metahorse", d:"仕様ドキュメント"},
+  {t:"vvvvv.my", u:"https://www.vvvvv.my/ja/", d:"NFTマーケット"},
+  {t:"KYH", u:"https://kyh.head-2-head.net/ja/", d:"馬データ検索"},
   {t:"ADIL Chain", u:"https://adilchain.io/", d:"$ADILの基盤チェーン"},
-  {t:"Linktree", u:"https://linktr.ee/metahorse_official", d:"各種リンクまとめ"},
-  {t:"YouTube", u:"https://www.youtube.com/@METAHORSEofficial2089", d:"紹介動画"}
+  {t:"YouTube", u:"https://www.youtube.com/@METAHORSEofficial2089", d:"紹介動画"},
+  {t:"Linktree", u:"https://linktr.ee/metahorse_official", d:"各種リンクまとめ"}
 ];
 const FAN_LINKS = [
   {t:"METAHORSE FAN SHOP", u:"https://metahorsefanshop.square.site", d:"有志によるファン制作グッズ"},
@@ -587,12 +568,15 @@ const RETURN_TIMELINE = [
 const RETURN_STEPS = [
   {t:"まずはログインしてみる", body:"[METAHORSE](https://metahorse.racing/login)にアクセスしてみてください。ログイン方法は以前と同じで、head2headアカウント、またはMetaMaskが使えます。長く離れていても、アカウントと保有NFTはそのまま残っています。\n\nパスワードが分からない場合は、ログイン画面の「Forgot Password?」から再設定を試してみてください。"},
   {t:"愛馬の状態を確認する", body:"ログインできたら、手持ちの馬を見てみましょう。パラメータ、★の構成、レベル。当時と変わっていない愛馬が待っています。"},
-  {t:"何が変わったかを知る", body:"上の「最近の変化」に目を通してみてください。天候、アーマー、ギルド、ガチャ——離れている間に、できることが増えています。\n\n見覚えのないボタンが増えているかもしれません。画面構成やゲームミュージックも変わっているかも。その変化ごと、楽しんでみてください。"},
+  {t:"何が変わったかを知る", body:"「最近の変化」に目を通してみてください。天候、アーマー、ギルド、ガチャ——離れている間に、できることが増えています。\n\n見覚えのないボタンが増えているかもしれません。画面構成やゲームミュージックも変わっているかも。その変化ごと、楽しんでみてください。"},
   {t:"一度、走らせてみる", body:"難しいことは後回しで大丈夫です。まずは1レース、エントリーしてみてください。勝てなくても構いません。"},
   {t:"分からないことがあれば", body:"[攻略情報](#guides)に、育成やバーンガチャの判断基準をまとめています。[ホワイトペーパー](https://head2head.gitbook.io/metahorse)にも詳しい情報があります。"}
 ];
 // アップデート履歴：METAHORSE本体の変更点を時系列(新しい順)で積み上げる置き場。
 // dateが空文字の項目は日付欄を表示しない。初期表示5件＋「もっと見る」で全件展開。
+// SHOW_UPDATES=falseの間はセクション・nav項目とも非表示（コード/データは温存。
+// 将来「攻略情報の1項目としてモーダル表示」に作り替える可能性があるため、2026-07-22時点で非公開化）。
+const SHOW_UPDATES = false;
 const UPDATES = [
   {date:'', text:'月間ランキング報酬'},
   {date:'', text:'Special Race'},
@@ -740,33 +724,45 @@ document.getElementById('guideGrid').addEventListener('click', e=>{
   if(card) openGuideModal(GUIDES[+card.dataset.i]);
 });
 
-// ---- 復帰者ガイド ----
-document.getElementById('rgTimeline').innerHTML = RETURN_TIMELINE.map(i=>
-  '<div class="rg-item'+(i.latest?' latest':'')+'"><h3>'+escapeHtml(i.t)+(i.latest?'<span class="tag-new">NEW</span>':'')+'</h3><p>'+escapeHtml(i.d)+'</p></div>'
+// ---- 復帰者ガイド（攻略情報と同じカード→モーダル方式。中身はRETURN_TIMELINE/RETURN_STEPSから自動生成、
+//      二重管理を避ける。「## 見出し」記法はbodyToHtmlが.mb-labelとして描画） ----
+const RETURN_CARDS = [
+  {t:"最近の変化", d:"天候・アーマー/スキン・ギルド・ガチャなど、離れている間に増えたこと", ready:true,
+    body: RETURN_TIMELINE.map(i=>'## '+i.t+(i.latest?'（NEW）':'')+'\n\n'+i.d).join('\n\n')},
+  {t:"復帰の手順", d:"ログインから最初の1レースまで、迷わないための5ステップ", ready:true,
+    body: RETURN_STEPS.map((s,i)=>'## '+(i+1)+'. '+s.t+'\n\n'+s.body).join('\n\n')}
+];
+document.getElementById('returnGrid').innerHTML = RETURN_CARDS.map((g,i)=>
+  '<button class="gcard ready" type="button" data-i="'+i+'"><h3>'+escapeHtml(g.t)+'</h3><p>'+escapeHtml(g.d)+'</p></button>'
 ).join('');
-document.getElementById('rgSteps').innerHTML = RETURN_STEPS.length
-  ? RETURN_STEPS.map((s,i)=>'<div class="mb-block"><div class="mb-label">'+(i+1)+'. '+escapeHtml(s.t)+'</div>'+bodyToHtml(s.body)+'</div>').join('')
-  : '<p class="rg-empty">準備中（具体的な復帰手順は近日追加）</p>';
+document.getElementById('returnGrid').addEventListener('click', e=>{
+  const card = e.target.closest('.gcard.ready');
+  if(card) openGuideModal(RETURN_CARDS[+card.dataset.i]);
+});
 
-// ---- アップデート履歴（初期5件＋「もっと見る」で全件展開） ----
-(function renderUpdates(){
-  const list = document.getElementById('updatesList');
-  const moreBtn = document.getElementById('updatesMore');
-  const INITIAL = 5;
-  function renderItems(items){
-    list.innerHTML = items.map(u=>
-      '<div class="upd-item">'+(u.date?'<time>'+escapeHtml(u.date)+'</time>':'')+'<p>'+escapeHtml(u.text)+'</p></div>'
-    ).join('');
-  }
-  renderItems(UPDATES.slice(0, INITIAL));
-  if(UPDATES.length > INITIAL){
-    moreBtn.hidden = false;
-    moreBtn.addEventListener('click', ()=>{
-      renderItems(UPDATES);
-      moreBtn.hidden = true;
-    });
-  }
-})();
+// ---- アップデート履歴（初期5件＋「もっと見る」で全件展開。SHOW_UPDATES=falseの間はセクション/nav項目ごと非表示） ----
+if(SHOW_UPDATES){
+  document.getElementById('updates').hidden = false;
+  document.getElementById('navUpdates').hidden = false;
+  (function renderUpdates(){
+    const list = document.getElementById('updatesList');
+    const moreBtn = document.getElementById('updatesMore');
+    const INITIAL = 5;
+    function renderItems(items){
+      list.innerHTML = items.map(u=>
+        '<div class="upd-item">'+(u.date?'<time>'+escapeHtml(u.date)+'</time>':'')+'<p>'+escapeHtml(u.text)+'</p></div>'
+      ).join('');
+    }
+    renderItems(UPDATES.slice(0, INITIAL));
+    if(UPDATES.length > INITIAL){
+      moreBtn.hidden = false;
+      moreBtn.addEventListener('click', ()=>{
+        renderItems(UPDATES);
+        moreBtn.hidden = true;
+      });
+    }
+  })();
+}
 
 // ---- リンク（公式／ファン。各リンクに一言説明を添える） ----
 function renderLinks(id, list){
