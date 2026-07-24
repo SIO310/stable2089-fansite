@@ -47,6 +47,8 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
     linear-gradient(180deg, rgba(6,9,19,.25), rgba(6,9,19,.55)),
     var(--hero-img, none) var(--hero-x,50%) 38%/cover no-repeat,
     var(--void);}
+/* 時刻による表示調整 */
+.hero-bg.hero-late{filter:hue-rotate(-40deg) brightness(.65) saturate(1.2)}
 .hero-bg .floor{position:absolute;left:-30%;right:-30%;bottom:0;height:46%;
   background-image:
     repeating-linear-gradient(90deg, rgba(46,230,214,.22) 0 1px, transparent 1px 64px),
@@ -669,6 +671,9 @@ function xLinkHtml(h){
 (function renderHero(){
   const bg = document.getElementById('heroBg');
   bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
+  // 時刻による表示調整
+  const h = new Date().getHours();
+  if(h >= 0 && h < 4) bg.classList.add('hero-late');
 })();
 
 // ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示） ----
