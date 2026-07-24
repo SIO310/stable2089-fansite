@@ -339,6 +339,9 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 .sublabel{font-family:var(--disp);font-size:11px;letter-spacing:.3em;color:var(--sub);margin-top:36px}
 footer{border-top:1px solid var(--line);padding:36px 24px 48px;text-align:center;color:var(--sub);font-size:12px}
 footer .disc{max-width:560px;margin:0 auto 14px}
+.kofi-cta{margin-top:18px}
+.kofi-cta a{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);transition:.2s}
+.kofi-cta a:hover{color:var(--cyan);text-decoration:none}
 footer b{color:var(--txt)}
 
 @media(max-width:720px){
@@ -512,6 +515,9 @@ footer b{color:var(--txt)}
 <footer>
   <p class="disc">当サイトは<b>非公式のファンサイト</b>です。掲載内容は個人の見解であり、運営とは関係ありません。<br>画像等の著作権は各権利者に帰属します。</p>
   <p>運営：<a href="https://x.com/SIO310meta" target="_blank" rel="noopener">siosio @SIO310meta</a>　|　site v1.0</p>
+  <div class="kofi-cta" id="kofiCta" hidden>
+    <a id="kofiLink" href="#" target="_blank" rel="noopener">THANKS, METAHORSERS. 🐎</a>
+  </div>
 </footer>
 
 <script src="data-bloodlines.js"></script>
@@ -554,8 +560,12 @@ const FAN_LINKS = [
   {t:"WE LOVE METAHORSE", u:"https://youtube.com/@welovemetahorse", d:"ギルドリーグなどの配信"}
 ];
 // 「あなたの一頭、募集」フォーム導線。GoogleフォームなどのURLを入れると
-// アーカイブ下部に導線が表示される。空欄の間は非表示（枠のみ実装、文言はたろ確定待ち）
-const SUBMISSION_FORM_URL = 'https://forms.gle/nR7GWiQWkJKAKYp5A';
+// アーカイブ下部に導線が表示される。空欄の間は非表示
+const SUBMISSION_FORM_URL = 'https://forms.gle/STBjH7nXqW4g4PwQ7';
+// 投げ銭窓口（Ko-fi）。運営（イワマP）へ収益化可否を確認済みのためSHOW_KOFI=trueで公開。
+// 未確認の状態に戻す必要が生じた場合はfalseにすればフッターの枠ごと非表示になる。
+const SHOW_KOFI = true;
+const KOFI_URL = 'https://ko-fi.com/siosio2089';
 // 復帰者ガイド：離脱後に変わったことを古い順に並べる（最新はlatest:trueでNEWバッジ）
 const RETURN_TIMELINE = [
   {t:"天候などレース要素の追加", d:"天候をはじめ、レースの勝敗に影響する要素が新たに加わった。天候の得意不得意を考えてエントリすることで勝率アップ。"},
@@ -783,6 +793,12 @@ renderLinks('fanLinks', FAN_LINKS);
 if(SUBMISSION_FORM_URL){
   document.getElementById('submitCtaLink').href = SUBMISSION_FORM_URL;
   document.getElementById('submitCta').hidden = false;
+}
+
+// ---- 投げ銭窓口（Ko-fi） ----
+if(SHOW_KOFI && KOFI_URL){
+  document.getElementById('kofiLink').href = KOFI_URL;
+  document.getElementById('kofiCta').hidden = false;
 }
 
 // 血統名の表記ゆれ吸収（"Mr.Prospector" と "Mr. Prospector" など、空白差を無視して比較）
