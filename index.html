@@ -346,8 +346,8 @@ footer .disc{max-width:560px;margin:0 auto 14px}
 /* KOFI_STYLE='link'（旧版）：文言そのものが控えめなテキストリンク */
 .kofi-cta .kofi-link{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);transition:.2s}
 .kofi-cta .kofi-link:hover{color:var(--cyan);text-decoration:none}
-/* KOFI_STYLE='button'：他の主要ボタン（応募フォーム等）と同格の枠線ボタン。塗りつぶしにはしない */
-.kofi-cta .kofi-label{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);margin-bottom:10px}
+/* KOFI_STYLE='button'：他の主要ボタン（応募フォーム等）と同格の枠線ボタン。塗りつぶしにはせず、
+   枠線色（マゼンタ）だけを他ボタンと変えて「行き先の種類が違う」ことを示す。hover挙動は同じ仕組み */
 .kofi-cta .kofi-btn{display:inline-block;font-family:var(--disp);font-size:12px;letter-spacing:.15em;
   color:#fff;border:1px solid var(--magenta);padding:10px 22px;background:rgba(255,61,166,.05);transition:.2s}
 .kofi-cta .kofi-btn:hover{background:var(--magenta);color:var(--void);text-decoration:none}
@@ -833,7 +833,7 @@ if(SUBMISSION_FORM_URL){
 if(SHOW_KOFI && KOFI_URL){
   const kofiCta = document.getElementById('kofiCta');
   kofiCta.innerHTML = KOFI_STYLE === 'button'
-    ? '<p class="kofi-label">THANKS, METAHORSERS. 🐎</p><a id="kofiLink" class="kofi-btn" href="'+escapeHtml(KOFI_URL)+'" target="_blank" rel="noopener">SUPPORT US</a>'
+    ? '<a id="kofiLink" class="kofi-btn" href="'+escapeHtml(KOFI_URL)+'" target="_blank" rel="noopener">☕ THANKS, METAHORSERS 🏇</a>'
     : '<a id="kofiLink" class="kofi-link" href="'+escapeHtml(KOFI_URL)+'" target="_blank" rel="noopener">THANKS, METAHORSERS. 🐎</a>';
   kofiCta.hidden = false;
 }
