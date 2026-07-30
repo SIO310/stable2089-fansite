@@ -346,11 +346,15 @@ footer .disc{max-width:560px;margin:0 auto 14px}
 /* KOFI_STYLE='link'（旧版）：文言そのものが控えめなテキストリンク */
 .kofi-cta .kofi-link{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);transition:.2s}
 .kofi-cta .kofi-link:hover{color:var(--cyan);text-decoration:none}
-/* KOFI_STYLE='button'：他の主要ボタン（応募フォーム等）と同格の枠線ボタン。塗りつぶしにはせず、
-   枠線色（マゼンタ）だけを他ボタンと変えて「行き先の種類が違う」ことを示す。hover挙動は同じ仕組み */
+/* KOFI_STYLE='button'：塗りつぶしは一切せず、静止時は光らせない。hover時のみ.horse-card:hoverと
+   全く同じ発光（border-color強調＋box-shadowグロー、色は既にマゼンタ）をそのまま流用する */
 .kofi-cta .kofi-btn{display:inline-block;font-family:var(--disp);font-size:12px;letter-spacing:.15em;
-  color:#fff;border:1px solid var(--magenta);padding:10px 22px;background:rgba(255,61,166,.05);transition:.2s}
-.kofi-cta .kofi-btn:hover{background:var(--magenta);color:var(--void);text-decoration:none}
+  color:#fff;border:1px solid var(--magenta);padding:10px 22px;background:none;
+  transition:border-color .3s,box-shadow .3s,transform .25s}
+.kofi-cta .kofi-btn:hover{border-color:rgba(255,61,166,.55);
+  box-shadow:0 0 22px rgba(255,61,166,.22);
+  transform:translateY(-2px);
+  text-decoration:none}
 footer b{color:var(--txt)}
 
 @media(max-width:720px){
