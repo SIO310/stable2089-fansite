@@ -45,7 +45,7 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
     radial-gradient(120% 90% at 50% -10%, rgba(139,47,217,.5), transparent 62%),
     radial-gradient(90% 70% at 84% 18%, rgba(255,61,166,.3), transparent 60%),
     linear-gradient(180deg, rgba(6,9,19,.25), rgba(6,9,19,.55)),
-    var(--hero-img, none) var(--hero-x,50%) 38%/cover no-repeat,
+    var(--hero-img, none) var(--hero-x,50%) var(--hero-y,38%)/cover no-repeat,
     var(--void);}
 /* 時刻による表示調整 */
 .hero-bg.hero-late{filter:hue-rotate(-40deg) brightness(.65) saturate(1.2)}
@@ -343,8 +343,14 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 footer{border-top:1px solid var(--line);padding:36px 24px 48px;text-align:center;color:var(--sub);font-size:12px}
 footer .disc{max-width:560px;margin:0 auto 14px}
 .kofi-cta{margin-top:18px}
-.kofi-cta a{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);transition:.2s}
-.kofi-cta a:hover{color:var(--cyan);text-decoration:none}
+/* KOFI_STYLE='link'（旧版）：文言そのものが控えめなテキストリンク */
+.kofi-cta .kofi-link{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);transition:.2s}
+.kofi-cta .kofi-link:hover{color:var(--cyan);text-decoration:none}
+/* KOFI_STYLE='button'：他の主要ボタン（応募フォーム等）と同格の枠線ボタン。塗りつぶしにはしない */
+.kofi-cta .kofi-label{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--sub);margin-bottom:10px}
+.kofi-cta .kofi-btn{display:inline-block;font-family:var(--disp);font-size:12px;letter-spacing:.15em;
+  color:#fff;border:1px solid var(--magenta);padding:10px 22px;background:rgba(255,61,166,.05);transition:.2s}
+.kofi-cta .kofi-btn:hover{background:var(--magenta);color:var(--void);text-decoration:none}
 footer b{color:var(--txt)}
 
 @media(max-width:720px){
@@ -518,9 +524,7 @@ footer b{color:var(--txt)}
 <footer>
   <p class="disc">当サイトは<b>非公式のファンサイト</b>です。掲載内容は個人の見解であり、運営とは関係ありません。<br>画像等の著作権は各権利者に帰属します。</p>
   <p>運営：<a href="https://x.com/SIO310meta" target="_blank" rel="noopener">siosio @SIO310meta</a>　|　site v1.0</p>
-  <div class="kofi-cta" id="kofiCta" hidden>
-    <a id="kofiLink" href="#" target="_blank" rel="noopener">THANKS, METAHORSERS. 🐎</a>
-  </div>
+  <div class="kofi-cta" id="kofiCta" hidden></div>
 </footer>
 
 <script src="data-bloodlines.js"></script>
@@ -569,6 +573,8 @@ const SUBMISSION_FORM_URL = 'https://forms.gle/STBjH7nXqW4g4PwQ7';
 // 未確認の状態に戻す必要が生じた場合はfalseにすればフッターの枠ごと非表示になる。
 const SHOW_KOFI = true;
 const KOFI_URL = 'https://ko-fi.com/stable2089';
+// 'link'=旧・文字リンクのみ / 'button'=枠線ボタン（他の主要ボタンと同格の見た目）。戻す場合は'link'に。
+const KOFI_STYLE = 'button';
 // 復帰者ガイド：離脱後に変わったことを古い順に並べる（最新はlatest:trueでNEWバッジ）
 const RETURN_TIMELINE = [
   {t:"天候などレース要素の追加", d:"天候をはじめ、レースの勝敗に影響する要素が新たに加わった。天候の得意不得意を考えてエントリすることで勝率アップ。"},
@@ -603,6 +609,17 @@ const UPDATES = [
 // このパノラマ内の遠景の馬影一頭は環境の一部＝サイトの手がかりとして意図的に許容
 //（たろの判断、2026-07-17）。画像未設定の間はヒーローはCSSのグラデのみで表示。
 const HERO_BG_IMAGE = 'assets/hero-panorama.png';
+// 時間帯ギミック（隠し要素）。'image'=時刻に応じてヒーロー背景画像そのものを切替 / 'filter'=旧CSSフィルター方式（下記hero-late）に戻す
+const HERO_MODE = 'image';
+// 境界値（時刻の"時"）。ここを変えるだけで時間帯の区切りを調整できる
+const HERO_MORNING_START = 6;  // 6時から朝昼画像（〜HERO_EVENING_STARTの前まで）
+const HERO_EVENING_START = 12; // 12時から夕暮れ画像＝メイン（〜翌朝のHERO_MORNING_STARTの前まで＝深夜も含む）
+// 画像ごとに --hero-x/--hero-y（object-position相当）をデスクトップ/モバイルで個別調整
+const HERO_TIME_IMAGES = {
+  morning: {src:'assets/hero-panorama_light.png', x:'50%', y:'42%', mobileX:'30%', mobileY:'45%'},
+  evening: {src:HERO_BG_IMAGE,                     x:'50%', y:'38%', mobileX:'20%', mobileY:'38%'},
+  night:   {src:'assets/hero-panorama_seoul.png',  x:'50%', y:'45%', mobileX:'55%', mobileY:'40%'}
+};
 // 見出し帯バナー（v1.5→v1.7）：ヒーローと同じ画像を全セクション共通で使う。
 // 各セクションの見せ場は x/y（background-position）+ zoom（scale倍率、1=無拡大）+
 // brightness（filter補正、1=無補正、暗い部分は1.1〜1.3程度で持ち上げ）+
@@ -681,12 +698,22 @@ function xLinkHtml(h){
 })();
 
 // ---- ヒーロービジュアル（馬NFTを含まない環境画像。未設定時はCSSのネオングリッドで代替） ----
+// HERO_MODE='image'：時刻に応じて背景画像自体を切替。'filter'：旧・固定画像+CSSフィルター方式
 (function renderHero(){
   const bg = document.getElementById('heroBg');
-  bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
-  // 時刻による表示調整
   const h = new Date().getHours();
-  if(h >= 0 && h < 4) bg.classList.add('hero-late');
+  if(HERO_MODE === 'image'){
+    const slot = (h >= HERO_MORNING_START && h < HERO_EVENING_START) ? 'morning'
+      : (h >= HERO_EVENING_START) ? 'evening' : 'night';
+    const cfg = HERO_TIME_IMAGES[slot];
+    const isMobile = matchMedia('(max-width:720px)').matches;
+    bg.style.setProperty('--hero-img', cfg.src ? 'url("'+cfg.src+'")' : 'none');
+    bg.style.setProperty('--hero-x', isMobile ? cfg.mobileX : cfg.x);
+    bg.style.setProperty('--hero-y', isMobile ? cfg.mobileY : cfg.y);
+  } else {
+    bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
+    if(h >= 0 && h < 4) bg.classList.add('hero-late');
+  }
 })();
 
 // ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示。urlは任意フィールド） ----
@@ -802,10 +829,13 @@ if(SUBMISSION_FORM_URL){
   document.getElementById('submitCta').hidden = false;
 }
 
-// ---- 投げ銭窓口（Ko-fi） ----
+// ---- 投げ銭窓口（Ko-fi）。KOFI_STYLEで文字リンク/枠線ボタンを切替 ----
 if(SHOW_KOFI && KOFI_URL){
-  document.getElementById('kofiLink').href = KOFI_URL;
-  document.getElementById('kofiCta').hidden = false;
+  const kofiCta = document.getElementById('kofiCta');
+  kofiCta.innerHTML = KOFI_STYLE === 'button'
+    ? '<p class="kofi-label">THANKS, METAHORSERS. 🐎</p><a id="kofiLink" class="kofi-btn" href="'+escapeHtml(KOFI_URL)+'" target="_blank" rel="noopener">SUPPORT US</a>'
+    : '<a id="kofiLink" class="kofi-link" href="'+escapeHtml(KOFI_URL)+'" target="_blank" rel="noopener">THANKS, METAHORSERS. 🐎</a>';
+  kofiCta.hidden = false;
 }
 
 // 血統名の表記ゆれ吸収（"Mr.Prospector" と "Mr. Prospector" など、空白差を無視して比較）
