@@ -60,25 +60,23 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 }
 #hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,transparent,rgba(6,9,19,.92))}
-.hero-inner{position:relative;z-index:2;padding:0 24px 10svh;max-width:1080px;margin:0 auto;width:100%}
+/* z-index:2のままだとhero-innerが独自のスタッキングコンテキストを作り、内側の要素がどんな
+   z-indexを持っていてもbody::after（スキャンライン、z-index:99）より下に閉じ込められてしまう。
+   hero-inner自体を99超に上げることで、tag/コピー/説明文まとめてスキャンラインの影響を外している */
+.hero-inner{position:relative;z-index:100;padding:0 24px 10svh;max-width:1080px;margin:0 auto;width:100%}
 .tag{font-family:var(--disp);font-size:12px;letter-spacing:.4em;color:var(--amber);margin-bottom:12px}
 .hero-inner h1{font-size:clamp(32px,6.4vw,64px);font-weight:700;line-height:1.14;
   color:var(--txt);text-shadow:0 0 26px rgba(255,61,166,.35);max-width:680px}
 .hero-inner h1 em{font-style:normal;color:var(--cyan)}
 .hero-sub{font-family:var(--disp);font-size:14px;letter-spacing:.2em;color:var(--cyan);margin-top:10px}
 .hero-inner p{margin-top:14px;color:var(--sub);max-width:560px;font-size:15px}
-/* h1/hero-subをまとめる入れ物。HERO_TEXT_PLAIN/HERO_TEXT_GLOWの適用範囲をこの2要素だけに絞る */
-.hero-copy{position:relative}
-/* HERO_TEXT_PLAIN=trueの間だけスキャンライン(body::after, z-index:99)より手前に出し、文字の掠れを解消。
-   falseに戻せば従来通りスキャンラインの影響を受ける */
-.hero-copy.plain-text{z-index:100}
-/* HERO_TEXT_GLOW=trueの間だけ、hover/tap時に文字がゆっくり発光する（キラリ＝掃引グレアとは別表現） */
-.hero-copy.glow-enabled h1,.hero-copy.glow-enabled .hero-sub{transition:text-shadow 1s ease}
-.hero-copy.glow-enabled:hover h1{text-shadow:0 0 26px rgba(255,61,166,.55),0 0 50px rgba(255,61,166,.3)}
-.hero-copy.glow-enabled:hover .hero-sub{text-shadow:0 0 16px rgba(46,230,214,.5),0 0 30px rgba(46,230,214,.25)}
+/* h1/hero-subのhover発光（キラリ＝掃引グレアとは別表現）。1.2秒かけてゆったり強まる */
+.hero-copy h1,.hero-copy .hero-sub{transition:text-shadow 1.2s ease}
+.hero-copy:hover h1{text-shadow:0 0 30px rgba(255,61,166,.72),0 0 60px rgba(255,61,166,.4)}
+.hero-copy:hover .hero-sub{text-shadow:0 0 20px rgba(46,230,214,.65),0 0 38px rgba(46,230,214,.33)}
 @media(prefers-reduced-motion:reduce){
-  .hero-copy.glow-enabled:hover h1{text-shadow:0 0 26px rgba(255,61,166,.35)}
-  .hero-copy.glow-enabled:hover .hero-sub{text-shadow:none}
+  .hero-copy:hover h1{text-shadow:0 0 26px rgba(255,61,166,.35)}
+  .hero-copy:hover .hero-sub{text-shadow:none}
 }
 .hint{position:absolute;right:24px;bottom:16px;z-index:2;font-size:11px;color:var(--sub);letter-spacing:.15em}
 .hint::after{content:"";display:inline-block;width:1px;height:16px;background:var(--sub);margin-left:8px;vertical-align:middle;animation:scrollDown 1.6s ease-in-out infinite}
@@ -405,11 +403,10 @@ footer b{color:var(--txt)}
   </div>
   <div class="hero-inner">
     <div class="tag">A.D.2089 — VIRTUAL JOCKEY SYSTEM ONLINE</div>
-    <div class="hero-copy" id="heroCopy">
+    <div class="hero-copy">
       <h1>WITH METAHORSE.</h1>
       <p class="hero-sub">OWN IT. ENJOY IT.</p>
     </div>
-    <!-- 元の文末「今日も、走らせよう。」はトーンが浮くため削除（2026-07-27）。戻す場合は下記を句点の後に追記：今日も、走らせよう。 -->
     <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。</p>
   </div>
   <div class="hint">SCROLL</div>
@@ -554,7 +551,7 @@ footer b{color:var(--txt)}
 /* ================= 編集エリア（ここだけ触ればOK） ================= */
 // NEWS：ヒーロー直下に最新3件のみ表示（配列が空ならセクションごと非表示）。新しい順に並べること。
 const NEWS = [
-  {date:'2026-07-30', text:'レベルアップコスト割引キャンペーンまもなく終了（7/31まで）', url:'https://x.com/MHORSE_official/status/2067098241716617437'},
+  {date:'2026-07-27', text:'ご意見・ご指摘フォームを設置しました'},
   {date:'2026-07-25', text:'名古屋でオフラインイベントが開催されました', url:'https://x.com/maximum1npact/status/2061619628766589254'},
   {date:'2026-07-24', text:'ファンサイト「STABLE 2089」を公開しました'}
 ];
@@ -591,9 +588,6 @@ const FAN_LINKS = [
 const SUBMISSION_FORM_URL = 'https://forms.gle/STBjH7nXqW4g4PwQ7';
 // フッター「ご意見・ご指摘はこちら」導線。空欄の間は非表示
 const FEEDBACK_FORM_URL = 'https://forms.gle/i2RjAGhfnezLE8Dx6';
-// ヒーローコピー（WITH METAHORSE. / OWN IT. ENJOY IT.）の質感調整。両方とも元に戻せるフラグ。
-const HERO_TEXT_PLAIN = true; // falseでスキャンラインの影響を受ける従来の見た目に戻る
-const HERO_TEXT_GLOW = true;  // falseでhover発光なしに戻る
 // 投げ銭窓口（Ko-fi）。運営（イワマP）へ収益化可否を確認済みのためSHOW_KOFI=trueで公開。
 // 未確認の状態に戻す必要が生じた場合はfalseにすればフッターの枠ごと非表示になる。
 const SHOW_KOFI = true;
@@ -739,9 +733,6 @@ function xLinkHtml(h){
     bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
     if(h >= 0 && h < 4) bg.classList.add('hero-late');
   }
-  const heroCopy = document.getElementById('heroCopy');
-  if(HERO_TEXT_PLAIN) heroCopy.classList.add('plain-text');
-  if(HERO_TEXT_GLOW) heroCopy.classList.add('glow-enabled');
 })();
 
 // ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示。urlは任意フィールド） ----
