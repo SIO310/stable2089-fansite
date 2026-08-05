@@ -67,6 +67,19 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 .hero-inner h1 em{font-style:normal;color:var(--cyan)}
 .hero-sub{font-family:var(--disp);font-size:14px;letter-spacing:.2em;color:var(--cyan);margin-top:10px}
 .hero-inner p{margin-top:14px;color:var(--sub);max-width:560px;font-size:15px}
+/* h1/hero-subをまとめる入れ物。HERO_TEXT_PLAIN/HERO_TEXT_GLOWの適用範囲をこの2要素だけに絞る */
+.hero-copy{position:relative}
+/* HERO_TEXT_PLAIN=trueの間だけスキャンライン(body::after, z-index:99)より手前に出し、文字の掠れを解消。
+   falseに戻せば従来通りスキャンラインの影響を受ける */
+.hero-copy.plain-text{z-index:100}
+/* HERO_TEXT_GLOW=trueの間だけ、hover/tap時に文字がゆっくり発光する（キラリ＝掃引グレアとは別表現） */
+.hero-copy.glow-enabled h1,.hero-copy.glow-enabled .hero-sub{transition:text-shadow 1s ease}
+.hero-copy.glow-enabled:hover h1{text-shadow:0 0 26px rgba(255,61,166,.55),0 0 50px rgba(255,61,166,.3)}
+.hero-copy.glow-enabled:hover .hero-sub{text-shadow:0 0 16px rgba(46,230,214,.5),0 0 30px rgba(46,230,214,.25)}
+@media(prefers-reduced-motion:reduce){
+  .hero-copy.glow-enabled:hover h1{text-shadow:0 0 26px rgba(255,61,166,.35)}
+  .hero-copy.glow-enabled:hover .hero-sub{text-shadow:none}
+}
 .hint{position:absolute;right:24px;bottom:16px;z-index:2;font-size:11px;color:var(--sub);letter-spacing:.15em}
 .hint::after{content:"";display:inline-block;width:1px;height:16px;background:var(--sub);margin-left:8px;vertical-align:middle;animation:scrollDown 1.6s ease-in-out infinite}
 @keyframes scrollDown{0%{opacity:0;transform:translateY(-4px)}50%{opacity:1}100%{opacity:0;transform:translateY(8px)}}
@@ -392,9 +405,12 @@ footer b{color:var(--txt)}
   </div>
   <div class="hero-inner">
     <div class="tag">A.D.2089 — VIRTUAL JOCKEY SYSTEM ONLINE</div>
-    <h1>WITH METAHORSE.</h1>
-    <p class="hero-sub">OWN IT. ENJOY IT.</p>
-    <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。今日も、走らせよう。</p>
+    <div class="hero-copy" id="heroCopy">
+      <h1>WITH METAHORSE.</h1>
+      <p class="hero-sub">OWN IT. ENJOY IT.</p>
+    </div>
+    <!-- 元の文末「今日も、走らせよう。」はトーンが浮くため削除（2026-07-27）。戻す場合は下記を句点の後に追記：今日も、走らせよう。 -->
+    <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。</p>
   </div>
   <div class="hint">SCROLL</div>
 </div>
@@ -527,6 +543,7 @@ footer b{color:var(--txt)}
 <footer>
   <p class="disc">当サイトは<b>非公式のファンサイト</b>です。掲載内容は個人の見解であり、運営とは関係ありません。<br>画像等の著作権は各権利者に帰属します。</p>
   <p>運営：<a href="https://x.com/SIO310meta" target="_blank" rel="noopener">siosio @SIO310meta</a>　|　site v1.0</p>
+  <p id="feedbackLine" hidden><a id="feedbackLink" href="#" target="_blank" rel="noopener">ご意見・ご指摘はこちら</a></p>
   <div class="kofi-cta" id="kofiCta" hidden></div>
 </footer>
 
@@ -572,6 +589,11 @@ const FAN_LINKS = [
 // 「あなたの一頭、募集」フォーム導線。GoogleフォームなどのURLを入れると
 // アーカイブ下部に導線が表示される。空欄の間は非表示
 const SUBMISSION_FORM_URL = 'https://forms.gle/STBjH7nXqW4g4PwQ7';
+// フッター「ご意見・ご指摘はこちら」導線。空欄の間は非表示
+const FEEDBACK_FORM_URL = 'https://forms.gle/i2RjAGhfnezLE8Dx6';
+// ヒーローコピー（WITH METAHORSE. / OWN IT. ENJOY IT.）の質感調整。両方とも元に戻せるフラグ。
+const HERO_TEXT_PLAIN = true; // falseでスキャンラインの影響を受ける従来の見た目に戻る
+const HERO_TEXT_GLOW = true;  // falseでhover発光なしに戻る
 // 投げ銭窓口（Ko-fi）。運営（イワマP）へ収益化可否を確認済みのためSHOW_KOFI=trueで公開。
 // 未確認の状態に戻す必要が生じた場合はfalseにすればフッターの枠ごと非表示になる。
 const SHOW_KOFI = true;
@@ -717,6 +739,9 @@ function xLinkHtml(h){
     bg.style.setProperty('--hero-img', HERO_BG_IMAGE ? 'url("'+HERO_BG_IMAGE+'")' : 'none');
     if(h >= 0 && h < 4) bg.classList.add('hero-late');
   }
+  const heroCopy = document.getElementById('heroCopy');
+  if(HERO_TEXT_PLAIN) heroCopy.classList.add('plain-text');
+  if(HERO_TEXT_GLOW) heroCopy.classList.add('glow-enabled');
 })();
 
 // ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示。urlは任意フィールド） ----
@@ -830,6 +855,12 @@ renderLinks('fanLinks', FAN_LINKS);
 if(SUBMISSION_FORM_URL){
   document.getElementById('submitCtaLink').href = SUBMISSION_FORM_URL;
   document.getElementById('submitCta').hidden = false;
+}
+
+// ---- フッター「ご意見・ご指摘はこちら」導線（URL未設定時は非表示） ----
+if(FEEDBACK_FORM_URL){
+  document.getElementById('feedbackLink').href = FEEDBACK_FORM_URL;
+  document.getElementById('feedbackLine').hidden = false;
 }
 
 // ---- 投げ銭窓口（Ko-fi）。KOFI_STYLEで文字リンク/枠線ボタンを切替 ----
