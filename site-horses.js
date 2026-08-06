@@ -508,13 +508,13 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   },
   {
     serial: "No.045",
-    name: "Boss",
+    name: "72 Boss",
     blood: "Roberto",
     style: "先行",
     rank: "SSS",
     date: "2026-08-06",
     body: `72の冠を持つ軍団のボスだ。Yellow Greenの体に風を巻き、ピンクの蹄が先行位置から芝の長距離を制する。SSS級のスピードは組織を率いる圧倒的な推進力、しかし精神力SSは脆さも抱える。打たれ弱さがあるからこそ、慎重に配置を読み、仲間に追い風を吹かせてきたのだろう。4962戦を刻むLv12の彼が示す17%という数字は、勝率ではなく継続の証。軍団は一頭では成立しない。ボスが吹かせた風が、次の世代を押し上げていく。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_006_03_01_05_02.png",
-    xUrl: ""
+    xUrl: "https://x.com/SIO310meta/status/2085371754642583852?s=20"
   }
 ];
