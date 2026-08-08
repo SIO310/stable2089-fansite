@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-06時点、投稿済み45頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-08時点、投稿済み46頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -516,5 +516,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `72の冠を持つ軍団のボスだ。Yellow Greenの体に風を巻き、ピンクの蹄が先行位置から芝の長距離を制する。SSS級のスピードは組織を率いる圧倒的な推進力、しかし精神力SSは脆さも抱える。打たれ弱さがあるからこそ、慎重に配置を読み、仲間に追い風を吹かせてきたのだろう。4962戦を刻むLv12の彼が示す17%という数字は、勝率ではなく継続の証。軍団は一頭では成立しない。ボスが吹かせた風が、次の世代を押し上げていく。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_006_03_01_05_02.png",
     xUrl: "https://x.com/SIO310meta/status/2085371754642583852?s=20"
+  },
+  {
+    serial: "No.046",
+    name: "Bentley",
+    blood: "Zeddaan",
+    style: "先行",
+    rank: "SSS",
+    date: "2026-08-08",
+    body: `本来なら相容れない、優雅さと猛々しいエンジンの共存。Jade Greenの体がオーラを纏い疾走する姿は静謐だが、その内側には最上級SSSのスピードとS級の筋力が息づいている。先行策からピンクの蹄で芝短距離を制する走りは、繊細な内面が生み出す計算された加速の美学だ。この馬の中で、二つはようやく一つになる。
+🎁 2026.07.25 "愛知メタリアル" 記念`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_007_04_01_05_02.png",
+    xUrl: "https://x.com/SIO310meta/status/2086067971756314928?s=20"
   }
 ];
