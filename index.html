@@ -205,8 +205,8 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
 .bl-card{border:1px solid var(--line);background:var(--panel);padding:16px 16px 14px 20px;cursor:pointer;
   text-align:left;transition:.2s;position:relative;color:var(--txt);font-family:inherit;
   min-height:104px;display:flex;flex-direction:column;overflow:hidden}
-.bl-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--chip,var(--line));box-shadow:0 0 6px var(--chip,transparent)}
+.bl-card::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2px;
+  background:var(--chip,var(--line));box-shadow:0 0 4px var(--chip,transparent)}
 .bl-card:hover,.bl-card:focus-visible,.bl-card:active{border-color:var(--chip,var(--magenta));
   transform:translateY(-3px);box-shadow:0 0 18px var(--chip-glow,rgba(255,61,166,.25));outline:none}
 .bl-card h3{font-size:17px;color:var(--txt);font-weight:600;margin:0 0 6px;letter-spacing:.03em}
@@ -283,12 +283,19 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 #modalClose:hover{color:var(--cyan)}
 #modalBody h3{color:var(--cyan);font-size:20px;margin-bottom:4px}
 #modalBody .sub{font-family:var(--disp);font-size:11px;letter-spacing:.18em;color:var(--sub)}
-.mb-block{margin-top:14px}
-.mb-label{font-family:var(--disp);font-size:11px;letter-spacing:.2em;color:var(--amber);margin-bottom:6px}
+/* 見出し(.mb-label)は本文(13px)より明確に大きく、直前の段落と十分な間隔を取る。
+   bodyToHtml()が出力する裸の.mb-labelと、血統モーダルの.mb-block>.mb-labelの両方に効くよう
+   margin-topは.mb-label自身が持つ（.mb-blockには持たせない）ことで、どのモーダルでも間隔が揃う */
+.mb-label{font-family:var(--disp);font-size:15px;font-weight:600;letter-spacing:.08em;color:var(--amber);
+  margin:24px 0 8px}
 #modalBody p{font-size:13px;color:var(--txt)}
 #modalBody ul{padding-left:18px;font-size:13px;color:var(--sub)}
-#modalBody .m-horse{background:none;border:none;padding:0;font:inherit;color:var(--cyan);cursor:pointer}
-#modalBody .m-horse:hover,#modalBody .m-horse:focus-visible{color:var(--magenta);outline:none}
+/* 本文中のリンクは目立たせすぎず、下線で「押せる」ことだけ示す。hover/tapで初めて色が主張する */
+#modalBody a{color:var(--txt);text-decoration:underline;text-decoration-color:rgba(46,230,214,.4);text-underline-offset:2px}
+#modalBody a:hover{color:var(--cyan);text-decoration-color:var(--cyan)}
+#modalBody .m-horse{background:none;border:none;padding:0;font:inherit;color:var(--txt);cursor:pointer;
+  text-decoration:underline;text-decoration-color:rgba(255,61,166,.35);text-underline-offset:2px}
+#modalBody .m-horse:hover,#modalBody .m-horse:focus-visible{color:var(--magenta);text-decoration-color:var(--magenta);outline:none}
 
 /* 競馬カード風モーダル（アーカイブ1頭の詳細）：開いた瞬間に画像・馬名・紹介文が一望できる構成。
    今日の一頭カードと揃えて、上辺を明るく・下辺を暗くした境界線＋二層box-shadowで
@@ -866,6 +873,8 @@ if(SHOW_KOFI && KOFI_URL){
 
 // 血統名の表記ゆれ吸収（"Mr.Prospector" と "Mr. Prospector" など、空白差を無視して比較）
 function normBlood(s){ return String(s||'').replace(/\s+/g,''); }
+// serial（例："No.038"）から数値部分だけ取り出す。アーカイブ一覧・血統モーダルの並び替えで共用
+function serialNum(h){ return parseInt(String(h.serial||'').replace(/\D/g,''),10) || 0; }
 // 血統図鑑カードのhover/tap発光用：体色hex → 半透明rgba（グロー用）
 function hexToRgba(hex, a){
   const m = /^#?([0-9a-f]{6})$/i.exec(hex||'');
@@ -882,7 +891,6 @@ function hexToRgba(hex, a){
     el.outerHTML = '<div class="arch-empty" id="archiveList">まだ投稿がありません。site-horses.js に追加されると自動で一覧表示されます。</div>';
     return;
   }
-  const serialNum = h => parseInt(String(h.serial||'').replace(/\D/g,''),10) || 0;
   // 新しい馬（番号の大きい方）を先頭に表示
   const sorted = posts.slice().sort((a,b)=> serialNum(b)-serialNum(a));
   document.getElementById('archCount').textContent = 'ALL '+sorted.length+' HORSES';
@@ -949,7 +957,8 @@ const bloodModal = document.getElementById('bloodModal');
 function openModal(name, kind){
   const bl = (typeof window.BLOODLINES!=='undefined') ? window.BLOODLINES[name] : null;
   const disp = normBlood(name)==='Mr.Prospector' ? 'Mr. Prospector' : name;
-  const matches = posts.filter(h=>normBlood(h.blood)===normBlood(name));
+  // アーカイブ（降順）とは別に、血統ごとの掲載馬は古い方から辿れる昇順で表示する
+  const matches = posts.filter(h=>normBlood(h.blood)===normBlood(name)).sort((a,b)=>serialNum(a)-serialNum(b));
   // 天候の得意/苦手。エフェクト説明は総評の種明かしになるため表示しない
   const weather = (bl && bl.weather && bl.weather.best!=='-')
     ? '◎ '+escapeHtml(bl.weather.best)+'　×'+' '+escapeHtml(bl.weather.worst)
