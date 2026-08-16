@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-08時点、投稿済み46頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-16時点、投稿済み47頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -528,5 +528,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
 🎁 2026.07.25 "愛知メタリアル" 記念`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_007_04_01_05_02.png",
     xUrl: "https://x.com/SIO310meta/status/2086067971756314928?s=20"
+  },
+  {
+    serial: "No.047",
+    name: "MIKIKAZE",
+    blood: "Halo",
+    style: "先行",
+    rank: "SS+",
+    date: "2026-08-16",
+    body: `Deep Redの体に橙のバイザー、桃の蹄。そして白いたてがみと尾。深紅の火床から橙の炎が立ち上がり、桃色の火花を散らして、白熱の尾を引く。先行から芝の長距離を駆け、炎は風に乗る。想いを託した名と、母から継いだKAZE一族の血。五年をかけて育て上げた根性が、1090戦のトラックに愛を刻み続ける。Lv9、まだ伸びしろを残す若駒。この炎はやがて、世界のトラックで燃え上がる。
+🎁 2026.07.25 "愛知メタリアル" 記念`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_001_06_03_01_02.png",
+    xUrl: ""
   }
 ];
