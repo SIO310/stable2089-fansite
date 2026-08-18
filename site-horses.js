@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-17時点、投稿済み47頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-18時点、投稿済み48頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -540,5 +540,16 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
 🎁 2026.07.25 "愛知メタリアル" 記念`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_001_06_03_01_02.png",
     xUrl: "https://x.com/SIO310meta/status/2088967238820986970?s=20"
+  },
+  {
+    serial: "No.048",
+    name: "Rukia",
+    blood: "Mr.Prospector",
+    style: "逃げ",
+    rank: "SSS",
+    date: "2026-08-18",
+    body: `Cobalt Blueの体に黄の蹄。ルキアと呼ばれたこの牝馬は、先頭に立った瞬間、視界から消える。水しぶきを撒きながら芝の長距離を逃げる走りは、あまりに静かで、あまりに速い。打たれ弱さを抱えながら4084戦を刻むLv12の彼女が21%という勝率を保てるのは、誰よりも早く、誰にも追わせないからだ。白波のような軌跡だけを残して、蒼い影は雨の中へ消えていく。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_003_03_01_05_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2089708394307625269?s=20"
   }
 ];
