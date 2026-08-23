@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-18時点、投稿済み48頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-23時点、投稿済み49頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -551,5 +551,16 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Cobalt Blueの体に黄の蹄。ルキアと呼ばれたこの牝馬は、先頭に立った瞬間、視界から消える。水しぶきを撒きながら芝の長距離を逃げる走りは、あまりに静かで、あまりに速い。打たれ弱さを抱えながら4084戦を刻むLv12の彼女が21%という勝率を保てるのは、誰よりも早く、誰にも追わせないからだ。白波のような軌跡だけを残して、蒼い影は雨の中へ消えていく。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_003_03_01_05_01.png",
     xUrl: "https://x.com/SIO310meta/status/2089708394307625269?s=20"
+  },
+  {
+    serial: "No.049",
+    name: "T F O A",
+    blood: "Never Bend",
+    style: "差し",
+    rank: "SS+",
+    date: "2026-08-23",
+    body: `漆黒の体が影を引き裂き、黄のバイザーが戦場を見定める。差しの位置から青の蹄で加速する瞬間、闇が静寂を呑み込む。T.F.O.A——武装戦線の名を冠した牡馬。そのSSS級の精神力と負けず嫌いの気性は、折れない意志となって最後の直線で牙を剥く。6417戦を刻むLv14のベテランは、勝率20%、複勝率50%という確かな戦績を積み重ねてきた。敵も味方も越えてきたその軌跡こそ、一匹狼の証だ。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_005_02_01_04_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2091530216699286011?s=20"
   }
 ];
