@@ -201,7 +201,9 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
   .horse-visual[data-effect="glass"]:hover{border-color:rgba(255,255,255,.3)}
 }
 .horse-meta .no{font-family:var(--disp);color:var(--amber);font-size:12px;letter-spacing:.3em}
-.horse-meta h3{font-size:26px;margin:6px 0 14px;color:var(--cyan)}
+.horse-meta h3{font-size:26px;margin:6px 0 4px;color:var(--cyan)}
+/* 異名（エピセット）：任意項目、控えめに。Xポストの引用的表現に準じ""で囲む */
+.horse-meta .epithet{font-style:italic;font-size:13px;color:var(--sub);margin-bottom:14px}
 .horse-meta dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px}
 .horse-meta dt{color:var(--sub);font-family:var(--disp);letter-spacing:.1em}
 .horse-meta .review{margin-top:16px;font-size:14px;border-left:2px solid var(--magenta);padding-left:14px;color:var(--txt)}
@@ -329,6 +331,8 @@ dialog#bloodModal::backdrop{background:rgba(6,9,19,.75);backdrop-filter:blur(2px
 .pm-card.no-img{grid-template-columns:1fr}
 .pm-visual{aspect-ratio:1;overflow:hidden;border:1px solid var(--line);background:var(--void)}
 .pm-visual img{width:100%;height:100%;object-fit:cover;display:block}
+/* 異名（エピセット）：任意項目。モーダルはじっくり見られる場所のため今日の一頭より少ししっかりめに */
+.pm-meta .epithet{font-style:italic;font-size:14px;color:var(--txt);margin:4px 0 10px}
 .pm-meta .tags{font-size:12px;color:var(--sub);margin:6px 0 10px}
 .pm-review{font-size:13px;color:var(--txt);border-left:2px solid var(--magenta);padding-left:12px}
 @media(max-width:520px){
@@ -476,6 +480,7 @@ footer b{color:var(--txt)}
     <div class="horse-meta">
       <div class="no" id="hNo"></div>
       <h3 id="hName"></h3>
+      <p class="epithet" id="hEpithet" hidden></p>
       <dl>
         <dt>血統</dt><dd id="hBlood"></dd>
         <dt>脚質</dt><dd id="hStyle"></dd>
@@ -730,6 +735,8 @@ const PEDIGREE_BIOS = (typeof window.PEDIGREE_BIOS!=='undefined') ? window.PEDIG
 function xLinkHtml(h){
   return h && h.xUrl ? '<a class="x-link" href="'+h.xUrl+'" target="_blank" rel="noopener">Xでこの投稿を見る →</a>' : '';
 }
+// 投稿にepithet（ダッシュボード生成の異名、例："漆黒の鋼、誰にも折られぬ精神"）があるときだけ
+// 馬名の下に表示。表示箇所は「今日の一頭」とアーカイブ/図鑑の詳細モーダルのみ（一覧系には出さない）
 
 // ---- 今日の一頭 ----
 (function renderToday(){
@@ -737,6 +744,8 @@ function xLinkHtml(h){
   if(!latest) return;
   document.getElementById('hNo').textContent = latest.serial || '';
   document.getElementById('hName').textContent = latest.name || '';
+  const hEpithet = document.getElementById('hEpithet');
+  if(latest.epithet){ hEpithet.textContent = '"'+latest.epithet+'"'; hEpithet.hidden = false; }
   document.getElementById('hBlood').textContent = latest.blood || '';
   document.getElementById('hStyle').textContent = latest.style || '';
   document.getElementById('hReview').textContent = latest.body || '';
@@ -1092,6 +1101,7 @@ function openPostModal(h){
     +'<div class="pm-meta">'
     +'<div class="sub">'+escapeHtml(h.serial)+'　'+escapeHtml(h.date)+'</div>'
     +'<h3>'+escapeHtml(h.name)+'</h3>'
+    +(h.epithet ? '<p class="epithet">"'+escapeHtml(h.epithet)+'"</p>' : '')
     +'<div class="tags">'+escapeHtml(h.blood)+' ／ '+escapeHtml(h.style)+'</div>'
     +'<p class="pm-review">'+escapeHtml(h.body)+'</p>'
     +xLinkHtml(h)
