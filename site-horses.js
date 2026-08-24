@@ -4,6 +4,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.001",
     name: "Peace",
+    epithet: "霧に包まれし、不屈の美",
     blood: "Danzig",
     style: "差し",
     rank: "SSS",
@@ -16,6 +17,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.002",
     name: "Diavolo 3",
+    epithet: "傷つきし猛獣、砂の王道を征く",
     blood: "The Tetrarch",
     style: "差し",
     rank: "SSS",
@@ -28,6 +30,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.003",
     name: "Over the Rainbow",
+    epithet: "黄金のゲートから駆ける、七色の人気者",
     blood: "Caro",
     style: "逃げ",
     rank: "SSS",
@@ -40,6 +43,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.004",
     name: "DARK FATHER",
+    epithet: "闇夜の酒蔵、静寂を醸す者",
     blood: "Never Bend",
     style: "追込",
     rank: "SSS",
@@ -52,6 +56,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.005",
     name: "Sabotender",
+    epithet: "刺々しく、駆け抜ける緑の逃走劇",
     blood: "Roberto",
     style: "逃げ",
     rank: "SSS",
@@ -64,6 +69,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.006",
     name: "Rakuten",
+    epithet: "深紅の炎を纏う、電脳の覇王",
     blood: "Halo",
     style: "逃げ",
     rank: "SSS",
@@ -76,6 +82,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.007",
     name: "7 three 7 seven 7",
+    epithet: "群青の針、未来を掴む七",
     blood: "Round Table",
     style: "差し",
     rank: "SSS",
@@ -88,6 +95,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.008",
     name: "Sanchin",
+    epithet: "氷風の蹄で栄冠を拓く",
     blood: "Seattle Slew",
     style: "差し",
     rank: "SSS",
@@ -100,6 +108,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.009",
     name: "xVIOLET GARDENx",
+    epithet: "霧に潜み、終盤で仕留める淡き影",
     blood: "Nureyev",
     style: "追込",
     rank: "SSS",
@@ -111,6 +120,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.010",
     name: "Oden ZaMaaaaa",
+    epithet: "鍋底から沸き立つ、黄金の出汁",
     blood: "Caro",
     style: "逃げ",
     rank: "B",
@@ -123,6 +133,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.011",
     name: "yuraraka01",
+    epithet: "蒼き波濤、ゆららか軍団の先駆者",
     blood: "Mr.Prospector",
     style: "先行",
     rank: "SSS",
@@ -135,6 +146,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.012",
     name: "Shangri La",
+    epithet: "深紅のゲートブレイカー、炎をまとう先駆者",
     blood: "Halo",
     style: "逃げ",
     rank: "SS+",
@@ -147,6 +159,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.013",
     name: "Submariner",
+    epithet: "深海を疾る、群青の時刻針",
     blood: "Round Table",
     style: "逃げ",
     rank: "SSS",
@@ -159,6 +172,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.014",
     name: "ever free",
+    epithet: "橙色に黄バイザー、自由を謳う逃亡者",
     blood: "Stay Gold",
     style: "逃げ",
     rank: "SSS",
@@ -171,6 +185,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.015",
     name: "KAZEnoENGI",
+    epithet: "追い風とともに、幸運の兆し",
     blood: "Blushing Groom",
     style: "逃げ",
     rank: "SSS",
@@ -182,6 +197,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.016",
     name: "KERORO Sergeant",
+    epithet: "草飛沫をまとう、緑の軍曹",
     blood: "Partholon",
     style: "追込",
     rank: "SSS",
@@ -194,6 +210,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.017",
     name: "Knight Rider",
+    epithet: "五線譜を駆ける夜の騎士",
     blood: "Northern Dancer",
     style: "逃げ",
     rank: "SSS",
@@ -206,6 +223,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.018",
     name: "CG GAL",
+    epithet: "空を映す青と、冷静の蒼い瞳",
     blood: "Seattle Slew",
     style: "差し",
     rank: "SSS",
@@ -217,6 +235,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.019",
     name: "StaceBlueSword",
+    epithet: "荒波を切り裂く、一瞬の刃",
     blood: "Mr.Prospector",
     style: "逃げ",
     rank: "SSS",
@@ -228,6 +247,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.020",
     name: "CHICHIgamisama",
+    epithet: "草を生やす、伝説の逃げ神",
     blood: "Partholon",
     style: "逃げ",
     rank: "SS+",
@@ -240,6 +260,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.021",
     name: "Sangenton 7",
+    epithet: "紫霧を抜け、緑の蹄で駆ける毒豚",
     blood: "Nureyev",
     style: "追込",
     rank: "SSS",
@@ -252,6 +273,7 @@ window.HORSE_POSTS = [
   {
     serial: "No.022",
     name: "New Year Star 2024",
+    epithet: "Lemon Yellowに煌めく、元旦を駆けた星",
     blood: "Native Dancer",
     style: "逃げ",
     rank: "SSS",
@@ -264,6 +286,7 @@ Spirit SSS、勝率37%の絶対的走力で前を譲らず、78%のPlace率が�
   {
     serial: "No.023",
     name: "YAMATAnoOrochi",
+    epithet: "魔法陣を描く、黄蹄の大蛇",
     blood: "Zeddaan",
     style: "逃げ",
     rank: "SSS",
@@ -276,6 +299,7 @@ Spirit SSS、勝率37%の絶対的走力で前を譲らず、78%のPlace率が�
   {
     serial: "No.024",
     name: "ZAKU 2",
+    epithet: "橙の拳は黄蹄で戦線を切り開く",
     blood: "Stay Gold",
     style: "逃げ",
     rank: "SS+",
@@ -288,6 +312,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.025",
     name: "Only once in a life",
+    epithet: "聖なる光が刻む一度きりの軌跡",
     blood: "Caro",
     style: "逃げ",
     rank: "SSS",
@@ -299,6 +324,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.026",
     name: "Hono Unit 03",
+    epithet: "名門が放つ、霧の名牝",
     blood: "Danzig",
     style: "逃げ",
     rank: "SSS",
@@ -310,6 +336,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.027",
     name: "HAGURE METAL",
+    epithet: "終盤に迸る、闇の金属生命体",
     blood: "Never Bend",
     style: "追込",
     rank: "SSS",
@@ -321,6 +348,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.028",
     name: "Nausicaa",
+    epithet: "獣が映す、紅桜の刹那",
     blood: "The Tetrarch",
     style: "差し",
     rank: "SSS",
@@ -332,6 +360,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.029",
     name: "NEBUTA",
+    epithet: "燃える祭、褐色の光跡を統べる者",
     blood: "Blushing Groom",
     style: "逃げ",
     rank: "SSS",
@@ -343,6 +372,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.030",
     name: "Source of Light",
+    epithet: "蒼き波濤が後方から放つ、光の残響",
     blood: "Mr.Prospector",
     style: "追込",
     rank: "SSS",
@@ -354,6 +384,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.031",
     name: "Ai May Black",
+    epithet: "闇のヴェール、差しきる青い蹄",
     blood: "Never Bend",
     style: "差し",
     rank: "SS",
@@ -365,6 +396,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.032",
     name: "GYUSUJI 258",
+    epithet: "煮込まれた旨味、よい仕上がり",
     blood: "Northern Dancer",
     style: "追込",
     rank: "SS",
@@ -376,6 +408,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.033",
     name: "NEKO NIHIKI",
+    epithet: "二匹が駆ける、負けず嫌いの疾風",
     blood: "Roberto",
     style: "逃げ",
     rank: "SS+",
@@ -387,6 +420,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.034",
     name: "META APOLLON",
+    epithet: "氷結晶が描く、光の円舞曲",
     blood: "Seattle Slew",
     style: "先行",
     rank: "SSS",
@@ -398,6 +432,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.035",
     name: "YuiA",
+    epithet: "薔薇の蹄、草を芽吹かせる先駆",
     blood: "Partholon",
     style: "先行",
     rank: "SSS",
@@ -409,6 +444,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.036",
     name: "8349",
+    epithet: "深紅に燃え、やさしさを貫く炎",
     blood: "Halo",
     style: "逃げ",
     rank: "SSS",
@@ -420,6 +456,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.037",
     name: "Cinderella Story",
+    epithet: "星屑をまとう、素直な心の輝き",
     blood: "Native Dancer",
     style: "先行",
     rank: "SS",
@@ -431,6 +468,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.038",
     name: "Milky Way",
+    epithet: "白き光輪、夜空を駆ける",
     blood: "Caro",
     style: "先行",
     rank: "SSS",
@@ -442,6 +480,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.039",
     name: "KING ARTHUR",
+    epithet: "大波を従え、先頭に立つ儚き王",
     blood: "Mr.Prospector",
     style: "先行",
     rank: "SSS",
@@ -453,6 +492,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.040",
     name: "ARCHITECT",
+    epithet: "魔法陣を描く、逃げの設計者",
     blood: "Zeddaan",
     style: "逃げ",
     rank: "SSS",
@@ -464,6 +504,7 @@ IQ:Bの直情さが逆に武器、4000戦近い歴戦の複勝圏48%は知る人
   {
     serial: "No.041",
     name: "DARUM",
+    epithet: "情熱の拳、闘気に焦がされた串",
     blood: "Stay Gold",
     style: "逃げ",
     rank: "SSS",
@@ -476,6 +517,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.042",
     name: "Oguri Cap8",
+    epithet: "伝説を継ぐ者、白き光輪の彼方へ",
     blood: "Caro",
     style: "先行",
     rank: "SSS",
@@ -487,6 +529,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.043",
     name: "La vie en rose",
+    epithet: "現実は青く、視界はバラ色に",
     blood: "The Tetrarch",
     style: "逃げ",
     rank: "SSS",
@@ -498,6 +541,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.044",
     name: "Harukaze 1",
+    epithet: "吹き抜けた風が、記録になる",
     blood: "Northern Dancer",
     style: "追込",
     rank: "SSS",
@@ -509,6 +553,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.045",
     name: "72 Boss",
+    epithet: "72軍団の大将、風が組織を動かす",
     blood: "Roberto",
     style: "先行",
     rank: "SSS",
@@ -520,6 +565,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.046",
     name: "Bentley",
+    epithet: "強靭なボディ、流麗な加速",
     blood: "Zeddaan",
     style: "先行",
     rank: "SSS",
@@ -532,6 +578,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.047",
     name: "MIKIKAZE",
+    epithet: "深紅に橙と桃、炎そのものを駆る者",
     blood: "Halo",
     style: "先行",
     rank: "SS+",
@@ -544,6 +591,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.048",
     name: "Rukia",
+    epithet: "白波残して、蒼が視界を奪う",
     blood: "Mr.Prospector",
     style: "逃げ",
     rank: "SSS",
@@ -555,6 +603,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.049",
     name: "T F O A",
+    epithet: "漆黒の鋼、誰にも折られぬ精神",
     blood: "Never Bend",
     style: "差し",
     rank: "SS+",
@@ -566,6 +615,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
   {
     serial: "No.050",
     name: "GOD 666",
+    epithet: "666を背負う、SSSの荒馬",
     blood: "Blushing Groom",
     style: "逃げ",
     rank: "SSS",
