@@ -174,22 +174,6 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
   .hc-sweep{animation:none;display:none}
 }
 
-/* ==== CARD_EFFECT='glass'（現行）。半透明のガラス質感＋カーソル追従チルト。
-   tilt/shadowはJS(setupGlassTilt)が毎フレームstyle.transform/boxShadowを書き換えるため、
-   ここでは競合しないようtransform/box-shadowをtransition対象から外し、border-colorのみ遷移させる ==== */
-.horse-card[data-effect="glass"]{
-  background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.015) 45%, rgba(255,255,255,.03) 100%), rgba(11,17,32,.6);
-  backdrop-filter:blur(16px) saturate(1.1);
-  -webkit-backdrop-filter:blur(16px) saturate(1.1);
-  border-color:rgba(255,255,255,.14);
-  border-top-color:rgba(255,255,255,.14);
-  border-bottom-color:rgba(255,255,255,.14);
-  transition:border-color .3s;
-}
-@media(prefers-reduced-motion:no-preference){
-  .horse-card[data-effect="glass"]:hover{border-color:rgba(255,255,255,.26)}
-}
-
 /* アーカイブ／図鑑の馬詳細モーダル(.pm-card)は今回のCARD_EFFECT切替の対象外。現状のキラリのまま維持 */
 .pm-sweep{position:absolute;top:-4%;left:0;width:34%;height:108%;pointer-events:none;
   background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.16) 45%, rgba(46,230,214,.14) 50%, transparent 100%);
@@ -203,6 +187,19 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
   justify-content:center;color:var(--sub);font-size:12px;letter-spacing:.1em;text-align:center;padding:12px;
   background:radial-gradient(circle at 50% 60%,rgba(139,47,217,.12),transparent 70%)}
 .horse-visual img{width:100%;height:100%;object-fit:cover}
+/* CARD_EFFECT='glass'：エフェクトの対象は画像部分(.horse-visual)のみに限定し、
+   馬名・データ・紹介文（.horse-meta）には一切かけない。tilt/shadowはJS(setupGlassTilt)が
+   毎フレームstyle.transform/boxShadowを書き換えるため、border-colorのみCSS側で遷移させる */
+.horse-visual[data-effect="glass"]{
+  border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.02) 45%, rgba(255,255,255,.04) 100%), rgba(11,17,32,.5);
+  backdrop-filter:blur(16px) saturate(1.1);
+  -webkit-backdrop-filter:blur(16px) saturate(1.1);
+  transition:border-color .3s;
+}
+@media(prefers-reduced-motion:no-preference){
+  .horse-visual[data-effect="glass"]:hover{border-color:rgba(255,255,255,.3)}
+}
 .horse-meta .no{font-family:var(--disp);color:var(--amber);font-size:12px;letter-spacing:.3em}
 .horse-meta h3{font-size:26px;margin:6px 0 14px;color:var(--cyan)}
 .horse-meta dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px}
@@ -749,22 +746,23 @@ function xLinkHtml(h){
   }
 })();
 
-// ---- 今日の一頭カードの質感（CARD_EFFECT）。対象はこのカードのみ、アーカイブ/図鑑モーダルは対象外 ----
+// ---- 今日の一頭カードの質感（CARD_EFFECT）。対象は画像部分(.horse-visual)のみ。
+//      馬名・データ・紹介文（.horse-meta）やアーカイブ/図鑑モーダルは対象外 ----
 // 実装済みの値のリスト。CARD_EFFECTがここに無ければ'glass'にフォールバックする
 const CARD_EFFECT_TYPES = ['glass'];
 (function setupCardEffect(){
-  const card = document.querySelector('.horse-card');
-  if(!card) return;
+  const visual = document.querySelector('.horse-visual');
+  if(!visual) return;
   const effect = CARD_EFFECT_TYPES.includes(CARD_EFFECT) ? CARD_EFFECT : 'glass';
-  card.dataset.effect = effect;
-  if(effect === 'glass') setupGlassTilt(card);
+  visual.dataset.effect = effect;
+  if(effect === 'glass') setupGlassTilt(visual);
 })();
 
-// 'glass'エフェクト：カーソル位置に応じてカードがわずかに傾く（perspective+rotateX/Y）。
+// 'glass'エフェクト：カーソル位置に応じて画像部分がわずかに傾く（perspective+rotateX/Y）。
 // 目標角度に対して現在角度を毎フレーム少しずつ追いつかせる減衰処理（curr += (target-curr)*0.1）を
 // 使うことで、上限に当たっても/カーソルが離れても、急停止せずゆっくり収束する。
 // 影も傾きに応じてオフセットさせ、光ではなく影の動きで立体感を出す。
-function setupGlassTilt(card){
+function setupGlassTilt(el){
   if(reducedMotion) return; // 静止したガラス質感のみ。傾き・影の追従は行わない
   const MAX_DEG = 8;
   const BASE_SHADOW = '0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05)';
@@ -774,11 +772,11 @@ function setupGlassTilt(card){
 
   function apply(){
     const lift = hovering ? -2 : 0;
-    card.style.transform = 'perspective(900px) rotateX('+curRX+'deg) rotateY('+curRY+'deg) translateY('+lift+'px)';
+    el.style.transform = 'perspective(900px) rotateX('+curRX+'deg) rotateY('+curRY+'deg) translateY('+lift+'px)';
     const shadowX = curRY * 2.2;
     const shadowY = 14 - curRX * 2.2;
     const shadowStrength = .35 + Math.min(.15, (Math.abs(curRX)+Math.abs(curRY))/MAX_DEG*.15);
-    card.style.boxShadow = BASE_SHADOW+', '+shadowX.toFixed(1)+'px '+shadowY.toFixed(1)+'px 28px rgba(0,0,0,'+shadowStrength.toFixed(2)+')';
+    el.style.boxShadow = BASE_SHADOW+', '+shadowX.toFixed(1)+'px '+shadowY.toFixed(1)+'px 28px rgba(0,0,0,'+shadowStrength.toFixed(2)+')';
   }
   function loop(){
     curRX += (targetRX - curRX) * 0.1;
@@ -793,27 +791,27 @@ function setupGlassTilt(card){
   }
   function ensureLoop(){ if(raf === null) raf = requestAnimationFrame(loop); }
 
-  card.addEventListener('pointermove', e=>{
+  el.addEventListener('pointermove', e=>{
     if(e.pointerType === 'touch') return; // タッチはタップ時の一発表現のみ（下記pointerdown）
-    const rect = card.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
     targetRY = (px - .5) * 2 * MAX_DEG;
     targetRX = -(py - .5) * 2 * MAX_DEG;
     ensureLoop();
   });
-  card.addEventListener('pointerenter', e=>{
+  el.addEventListener('pointerenter', e=>{
     if(e.pointerType === 'touch') return;
     hovering = true;
   });
-  card.addEventListener('pointerleave', e=>{
+  el.addEventListener('pointerleave', e=>{
     if(e.pointerType === 'touch') return;
     hovering = false;
     targetRX = 0; targetRY = 0;
     ensureLoop();
   });
   // スマホ：タップ時に一度だけ軽く傾いて戻る代替表現
-  card.addEventListener('pointerdown', e=>{
+  el.addEventListener('pointerdown', e=>{
     if(e.pointerType !== 'touch') return;
     hovering = true;
     targetRX = MAX_DEG * .5; targetRY = MAX_DEG * .5;
