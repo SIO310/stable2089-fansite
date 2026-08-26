@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-24時点、投稿済み50頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-26時点、投稿済み51頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -623,5 +623,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `飾らない。ゲート5番・8番から黄の蹄が開く瞬間、ピンクのバイザーに宿る激情が先頭を奪い去る。Burnt Umberの体色に余計な演出はない。逃げの設計に魔法陣も炎も必要ない。ただ、鍛え抜かれた速さと精神力。5921戦を刻むLv11の彼女は、16%の勝率と49%の複勝率を積み重ねてきた。神の名を冠しながら、走りはひどく生々しい。だからこそ、この馬の速さには誤魔化しがない。何も足さず、何も借りず、ただ速い。それだけで十分なのだ。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_014_02_01_03_01.png",
     xUrl: "https://x.com/SIO310meta/status/2091876607216558219?s=20"
+  },
+  {
+    serial: "No.051",
+    name: "Contrail",
+    epithet: "蒼が溶けて、空に残る一筋の軌跡",
+    blood: "Danzig",
+    style: "差し",
+    rank: "SS",
+    date: "2026-08-26",
+    body: `Acid Blueの馬体に青のバイザー、青の蹄。電脳トラックに立つだけで目を奪う、ひときわ鮮烈な蒼だ。差しから伸びるその軌跡は、やがて霧のように輪郭を失い、空へ溶けていく。Contrail――飛行機雲の名を持つMistの牝馬は、冷静に勝機を待ち、走りながら一筋の線を描く。4428戦を刻むLv10。残された軌跡は、夏の空にも似て、静かに記憶へ残る。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_022_06_02_02_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2092585510325944381?s=20"
   }
 ];
