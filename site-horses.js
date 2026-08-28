@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-08-26時点、投稿済み51頭）
+// METAHORSE Dashboardからの自動書き出し（2026-08-28時点、投稿済み52頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -635,5 +635,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Acid Blueの馬体に青のバイザー、青の蹄。電脳トラックに立つだけで目を奪う、ひときわ鮮烈な蒼だ。差しから伸びるその軌跡は、やがて霧のように輪郭を失い、空へ溶けていく。Contrail――飛行機雲の名を持つMistの牝馬は、冷静に勝機を待ち、走りながら一筋の線を描く。4428戦を刻むLv10。残された軌跡は、夏の空にも似て、静かに記憶へ残る。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_022_06_02_02_03.png",
     xUrl: "https://x.com/SIO310meta/status/2092585510325944381?s=20"
+  },
+  {
+    serial: "No.052",
+    name: "StaceGreenBio3DM",
+    epithet: "根を張り、芽吹き、誰より深く",
+    blood: "Partholon",
+    style: "差し",
+    rank: "SSS",
+    date: "2026-08-29",
+    body: `新緑が電脳ダートを覆う。差しの位置から青の蹄が加速するとき、Grass Greenの体が若草の息吹を残して走る。この牡馬を支えるのは、根性という名の深く張った根だ。打たれても折れず、踏まれても伸びる。26%という勝率を保てるのは、地中深く張った根が、地上の嵐に屈しないからだろう。強者は、静かに芽吹き続ける。雨の日に強く、雪に弱い――それをこじ開ける生命力。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_004_04_03_01_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2093360910077403402?s=20"
   }
 ];
