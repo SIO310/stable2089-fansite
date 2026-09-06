@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-05時点、投稿済み54頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-06時点、投稿済み55頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -671,5 +671,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `螺旋を描いて渦を巻く。蛇の名を持つ牝馬は、Deep Redの体に青のバイザー、緑の蹄という鮮烈な配色で電脳トラックに立つ。追込という設計は、獲物を狙う冷静さそのもの。Agility:SSのしなやかさが、最後の一瞬に牙へと変わる。炎を引く血統でありながら、この馬の本質は焔ではなく、氷のような集中だ。5185戦を刻むLv13のベテランは、勝率18%を冷静に積み重ねてきた。螺旋が締まるほど、蛇の牙は鋭くなる。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_001_04_01_02_04.png",
     xUrl: "https://x.com/SIO310meta/status/2096147786362392846?s=20"
+  },
+  {
+    serial: "No.055",
+    name: "Super Fly 6",
+    epithet: "超かっこいいから、もう誰も追えない",
+    blood: "Northern Dancer",
+    style: "逃げ",
+    rank: "SS+",
+    date: "2026-09-06",
+    body: `リーダーボード5位。11829戦を刻むLv15のベテランは、自分のことを「けっこうクールでしょ」と思っているのだろうか。繊細な彼女には、逃げがよく似合うらしい。Nudeの体に黄の蹄。音を受け継ぐ血統から、派手さではなく静かな加速の律動を得た。SSSの精神力で先頭を守り続け、24%の勝率を積み重ねてきた。追われることを恐れず、追わせることを許さない。自由に走る、それがこの馬のクールなのだ。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_013_03_01_05_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2096579679906156770?s=20"
   }
 ];
