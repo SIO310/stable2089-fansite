@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-06時点、投稿済み55頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-07時点、投稿済み56頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -683,5 +683,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `リーダーボード5位。11829戦を刻むLv15のベテランは、自分のことを「けっこうクールでしょ」と思っているのだろうか。繊細な彼女には、逃げがよく似合うらしい。Nudeの体に黄の蹄。音を受け継ぐ血統から、派手さではなく静かな加速の律動を得た。SSSの精神力で先頭を守り続け、24%の勝率を積み重ねてきた。追われることを恐れず、追わせることを許さない。自由に走る、それがこの馬のクールなのだ。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_013_03_01_05_01.png",
     xUrl: "https://x.com/SIO310meta/status/2096579679906156770?s=20"
+  },
+  {
+    serial: "No.056",
+    name: "Angel Queen",
+    epithet: "薔薇色の刃、天上より降る一閃",
+    blood: "Forty Niner",
+    style: "追込",
+    rank: "SSS",
+    date: "2026-09-08",
+    body: `Roseの体に緑の蹄。青いバイザーを閃かせ、冷静な牝馬が後方から仕掛けるとき、最後の直線に刃が走る。天使の名を持ちながら、その走りは優雅さだけではない。4257戦を刻むLv11の彼女は、追込から20%の勝率を積み重ねてきた。狙いを定め、最後の一瞬に伸びる。その姿は苛烈ですらなく、ただ研ぎ澄まされている。天使の一閃は、いつも静かだ。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_019_04_03_02_04.png",
+    xUrl: "https://x.com/SIO310meta/status/2096995682423107823?s=20"
   }
 ];
