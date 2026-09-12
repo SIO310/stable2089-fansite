@@ -597,7 +597,6 @@ footer b{color:var(--txt)}
         <button type="button" class="chem-reset-btn" id="chemResetOpp">リセット</button>
       </div>
       <div class="chem-icon-grid" id="chemOppGrid"></div>
-      <p class="chem-selected-name" id="chemOppNames"></p>
     </div>
     <div class="chem-results" id="chemResults"></div>
     <p class="chem-source">出典：<a href="https://head2head.gitbook.io/metahorse/4.-game-play/4-4-bloodline" target="_blank" rel="noopener">METAHORSE公式ホワイトペーパー（Bloodline / Chemistry）</a><br>掲載時点の情報です。運営による調整が入る場合があります。</p>
@@ -1161,7 +1160,6 @@ if(SHOW_CHEMISTRY && typeof CHEMISTRY_DATA !== 'undefined'){
     const oppGrid = document.getElementById('chemOppGrid');
     const selfNameEl = document.getElementById('chemSelfName');
     const selfCompactEl = document.getElementById('chemSelfCompact');
-    const oppNamesEl = document.getElementById('chemOppNames');
     const resultsEl = document.getElementById('chemResults');
     const hintEl = document.getElementById('chemHint');
     const resetOppBtn = document.getElementById('chemResetOpp');
@@ -1202,7 +1200,7 @@ if(SHOW_CHEMISTRY && typeof CHEMISTRY_DATA !== 'undefined'){
       if(collapsed){
         const {chip} = bloodInfo(selfType);
         selfCompactEl.innerHTML = '<span class="chem-self-compact-icon" style="--chip:'+escapeHtml(chip)+'">'+selfType+'</span>'
-          +'<span>自分のタイプ：'+escapeHtml(nameFor(selfType))+'</span>'
+          +'<span>'+escapeHtml(nameFor(selfType))+'</span>'
           +'<span class="chem-self-compact-hint">タップで変更</span>';
       }
     }
@@ -1217,9 +1215,6 @@ if(SHOW_CHEMISTRY && typeof CHEMISTRY_DATA !== 'undefined'){
         if(selected){ badge.hidden = false; badge.textContent = CIRCLED[idx]; }
         else { badge.hidden = true; badge.textContent = ''; }
       });
-      oppNamesEl.textContent = oppTypes.length
-        ? '選択中：'+oppTypes.map((e,i)=>CIRCLED[i]+nameFor(e)).join('　')
-        : '';
     }
     function renderResults(){
       if(!selfType || !oppTypes.length){
