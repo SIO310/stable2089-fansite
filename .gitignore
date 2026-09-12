@@ -30,6 +30,10 @@ m_003_01_02_05_02.png
 # QRコード：イベント配布用素材。サイトには埋め込まないため非公開のまま
 assets/qr-*.png
 
+# 相性チェッカーの元データ（たろ提供のJSON）。サイトが実際に読むのはdata-chemistry.js
+# （同内容をwindow.CHEMISTRY_DATAとして書き出したもの）なので、rawのjsonは非公開のまま
+chemistry-data.json
+
 # ツール／エディタ関連
 .claude/
 .vite/

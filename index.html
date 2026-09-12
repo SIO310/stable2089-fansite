@@ -245,6 +245,79 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
   .bl-card h3{font-size:15px}
 }
 
+/* 相性チェック：アイコングリッドで自分/相手のタイプを選び、即座に結果カードを見るクイック診断。
+   色は「自馬=シアン／相手=マゼンタ」という役割の識別だけに使い、記号(◎○-△×)自体の色・太さは
+   一切変えない（効果の良し悪しは記号そのもので伝わるため、色を重ねると意味が混同する） */
+.chem-hint{margin-top:28px;color:var(--sub);font-size:13px}
+.chem-picker{margin-top:28px}
+.chem-picker-label{font-family:var(--disp);font-size:12px;letter-spacing:.15em;margin-bottom:12px;
+  padding-left:10px;border-left:3px solid var(--line)}
+.chem-label-self{border-left-color:var(--cyan);color:var(--cyan)}
+.chem-label-opp{border-left-color:var(--magenta);color:var(--magenta)}
+/* 相手タイプ見出しの右にリセットボタンを添える行 */
+.chem-picker-label-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.chem-picker-label-row .chem-picker-label{margin-bottom:0}
+.chem-reset-btn{font-family:var(--disp);font-size:10px;letter-spacing:.1em;color:var(--sub);
+  border:1px solid var(--line);background:none;padding:4px 12px;cursor:pointer;transition:.2s;flex-shrink:0}
+.chem-reset-btn:hover{color:var(--cyan);border-color:var(--cyan)}
+.chem-icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:8px}
+/* display:gridが[hidden]のUAデフォルト(display:none)を上書きしてしまうため、明示的に指定し直す
+   （chem-icon-badgeで一度踏んだのと同じ罠。以後この手のトグル要素は都度[hidden]を明記する） */
+.chem-icon-grid[hidden]{display:none}
+.chem-icon{position:relative;aspect-ratio:1;border:1px solid var(--line);background:var(--panel);
+  display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;
+  transition:.2s;color:inherit}
+.chem-icon:hover{border-color:var(--sub)}
+/* 血統の体色を下端の細いバーで補助表示（図鑑カードの色ラインと同じ考え方）。
+   --chipは各アイコンにJSからインラインで設定 */
+.chem-icon::after{content:"";position:absolute;left:4px;right:4px;bottom:2px;height:1px;
+  background:var(--chip,transparent);opacity:.85}
+/* 選択中は「枠線の色変化だけに頼らない」ため、背景の塗りつぶし＋拡大で強調する */
+.chem-icon.self-selected{border-color:var(--cyan);background:rgba(46,230,214,.22);
+  transform:scale(1.15);box-shadow:0 0 12px rgba(46,230,214,.4);z-index:1}
+.chem-icon.opp-selected{border-color:var(--magenta);background:rgba(255,61,166,.22);
+  transform:scale(1.15);box-shadow:0 0 12px rgba(255,61,166,.4);z-index:1}
+.chem-icon.opp-disabled{opacity:.3;cursor:not-allowed}
+.chem-icon-badge{position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;
+  background:var(--magenta);color:var(--void);font-family:var(--disp);font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;line-height:1}
+/* display:flexが[hidden]のUAデフォルト(display:none)を上書きしてしまうため、明示的に指定し直す */
+.chem-icon-badge[hidden]{display:none}
+.chem-selected-name{margin-top:10px;font-size:12px;color:var(--txt);min-height:1.4em}
+/* 自分のタイプ選択後：23アイコンのフルグリッドを畳み、アイコン+名前だけの1行に。
+   タップで再度フルグリッドを開ける（縦スペース節約が目的） */
+.chem-self-compact{display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 14px;
+  border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;
+  cursor:pointer;transition:.2s;text-align:left;width:100%;font-family:inherit}
+.chem-self-compact:hover{border-color:var(--cyan)}
+.chem-self-compact[hidden]{display:none}
+.chem-self-compact .chem-self-compact-icon{position:relative;display:inline-flex;align-items:center;
+  justify-content:center;width:28px;height:28px;font-size:16px;border:1px solid var(--line);
+  background:var(--void);flex-shrink:0;overflow:hidden}
+.chem-self-compact .chem-self-compact-icon::after{content:"";position:absolute;left:3px;right:3px;
+  bottom:1px;height:1px;background:var(--chip,transparent);opacity:.85}
+.chem-self-compact-hint{margin-left:auto;font-family:var(--disp);font-size:10px;letter-spacing:.1em;
+  color:var(--sub)}
+/* 結果：相手ごとに1カード。選んだ数だけ（最大4枚）1段に横並びさせ、
+   4列固定グリッドにする（2列×2段には折り返さない）。PCで間延びしないよう最大幅を固定する */
+.chem-results{margin-top:32px;max-width:400px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.chem-result-card{border:1px solid var(--line);background:var(--panel);padding:7px 3px;text-align:center;min-width:0}
+.chem-result-icon{font-size:18px}
+.chem-result-name{font-size:9px;color:var(--txt);margin:3px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chem-badge{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:9px;
+  padding:3px 2px;margin-top:3px;border:1px solid var(--line)}
+.chem-badge.self{border-color:rgba(46,230,214,.4);background:rgba(46,230,214,.08)}
+.chem-badge.opp{border-color:rgba(255,61,166,.4);background:rgba(255,61,166,.08)}
+.chem-badge-label{font-family:var(--disp);font-size:8px;letter-spacing:.05em;color:var(--sub)}
+.chem-badge-symbol{font-size:12px;font-weight:600;color:var(--txt)}
+.chem-source{margin-top:28px;font-size:11px;color:var(--sub);line-height:1.7}
+.chem-source a{color:var(--sub);text-decoration:underline;text-decoration-color:rgba(46,230,214,.4)}
+.chem-source a:hover{color:var(--cyan);text-decoration-color:var(--cyan)}
+@media(max-width:520px){
+  .chem-icon-grid{grid-template-columns:repeat(auto-fill,minmax(38px,1fr))}
+  .chem-icon{font-size:17px}
+}
+
 /* archive: 全頭コンパクトリスト（クリックで詳細モーダル）。今日の一頭カードと同じ
    掃引グレア＋発光を展開するが、全行が同時に光ると騒がしいので周期を長くし、
    行ごとにanimation-delayをJSでずらす（負のdelayで初期表示から位相をばらけさせる） */
@@ -418,8 +491,7 @@ footer b{color:var(--txt)}
   <ul>
     <li><a href="#mission">世界観</a></li>
     <li><a href="#today">今日の一頭</a></li>
-    <li><a href="#archive" data-tab="list">アーカイブ</a></li>
-    <li><a href="#archive" data-tab="blood">図鑑</a></li>
+    <li><a href="#archive" data-tab="list">アーカイブ・血統</a></li>
     <li><a href="#guides">攻略情報</a></li>
     <li><a href="#return-guide">復帰ガイド</a></li>
     <li id="navUpdates" hidden><a href="#updates">更新履歴</a></li>
@@ -495,13 +567,14 @@ footer b{color:var(--txt)}
   <div class="hbanner" id="hbanner-archive" data-side="left"></div>
   <div class="head-row">
     <div>
-      <h2>図鑑・アーカイブ</h2>
-      <p class="lead">これまでの「今日の一頭」をNo.順の全頭リストで、または<span class="nowrap">23血統ごとの図鑑で。</span>タップすると<span class="nowrap">詳細が開く。</span></p>
+      <h2>アーカイブ・血統</h2>
+      <p class="lead">これまでの「今日の一頭」をNo.順の全頭リストで、23血統ごとのまとめで、または<span class="nowrap">血統タイプの相性チェックで。</span>タップすると<span class="nowrap">詳細が開く。</span></p>
     </div>
   </div>
   <div class="view-toggle" role="tablist">
     <button class="vtab active" data-view="list" type="button">番号順リスト</button>
     <button class="vtab" data-view="blood" type="button">血統別まとめ</button>
+    <button class="vtab" data-view="chem" type="button" id="vtabChem" hidden>相性チェック</button>
   </div>
   <div id="listView">
     <div class="arch-count" id="archCount"></div>
@@ -509,6 +582,25 @@ footer b{color:var(--txt)}
   </div>
   <div id="bloodView" hidden>
     <div class="bl-grid" id="bloodGrid"></div>
+  </div>
+  <div id="chemView" hidden>
+    <p class="chem-hint" id="chemHint">自分のタイプを1つ、相手のタイプを最大4つまで選んでください。</p>
+    <div class="chem-picker">
+      <div class="chem-picker-label chem-label-self">自分のタイプ</div>
+      <div class="chem-icon-grid" id="chemSelfGrid"></div>
+      <p class="chem-selected-name" id="chemSelfName"></p>
+      <button type="button" class="chem-self-compact" id="chemSelfCompact" hidden></button>
+    </div>
+    <div class="chem-picker">
+      <div class="chem-picker-label-row">
+        <div class="chem-picker-label chem-label-opp">相手のタイプ（最大4つ）</div>
+        <button type="button" class="chem-reset-btn" id="chemResetOpp">リセット</button>
+      </div>
+      <div class="chem-icon-grid" id="chemOppGrid"></div>
+      <p class="chem-selected-name" id="chemOppNames"></p>
+    </div>
+    <div class="chem-results" id="chemResults"></div>
+    <p class="chem-source">出典：<a href="https://head2head.gitbook.io/metahorse/4.-game-play/4-4-bloodline" target="_blank" rel="noopener">METAHORSE公式ホワイトペーパー（Bloodline / Chemistry）</a><br>掲載時点の情報です。運営による調整が入る場合があります。</p>
   </div>
   <div class="submit-cta" id="submitCta" hidden>
     <p>あなたの愛馬も紹介しませんか？</p>
@@ -577,11 +669,17 @@ footer b{color:var(--txt)}
 
 <script src="data-bloodlines.js"></script>
 <script src="data-pedigree.js"></script>
+<script src="data-chemistry.js"></script>
 <script src="site-horses.js"></script>
 <script>
 /* ================= 編集エリア（ここだけ触ればOK） ================= */
+// 相性チェック（試験導入）。falseにすると：タブ本体（番号順リスト／血統別まとめの2タブ構成に戻る）／
+// 攻略記事末尾のリンク文／NEWSの該当項目、すべてが痕跡なく非表示になる（下のNEWS/GUIDES構築時に
+// 参照するため一番上に置く）。
+const SHOW_CHEMISTRY = true;
 // NEWS：ヒーロー直下に最新3件のみ表示（配列が空ならセクションごと非表示）。新しい順に並べること。
 const NEWS = [
+  ...(SHOW_CHEMISTRY ? [{date:'2026-08-14', text:'アーカイブ・血統に「相性チェック」を追加しました'}] : []),
   {date:'2026-08-09', text:'初心者ガイドを公開しました'},
   {date:'2026-08-06', text:'ご意見・ご指摘フォームを設置しました'},
   {date:'2026-07-25', text:'名古屋でオフラインイベントが開催されました', url:'https://x.com/maximum1npact/status/2061619628766589254'},
@@ -592,7 +690,7 @@ const NEWS = [
 // 6項目（天候と血統〜／ステータス／KUDA育成／バーンガチャ／View-Fi／初心者ガイド）すべて本文反映済みでready:true。
 // bodyの段落全体が「## 見出し」のみの場合、bodyToHtmlが小見出し（.mb-label）として扱う。
 const GUIDES = [
-  {t:"天候と血統、距離と個体", d:"血統は天候、個体は距離・馬場。得意不得意の正体を整理", ready:true, body:"距離・馬場の得意不得意は、血統ではなく個体ごとに決まります。よく知られている通りです。個体にはそれぞれ性格や脚質もあり、得意なゲートも変わってきます。\n\n天候の得意不得意は血統によって決まります。加えて、レースでは隣のゲートの馬との相性も重要です。組み合わせによっては大きなダメージを受けることもあります（例：炎タイプの隣に水タイプ、など）。この相性相関図は[ホワイトペーパー](https://head2head.gitbook.io/metahorse)のBloodlineページに詳しく載っているので、エントリー前に確認してみてください。\n\nなお、天候の影響を無効化するアーマーも存在します。ただし効果を出すには複数アイテムを揃える必要があり、揃えるコストは軽くありません。まずは「そういう手段がある」という程度に留めておきます。\n\n血統・天候・性格・アーマーなどのアイテムについては、ホワイトペーパーに詳しい情報が記載されています。気になる方はぜひチェックしてみてください。"},
+  {t:"天候と血統、距離と個体", d:"血統は天候、個体は距離・馬場。得意不得意の正体を整理", ready:true, body:"距離・馬場の得意不得意は、血統ではなく個体ごとに決まります。よく知られている通りです。個体にはそれぞれ性格や脚質もあり、得意なゲートも変わってきます。\n\n天候の得意不得意は血統によって決まります。加えて、レースでは隣のゲートの馬との相性も重要です。組み合わせによっては大きなダメージを受けることもあります（例：炎タイプの隣に水タイプ、など）。この相性相関図は[ホワイトペーパー](https://head2head.gitbook.io/metahorse)のBloodlineページに詳しく載っているので、エントリー前に確認してみてください。\n\nなお、天候の影響を無効化するアーマーも存在します。ただし効果を出すには複数アイテムを揃える必要があり、揃えるコストは軽くありません。まずは「そういう手段がある」という程度に留めておきます。\n\n血統・天候・性格・アーマーなどのアイテムについては、ホワイトペーパーに詳しい情報が記載されています。気になる方はぜひチェックしてみてください。"+(SHOW_CHEMISTRY ? "\n\n隣接ゲートの相性を具体的に調べたい方は、アーカイブ・血統の[相性チェック](#chem)タブもあわせてどうぞ。" : "")},
   {t:"ステータスの読み方", d:"Speedの重要性と、上位馬に見られる傾向", ready:true, body:"パラメータのうち、最重視される傾向にあるのがSpeedです。多くの活躍馬はSpeed「SS」以上を備えているようです。\n\n育成が進んだ上位の馬では、Speed以外にもSS以上のパラメータを1〜2個持つ傾向が見られます。どのパラメータを伸ばすとどう影響するかは、[ホワイトペーパー](https://head2head.gitbook.io/metahorse)内で説明されています。\n\nレースの勝敗は、ステータスの数値がそのまま順位に直結するわけではありません。性格・天候・隣接ゲートの相性・アーマーなどが基礎ステータスに掛け合わされ、そこにコース適正やエナジーが絡んで結果が決まります。\n\nプロデューサーのイワマ氏が、この仕組みを図解したポストを公開しています。気になる方はぜひ。\n→ [馬のステータスと走る仕組み（イワマ氏のポスト）](https://x.com/iwamatatsuya/status/1826245567632245236)\n\n※ 投稿時点の情報のため、数値などは調整されている可能性があります。"},
   {t:"KUDA育成のすすめ", d:"育成か、別の道か。判断のヒント", ready:true, body:"手持ちの馬を育成するか、バーン・売却・レンディングなど別の道を選ぶか——判断のヒントになるのは、初期値にSがいくつあるかです。初期値が高いほど、上限までの育成コストは低く済みます。\n\n★（生来の適応値）の数は、かつては重要度が高いものでした。しかし現在はアーマーやスキンで★を補えるため、★が少なくてもパラメータが高ければ十分に活路があります。\n\nまた、★が埋まっていない部分（☆）にはドーピングで能力を上乗せできる点も、育成の強みです。\n\nギルドに所属している馬は、ギルドレベルに応じてKUDA消費の割引を受けることができます。また、ときどきレベルアップKUDA割引キャンペーンが開催され、KUDA消費半額などでレベルアップできることがあります。レベルアップを考えているなら、この期間が狙い目です。"},
   {t:"バーンガチャ活用術", d:"バーン判断の基準", ready:true, body:"バーンすると、二度と元には戻せません。判断は慎重に。\n\n候補として考えやすいのは、パラメータが総合的に低い馬です。特にSpeedの初期値がB・Aあたりの馬は、候補になりやすい傾向があります。\n\n★はアーマー/スキンで補えますが、そもそも★合計が2程度（例：TURF★1・SHORT★1）と極端に少ない場合、補うこと自体が難しくなります。このような馬は、バーンの候補として検討する価値があります。\n\nバーンガチャの結果はランダムです。素晴らしい出会いがあるかもしれない一方、その逆もあり得ます。\n\nそんな不遇なアーマーも、3つ集まれば「バーン3ガチャ」で、最低でも1つ上位レア度のアーマーに生まれ変わらせることができます。詳細は[ホワイトペーパー](https://head2head.gitbook.io/metahorse)を確認してください。なお、スキンはバーン3ガチャの対象外です。\n\nバーンに回すアーマーが足りない場合は、アイテム欄にチケットがないか確認してみてください。チケットガチャで入手できることがあります。\n\nこれらのガチャは、[vvvvv.my](https://www.vvvvv.my/ja/)にログインすることで利用できます。"},
@@ -1043,11 +1141,147 @@ function hexToRgba(hex, a){
   });
 })();
 
-// ---- 番号順リスト ⇄ 血統別まとめ タブ切替 ----
+// ---- 相性チェック（自分×相手のタイプをアイコンで選び、即座に結果カードを見るクイック診断）
+//      SHOW_CHEMISTRY=falseの間はタブ自体を出さない（番号順リスト／血統別まとめの2タブ構成に戻る） ----
+if(SHOW_CHEMISTRY && typeof CHEMISTRY_DATA !== 'undefined'){
+  document.getElementById('vtabChem').hidden = false;
+  (function renderChemistryQuickCheck(){
+    const CH = CHEMISTRY_DATA;
+    // 表示順・タイプ絵文字⇔血統名の対応はchemistry-data.json（order/map）を正とする。
+    // data-bloodlines.jsのtype末尾の絵文字とは表記ゆれがある（例：音符・時計の異体字）ため参照しない
+    const orderedEmoji = CH.order;
+    const nameByEmoji = CH.map;
+    const MAX_OPP = 4;
+    const CIRCLED = ['①','②','③','④'];
+    let selfType = null;
+    let oppTypes = [];
+    let selfCollapsed = false; // 自分のタイプ選択後、フルグリッドを畳んで省スペース化する
+
+    const selfGrid = document.getElementById('chemSelfGrid');
+    const oppGrid = document.getElementById('chemOppGrid');
+    const selfNameEl = document.getElementById('chemSelfName');
+    const selfCompactEl = document.getElementById('chemSelfCompact');
+    const oppNamesEl = document.getElementById('chemOppNames');
+    const resultsEl = document.getElementById('chemResults');
+    const hintEl = document.getElementById('chemHint');
+    const resetOppBtn = document.getElementById('chemResetOpp');
+    function nameFor(emoji){ return nameByEmoji[emoji]; }
+    // ツールチップ用「血統名 / タイプ名」と、アイコン下端の体色ラインを図鑑データから取得
+    function bloodInfo(emoji){
+      const name = nameFor(emoji);
+      const bl = (typeof window.BLOODLINES!=='undefined') ? window.BLOODLINES[name] : null;
+      const typeName = bl ? (bl.type.match(/^[A-Za-z]+/) || [''])[0] : '';
+      const chip = bl ? (BODY_COLOR_HEX[bl.body_color] || '') : '';
+      return {name, typeName, chip};
+    }
+    function iconTitle(emoji){
+      const {name, typeName} = bloodInfo(emoji);
+      return typeName ? name+' / '+typeName : name;
+    }
+
+    function iconHtml(e, withBadge){
+      const {chip} = bloodInfo(e);
+      return '<button class="chem-icon" type="button" data-emoji="'+escapeHtml(e)+'" style="--chip:'+escapeHtml(chip)+'" title="'+escapeHtml(iconTitle(e))+'"><span>'+e+'</span>'
+        +(withBadge ? '<span class="chem-icon-badge" hidden></span>' : '')
+        +'</button>';
+    }
+    selfGrid.innerHTML = orderedEmoji.map(e=>iconHtml(e, false)).join('');
+    oppGrid.innerHTML = orderedEmoji.map(e=>iconHtml(e, true)).join('');
+
+    // 「選択中の視認性」：枠線の色変化だけに頼らず、拡大＋背景塗りつぶし＋血統名のテキスト明示を併用
+    function renderSelfGrid(){
+      selfGrid.querySelectorAll('.chem-icon').forEach(btn=>{
+        btn.classList.toggle('self-selected', btn.dataset.emoji===selfType);
+      });
+      selfNameEl.textContent = selfType ? '選択中：'+nameFor(selfType) : '';
+      // 選択済み＋折りたたみ中はフルグリッドを隠し、アイコン＋名前だけの1行表示に切り替える
+      const collapsed = selfCollapsed && !!selfType;
+      selfGrid.hidden = collapsed;
+      selfNameEl.hidden = collapsed;
+      selfCompactEl.hidden = !collapsed;
+      if(collapsed){
+        const {chip} = bloodInfo(selfType);
+        selfCompactEl.innerHTML = '<span class="chem-self-compact-icon" style="--chip:'+escapeHtml(chip)+'">'+selfType+'</span>'
+          +'<span>自分のタイプ：'+escapeHtml(nameFor(selfType))+'</span>'
+          +'<span class="chem-self-compact-hint">タップで変更</span>';
+      }
+    }
+    function renderOppGrid(){
+      oppGrid.querySelectorAll('.chem-icon').forEach(btn=>{
+        const idx = oppTypes.indexOf(btn.dataset.emoji);
+        const selected = idx!==-1;
+        btn.classList.toggle('opp-selected', selected);
+        // 4つ選択済みの間、未選択アイコンは無効化表示にしてそれ以上追加されないことを示す
+        btn.classList.toggle('opp-disabled', !selected && oppTypes.length>=MAX_OPP);
+        const badge = btn.querySelector('.chem-icon-badge');
+        if(selected){ badge.hidden = false; badge.textContent = CIRCLED[idx]; }
+        else { badge.hidden = true; badge.textContent = ''; }
+      });
+      oppNamesEl.textContent = oppTypes.length
+        ? '選択中：'+oppTypes.map((e,i)=>CIRCLED[i]+nameFor(e)).join('　')
+        : '';
+    }
+    function renderResults(){
+      if(!selfType || !oppTypes.length){
+        resultsEl.innerHTML = '';
+        hintEl.hidden = false;
+        return;
+      }
+      hintEl.hidden = true;
+      resultsEl.innerHTML = oppTypes.map(oppEmoji=>{
+        const oppName = nameFor(oppEmoji);
+        const toSelf = CH.matrix[selfType][oppEmoji]; // 自馬への影響
+        const toOpp = CH.matrix[oppEmoji][selfType];  // 相手馬への影響（非対称データ）
+        return '<div class="chem-result-card">'
+          +'<div class="chem-result-icon">'+oppEmoji+'</div>'
+          +'<div class="chem-result-name">'+escapeHtml(oppName)+'</div>'
+          +'<div class="chem-badge self"><span class="chem-badge-label">自馬</span><span class="chem-badge-symbol">'+escapeHtml(toSelf)+'</span></div>'
+          +'<div class="chem-badge opp"><span class="chem-badge-label">相手</span><span class="chem-badge-symbol">'+escapeHtml(toOpp)+'</span></div>'
+          +'</div>';
+      }).join('');
+    }
+    function renderAll(){ renderSelfGrid(); renderOppGrid(); renderResults(); }
+
+    selfGrid.addEventListener('click', e=>{
+      const btn = e.target.closest('.chem-icon');
+      if(!btn) return;
+      selfType = btn.dataset.emoji;
+      selfCollapsed = true; // 選択したら自動的に畳む。相手の選択はそのまま保持される
+      renderAll();
+    });
+    // 折りたたみ済みの行をタップするとフルグリッドを再展開（相手の選択は保持したまま）
+    selfCompactEl.addEventListener('click', ()=>{
+      selfCollapsed = false;
+      renderAll();
+    });
+    oppGrid.addEventListener('click', e=>{
+      const btn = e.target.closest('.chem-icon');
+      if(!btn) return;
+      const emoji = btn.dataset.emoji;
+      const idx = oppTypes.indexOf(emoji);
+      if(idx!==-1){
+        oppTypes.splice(idx,1); // 選択済みは再タップで解除
+      } else {
+        if(oppTypes.length>=MAX_OPP) return; // 4つ選択済みの間は追加しない
+        oppTypes.push(emoji);
+      }
+      renderAll();
+    });
+    // リセットは相手の選択のみ解除する（自分のタイプ・折りたたみ状態は変更しない）
+    resetOppBtn.addEventListener('click', ()=>{
+      oppTypes = [];
+      renderAll();
+    });
+    renderAll();
+  })();
+}
+
+// ---- 番号順リスト ⇄ 血統別まとめ ⇄ 相性チェック タブ切替 ----
 function switchView(view){
   document.querySelectorAll('.vtab').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
   document.getElementById('listView').hidden = view!=='list';
   document.getElementById('bloodView').hidden = view!=='blood';
+  document.getElementById('chemView').hidden = view!=='chem';
 }
 document.querySelectorAll('.vtab').forEach(btn=>{
   btn.addEventListener('click', ()=>switchView(btn.dataset.view));
@@ -1082,7 +1316,16 @@ function openModal(name, kind){
   bloodModal.showModal();
 }
 // モーダル内の掲載馬名をタップ → その馬の紹介モーダルへ切り替え
+// 「相性チェック」への案内リンク（bodyToHtmlが[text](#chem)から生成）はモーダルを閉じてタブ切替＋スクロール
 document.getElementById('modalBody').addEventListener('click', e=>{
+  const chemLink = e.target.closest('a[href$="#chem"]');
+  if(chemLink){
+    e.preventDefault();
+    bloodModal.close();
+    switchView('chem');
+    document.getElementById('archive').scrollIntoView();
+    return;
+  }
   const btn = e.target.closest('.m-horse');
   if(!btn) return;
   const post = posts.find(h=>h.serial===btn.dataset.serial);
