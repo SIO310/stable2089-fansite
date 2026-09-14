@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-07時点、投稿済み56頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-14時点、投稿済み57頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -695,5 +695,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Roseの体に緑の蹄。青いバイザーを閃かせ、冷静な牝馬が後方から仕掛けるとき、最後の直線に刃が走る。天使の名を持ちながら、その走りは優雅さだけではない。4257戦を刻むLv11の彼女は、追込から20%の勝率を積み重ねてきた。狙いを定め、最後の一瞬に伸びる。その姿は苛烈ですらなく、ただ研ぎ澄まされている。天使の一閃は、いつも静かだ。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_019_04_03_02_04.png",
     xUrl: "https://x.com/SIO310meta/status/2096995682423107823?s=20"
+  },
+  {
+    serial: "No.057",
+    name: "Hisoka",
+    epithet: "脆さを牙に、静かに機を窺う",
+    blood: "The Tetrarch",
+    style: "差し",
+    rank: "SS+",
+    date: "2026-09-13",
+    body: `Ponceauの体に青の蹄。道化師の名を冠した彼は、静かに牙を研ぐ。打たれ弱さを抱えながらも、差しの位置でじっと機を窺い、勝負どころでは一気に踏み込む。Lv14、8552戦を刻むベテラン。24%の勝率と55%の複勝率は、ただ強いだけでは積めない数字だ。SSSの精神力とAAの知性、その繊細ささえも戦術に変えてきた。弱さを隠す必要はない。使いこなせば、それもまた牙になる。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_008_04_03_05_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2099024574100992438?s=20"
   }
 ];
