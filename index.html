@@ -50,7 +50,7 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 /* 時刻による表示調整 */
 .hero-bg.hero-late{filter:hue-rotate(-40deg) brightness(.65) saturate(1.2)}
 /* 特定条件での背景切替：同じ.hero-bgを重ねてopacityでクロスフェード */
-.hero-bg-fade{opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.hero-bg-fade{opacity:0;transition:opacity 5s ease;pointer-events:none}
 .hero-bg-fade.is-visible{opacity:1}
 .hero-bg .floor{position:absolute;left:-30%;right:-30%;bottom:0;height:46%;
   background-image:
@@ -772,7 +772,7 @@ const HERO_EVENING_START = 12; // 12時から夕暮れ画像＝メイン（〜�
 const HERO_TIME_IMAGES = {
   morning: {src:'assets/hero-panorama_light.png', x:'50%', y:'42%', mobileX:'30%', mobileY:'45%'},
   evening: {src:HERO_BG_IMAGE,                     x:'50%', y:'38%', mobileX:'20%', mobileY:'38%'},
-  night:   {src:'assets/hero-panorama_seoul.png',  x:'50%', y:'45%', mobileX:'55%', mobileY:'40%'}
+  night:   {src:'assets/hero-panorama_seoul.png',  x:'50%', y:'20%', mobileX:'55%', mobileY:'20%'}
 };
 // 特定条件での背景切替（試験導入）。falseにすると完全に無効化（通常の時間帯ギミックには影響しない）
 const SHOW_RUINS_EASTER_EGG = true;
