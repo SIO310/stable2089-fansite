@@ -49,6 +49,9 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
     var(--void);}
 /* 時刻による表示調整 */
 .hero-bg.hero-late{filter:hue-rotate(-40deg) brightness(.65) saturate(1.2)}
+/* 特定条件での背景切替：同じ.hero-bgを重ねてopacityでクロスフェード */
+.hero-bg-fade{opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.hero-bg-fade.is-visible{opacity:1}
 .hero-bg .floor{position:absolute;left:-30%;right:-30%;bottom:0;height:46%;
   background-image:
     repeating-linear-gradient(90deg, rgba(46,230,214,.22) 0 1px, transparent 1px 64px),
@@ -771,6 +774,9 @@ const HERO_TIME_IMAGES = {
   evening: {src:HERO_BG_IMAGE,                     x:'50%', y:'38%', mobileX:'20%', mobileY:'38%'},
   night:   {src:'assets/hero-panorama_seoul.png',  x:'50%', y:'45%', mobileX:'55%', mobileY:'40%'}
 };
+// 特定条件での背景切替（試験導入）。falseにすると完全に無効化（通常の時間帯ギミックには影響しない）
+const SHOW_RUINS_EASTER_EGG = true;
+const RUINS_EASTER_EGG_IMAGE = 'assets/city-night-seoul-ruins.png';
 // 見出し帯バナー（v1.5→v1.7）：ヒーローと同じ画像を全セクション共通で使う。
 // 各セクションの見せ場は x/y（background-position）+ zoom（scale倍率、1=無拡大）+
 // brightness（filter補正、1=無補正、暗い部分は1.1〜1.3程度で持ち上げ）+
@@ -944,6 +950,32 @@ function setupGlassTilt(el){
     if(h >= 0 && h < 4) bg.classList.add('hero-late');
   }
 })();
+
+// 特定条件での背景切替（試験導入）
+if(SHOW_RUINS_EASTER_EGG && HERO_MODE === 'image'){
+  (function(){
+    const bg = document.getElementById('heroBg');
+    const overlay = document.createElement('div');
+    overlay.className = 'hero-bg hero-bg-fade';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.style.setProperty('--hero-img', 'url("'+RUINS_EASTER_EGG_IMAGE+'")');
+    bg.insertAdjacentElement('afterend', overlay);
+    setTimeout(()=>{
+      const h = new Date().getHours();
+      if(h < HERO_MORNING_START){
+        overlay.style.setProperty('--hero-x', bg.style.getPropertyValue('--hero-x'));
+        overlay.style.setProperty('--hero-y', bg.style.getPropertyValue('--hero-y'));
+        overlay.classList.add('is-visible');
+        setTimeout(()=>{
+          overlay.classList.remove('is-visible');
+          setTimeout(()=>overlay.remove(), 1500);
+        }, 60000);
+      } else {
+        overlay.remove();
+      }
+    }, 60000);
+  })();
+}
 
 // ---- NEWS（ヒーロー直下。最新3件のみ、配列が空ならセクションごと非表示。urlは任意フィールド） ----
 (function renderNews(){
