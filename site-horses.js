@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-14時点、投稿済み57頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-16時点、投稿済み58頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -707,5 +707,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Ponceauの体に青の蹄。道化師の名を冠した彼は、静かに牙を研ぐ。打たれ弱さを抱えながらも、差しの位置でじっと機を窺い、勝負どころでは一気に踏み込む。Lv14、8552戦を刻むベテラン。24%の勝率と55%の複勝率は、ただ強いだけでは積めない数字だ。SSSの精神力とAAの知性、その繊細ささえも戦術に変えてきた。弱さを隠す必要はない。使いこなせば、それもまた牙になる。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_008_04_03_05_03.png",
     xUrl: "https://x.com/SIO310meta/status/2099024574100992438?s=20"
+  },
+  {
+    serial: "No.058",
+    name: "ALEXANDRITE",
+    epithet: "翡翠の体、遠ざかる光",
+    blood: "Zeddaan",
+    style: "逃げ",
+    rank: "SS+",
+    date: "2026-09-17",
+    body: `Jade Greenの体に黄の蹄。光の加減で色を変える宝石の名を持つ彼女。その逃げは、遠ざかっていく光そのものだ。激しい気性をそのまま前へ放ち、長距離を駆け抜ける。Lv8、3334戦を刻む若駒。勝率10%、複勝率33%という数字の奥にも、先頭を譲らず走り続けてきた強さがある。光を受けるたび色を変えるアレクサンドライト。この馬もまた、走るたびに違う輝きを見せる。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_007_02_03_03_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2100275154886820016?s=20"
   }
 ];
