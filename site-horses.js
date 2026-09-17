@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-16時点、投稿済み58頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-17時点、投稿済み59頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -719,5 +719,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Jade Greenの体に黄の蹄。光の加減で色を変える宝石の名を持つ彼女。その逃げは、遠ざかっていく光そのものだ。激しい気性をそのまま前へ放ち、長距離を駆け抜ける。Lv8、3334戦を刻む若駒。勝率10%、複勝率33%という数字の奥にも、先頭を譲らず走り続けてきた強さがある。光を受けるたび色を変えるアレクサンドライト。この馬もまた、走るたびに違う輝きを見せる。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_007_02_03_03_01.png",
     xUrl: "https://x.com/SIO310meta/status/2100275154886820016?s=20"
+  },
+  {
+    serial: "No.059",
+    name: "CRAZY HAZE",
+    epithet: "霧に溶けて、誰も追えない境界線",
+    blood: "Danzig",
+    style: "逃げ",
+    rank: "SSS",
+    date: "2026-09-18",
+    body: `黄の蹄が霧を蹴り、Acid Blueの馬体が先頭を駆ける。やがてその輪郭は靄に溶け、追う者の視界から滲んでいく。打たれ弱く、繊細な彼女にとって、霧に紛れて逃げることは最高の戦術となったのかもしれない。Lv13のベテランは、勝率21%という確かな数字を刻んできた。霧の向こうに何があるのか、誰も知らない。ただ霞だけが先へ流れていく。そして追う者が気づいたときには――もう、そこにいない。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_022_05_01_05_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2100613507633041480?s=20"
   }
 ];
