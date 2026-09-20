@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-17時点、投稿済み59頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-20時点、投稿済み60頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -731,5 +731,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `黄の蹄が霧を蹴り、Acid Blueの馬体が先頭を駆ける。やがてその輪郭は靄に溶け、追う者の視界から滲んでいく。打たれ弱く、繊細な彼女にとって、霧に紛れて逃げることは最高の戦術となったのかもしれない。Lv13のベテランは、勝率21%という確かな数字を刻んできた。霧の向こうに何があるのか、誰も知らない。ただ霞だけが先へ流れていく。そして追う者が気づいたときには――もう、そこにいない。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_022_05_01_05_01.png",
     xUrl: "https://x.com/SIO310meta/status/2100613507633041480?s=20"
+  },
+  {
+    serial: "No.060",
+    name: "Zanarkand",
+    epithet: "空色の結晶、幻の都から追う",
+    blood: "Seattle Slew",
+    style: "追込",
+    rank: "SSS",
+    date: "2026-09-20",
+    body: `幻の都に降る雪。Sky Blueの体が冷気をまとい、緑の蹄で最後の直線へ踏み込む。追込から最後まで勝負を諦めない、負けず嫌いの牡馬だ。Lv13、9908戦を刻むベテラン。ダートで25%の勝率を積み重ねてきた。雪の中を駆け、最後の一瞬に勝負を決める。遠くに先頭が見える。その差は……それでも、次の一歩で何かが変わる。そんな予感を残して、この馬は走る。夢の続きを見せる。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_009_03_01_04_04.png",
+    xUrl: "https://x.com/SIO310meta/status/2101576946778063153?s=20"
   }
 ];

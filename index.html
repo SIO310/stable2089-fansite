@@ -777,6 +777,8 @@ const HERO_TIME_IMAGES = {
 // 特定条件での背景切替（試験導入）。falseにすると完全に無効化（通常の時間帯ギミックには影響しない）
 const SHOW_RUINS_EASTER_EGG = true;
 const RUINS_EASTER_EGG_IMAGE = 'assets/city-night-seoul-ruins.png';
+// 通常の深夜画像とは被写体の位置が違う（塔の頂点が画像最上部、月・塔は右寄り）ため専用の位置を持つ
+const RUINS_EASTER_EGG_POS = {x:'50%', y:'0%', mobileX:'80%', mobileY:'0%'};
 // 見出し帯バナー（v1.5→v1.7）：ヒーローと同じ画像を全セクション共通で使う。
 // 各セクションの見せ場は x/y（background-position）+ zoom（scale倍率、1=無拡大）+
 // brightness（filter補正、1=無補正、暗い部分は1.1〜1.3程度で持ち上げ）+
@@ -963,8 +965,9 @@ if(SHOW_RUINS_EASTER_EGG && HERO_MODE === 'image'){
     setTimeout(()=>{
       const h = new Date().getHours();
       if(h < HERO_MORNING_START){
-        overlay.style.setProperty('--hero-x', bg.style.getPropertyValue('--hero-x'));
-        overlay.style.setProperty('--hero-y', bg.style.getPropertyValue('--hero-y'));
+        const mob = matchMedia('(max-width:720px)').matches;
+        overlay.style.setProperty('--hero-x', mob ? RUINS_EASTER_EGG_POS.mobileX : RUINS_EASTER_EGG_POS.x);
+        overlay.style.setProperty('--hero-y', mob ? RUINS_EASTER_EGG_POS.mobileY : RUINS_EASTER_EGG_POS.y);
         overlay.classList.add('is-visible');
         setTimeout(()=>{
           overlay.classList.remove('is-visible');
