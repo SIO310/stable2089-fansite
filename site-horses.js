@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-23時点、投稿済み61頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-27時点、投稿済み62頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -755,5 +755,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `踏まれても咲き続ける。タンポポの名を冠した牝馬は、ピンクの蹄で先頭を踏み、幾重もの光輪を背負って長距離を駆ける。激しい気性を持ちながら、その姿には不思議な荘厳さがある。打たれても折れず、陽射しの下で咲き続ける花のように。Lv11、4372戦を刻むベテラン。13%の勝率を積み重ねてきたその走りには、道端の花とは思えない強さがある。踏まれても、また先頭へ。その姿は、タンポポの強さそのものだ。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_011_05_03_03_02.png",
     xUrl: "https://x.com/SIO310meta/status/2102682449755156664?s=20"
+  },
+  {
+    serial: "No.062",
+    name: "Beyond Time",
+    epithet: "時計の針が届かない場所へ",
+    blood: "Round Table",
+    style: "差し",
+    rank: "SSS",
+    date: "2026-09-27",
+    body: `Ultramarineの体に青の蹄。時を刻む血統を持ちながら、この馬は時計の針に従うだけではない。冷静に機を窺い、差しの位置から、時の流れを追い越す一瞬を狙う。Lv12、3725戦を刻んできた牡馬。しなやかな身のこなしと強い精神力で、17%の勝率を積み重ねてきた。針が差す時刻と、勝負を決める一瞬。その間に生まれる時間差こそ、この馬の領域だ。時計の針が届かない場所へ。Beyond Time――時を超えて走る。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_016_02_01_02_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2104158124802543842?s=20"
   }
 ];
