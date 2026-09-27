@@ -40,6 +40,14 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 /* hero — パノラマ写真を主役に、マゼンタ〜紫グラデを色調シェードとして重ねる
    （公式Missionページ準拠のトーン）。シアンはグリッド/アクセントのみに限定 */
 #hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;overflow:hidden}
+/* ヒーロー背景のゆっくりした寄り（HERO_SLOW_ZOOM）。スクロール連動処理とは無関係の別要素に
+   かけることで、スクロール中の不自然な拡大バグとは干渉しない（#heroBg自体やbackground-positionには触れない） */
+.hero-bg-zoom{position:absolute;inset:0;z-index:0;transform-origin:50% 50%}
+.hero-bg-zoom.hero-slow-zoom{animation:heroSlowZoom 36s ease-out forwards}
+@keyframes heroSlowZoom{from{transform:scale(1)}to{transform:scale(1.05)}}
+@media(prefers-reduced-motion:reduce){
+  .hero-bg-zoom.hero-slow-zoom{animation:none}
+}
 .hero-bg{position:absolute;inset:0;z-index:0;
   background:
     radial-gradient(120% 90% at 50% -10%, rgba(139,47,217,.5), transparent 62%),
@@ -71,8 +79,22 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 .hero-inner h1{font-size:clamp(32px,6.4vw,64px);font-weight:700;line-height:1.14;
   color:var(--txt);text-shadow:0 0 26px rgba(255,61,166,.35);max-width:680px}
 .hero-inner h1 em{font-style:normal;color:var(--cyan)}
+/* ヒーロー見出しの打ち込み演出（HERO_TYPEWRITER）。ghost（visibility:hidden）が本来の文字数分の
+   領域を先に確保し、typed（position:absolute）がその上に重なって1文字ずつ表示される。
+   これにより打ち込み前後でレイアウトが動かない */
+.hero-h1{position:relative}
+.hero-h1-ghost{visibility:hidden;display:block}
+.hero-h1-typed{position:absolute;inset:0;display:block}
+.hero-caret{display:inline-block;width:2px;height:.85em;background:currentColor;margin-left:2px;
+  vertical-align:-0.05em;animation:heroCaretBlink 1s step-end infinite}
+.hero-caret-off{animation:none;opacity:0;transition:opacity .3s ease}
+@keyframes heroCaretBlink{0%,100%{opacity:1}50%{opacity:0}}
 .hero-sub{font-family:var(--disp);font-size:14px;letter-spacing:.2em;color:var(--cyan);margin-top:10px}
 .hero-inner p{margin-top:14px;color:var(--sub);max-width:560px;font-size:15px}
+/* 打ち込み完了後に静かにフェードイン（HERO_TYPEWRITER）。JSが有効な間だけpendingを付与するため、
+   機能OFF・reduced-motion時は最初から通常表示のまま */
+.hero-sub.hero-reveal-pending,.hero-desc.hero-reveal-pending{opacity:0}
+.hero-sub.hero-reveal-in,.hero-desc.hero-reveal-in{opacity:1;transition:opacity 1.1s ease}
 /* h1/hero-subのhover発光（キラリ＝掃引グレアとは別表現）。1.2秒かけてゆったり強まる */
 .hero-copy h1,.hero-copy .hero-sub{transition:text-shadow 1.2s ease}
 .hero-copy:hover h1{text-shadow:0 0 30px rgba(255,61,166,.72),0 0 60px rgba(255,61,166,.4)}
@@ -80,6 +102,7 @@ nav ul a:hover{color:var(--cyan);text-decoration:none}
 @media(prefers-reduced-motion:reduce){
   .hero-copy:hover h1{text-shadow:0 0 26px rgba(255,61,166,.35)}
   .hero-copy:hover .hero-sub{text-shadow:none}
+  .hero-caret{animation:none;display:none}
 }
 .hint{position:absolute;right:24px;bottom:16px;z-index:2;font-size:11px;color:var(--sub);letter-spacing:.15em}
 .hint::after{content:"";display:inline-block;width:1px;height:16px;background:var(--sub);margin-left:8px;vertical-align:middle;animation:scrollDown 1.6s ease-in-out infinite}
@@ -188,8 +211,12 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
 }
 .horse-visual{aspect-ratio:1;max-width:250px;align-self:start;border:1px dashed rgba(46,230,214,.4);display:flex;align-items:center;
   justify-content:center;color:var(--sub);font-size:12px;letter-spacing:.1em;text-align:center;padding:12px;
-  background:radial-gradient(circle at 50% 60%,rgba(139,47,217,.12),transparent 70%)}
-.horse-visual img{width:100%;height:100%;object-fit:cover}
+  background:radial-gradient(circle at 50% 60%,rgba(139,47,217,.12),transparent 70%);position:relative}
+/* imgはwidth/height:100%（flexの子として%解決）ではなく、position:absolute+insetで直接
+   ボックスを確定させる。一部のSafari/iOSで、aspect-ratioから決まる高さがflexの子の
+   height:100%に正しく伝わらず、画像が中央に小さく収まって左右が余る不具合が実機で
+   確認されたため、より枯れた絶対配置方式に切り替えて解決する（paddingの12pxはinsetで再現） */
+.horse-visual img{position:absolute;top:12px;left:12px;width:calc(100% - 24px);height:calc(100% - 24px);object-fit:cover}
 /* CARD_EFFECT='glass'：エフェクトの対象は画像部分(.horse-visual)のみに限定し、
    馬名・データ・紹介文（.horse-meta）には一切かけない。tilt/shadowはJS(setupGlassTilt)が
    毎フレームstyle.transform/boxShadowを書き換えるため、border-colorのみCSS側で遷移させる */
@@ -214,6 +241,23 @@ section h2::after{content:"";display:block;width:64px;height:2px;margin-top:14px
 .x-link{display:inline-block;margin-top:14px;font-family:var(--disp);font-size:11px;
   letter-spacing:.1em;color:var(--sub);border:1px solid var(--line);padding:6px 12px;transition:.2s}
 .x-link:hover{color:var(--cyan);border-color:var(--cyan);text-decoration:none}
+
+/* 「今日の一頭」の登場演出（TODAY_REVEAL）。画像→馬名→異名（打ち込み）→データ/紹介文の順で
+   1回だけ表示。CARD_EFFECT='glass'のtilt/border-color演出とは別クラスなので競合しない */
+/* 「暗い状態から」の表現は、img自体にfilterをかけるのではなく、上に重ねた黒いスクリムのopacityで
+   表現する（img/.horse-visualの見た目に一切手を出さずに済むため） */
+.today-img-scrim{position:absolute;inset:0;background:var(--void);opacity:1;pointer-events:none;
+  transition:opacity 1.3s ease}
+.today-img-scrim.today-out{opacity:0}
+.today-fade-name{opacity:0}
+.today-fade-name.today-in{opacity:1;transition:opacity .7s ease}
+.today-fade-data{opacity:0}
+.today-fade-data.today-in{opacity:1;transition:opacity 1.3s ease}
+.today-caret{display:inline-block;width:1px;height:.9em;background:currentColor;margin-left:2px;
+  vertical-align:-0.05em;animation:heroCaretBlink 1s step-end infinite}
+@media(prefers-reduced-motion:reduce){
+  .today-caret{animation:none;display:none}
+}
 
 /* 図鑑・アーカイブ：番号順リスト⇄血統別まとめ タブ切替 */
 .view-toggle{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
@@ -503,16 +547,21 @@ footer b{color:var(--txt)}
 </nav>
 
 <div id="hero">
-  <div class="hero-bg" id="heroBg" aria-hidden="true">
-    <div class="floor"></div>
+  <div class="hero-bg-zoom" id="heroBgZoom">
+    <div class="hero-bg" id="heroBg" aria-hidden="true">
+      <div class="floor"></div>
+    </div>
   </div>
   <div class="hero-inner">
     <div class="tag">A.D.2089 — VIRTUAL JOCKEY SYSTEM ONLINE</div>
     <div class="hero-copy">
-      <h1>WITH METAHORSE.</h1>
+      <h1 class="hero-h1" aria-label="WITH METAHORSE.">
+        <span class="hero-h1-ghost" aria-hidden="true">WITH METAHORSE.</span>
+        <span class="hero-h1-typed" id="heroTyped" aria-hidden="true"></span>
+      </h1>
       <p class="hero-sub">OWN IT. ENJOY IT.</p>
     </div>
-    <p>METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。</p>
+    <p class="hero-desc">METAHORSE非公式ファンサイト。攻略情報と「今日の一頭」で、2089年のサイバー競馬を追いかける。</p>
   </div>
   <div class="hint">SCROLL</div>
 </div>
@@ -729,6 +778,8 @@ const KOFI_STYLE = 'button';
 // 「今日の一頭」カードの質感切替。現在の選択肢は'glass'のみ（'sweep'=旧・掃引グレアのコードは
 // CSS/JS側に残してあるが未選択。将来'glow-soft'等を追加する想定）。未対応の値は'glass'にフォールバック。
 const CARD_EFFECT = 'glass';
+// 「今日の一頭」の登場演出（試験導入）。falseで従来通り常に全要素が最初から見えている状態に戻る
+const TODAY_REVEAL = true;
 // 復帰者ガイド：離脱後に変わったことを古い順に並べる（最新はlatest:trueでNEWバッジ）
 const RETURN_TIMELINE = [
   {t:"天候などレース要素の追加", d:"天候をはじめ、レースの勝敗に影響する要素が新たに加わった。天候の得意不得意を考えてエントリすることで勝率アップ。"},
@@ -774,6 +825,10 @@ const HERO_TIME_IMAGES = {
   evening: {src:HERO_BG_IMAGE,                     x:'50%', y:'38%', mobileX:'20%', mobileY:'38%'},
   night:   {src:'assets/hero-panorama_seoul.png',  x:'50%', y:'20%', mobileX:'55%', mobileY:'20%'}
 };
+// ヒーロー見出しの打ち込み演出（試験導入）。falseで即時に全文表示（従来通り）に戻る
+const HERO_TYPEWRITER = true;
+// ヒーロー背景のゆっくりした寄り（試験導入）。falseで完全停止（時間帯ギミック・深夜の隠し切替には影響しない）
+const HERO_SLOW_ZOOM = true;
 // 特定条件での背景切替（試験導入）。falseにすると完全に無効化（通常の時間帯ギミックには影響しない）
 const SHOW_RUINS_EASTER_EGG = true;
 const RUINS_EASTER_EGG_IMAGE = 'assets/city-night-seoul-ruins.png';
@@ -872,6 +927,78 @@ const CARD_EFFECT_TYPES = ['glass'];
   if(effect === 'glass') setupGlassTilt(visual);
 })();
 
+// 「今日の一頭」の登場演出（試験導入）。画面に入った時に1回だけ、画像→馬名→異名→データ/紹介文の順で表示。
+// CARD_EFFECT='glass'のtilt/border-color演出とは別クラス（today-*）で動くため競合しない
+(function setupTodayReveal(){
+  const section = document.getElementById('today');
+  const visual = document.querySelector('.horse-visual');
+  const nameEl = document.getElementById('hName');
+  const epithetEl = document.getElementById('hEpithet');
+  if(!section || !visual || !nameEl || !epithetEl) return;
+  if(!TODAY_REVEAL || reducedMotion || !('IntersectionObserver' in window)) return; // 通常表示のまま
+  const dataEls = [document.querySelector('#today dl'), document.getElementById('hReview')].filter(Boolean);
+  // 「暗い状態から」は黒いスクリムを上に重ねてopacityで晴らす方式（img/.horse-visualにfilterは使わない。
+  // 理由はCSS側のコメント参照：Safari/iOSでobject-fit:coverが壊れる不具合を実機で確認したため）
+  const scrim = document.createElement('div');
+  scrim.className = 'today-img-scrim';
+  scrim.setAttribute('aria-hidden', 'true');
+  visual.appendChild(scrim);
+
+  nameEl.classList.add('today-fade-name');
+  dataEls.forEach(el=>el.classList.add('today-fade-data'));
+  // 異名は打ち込み演出用に一旦テキストを退避して空にする（非表示のままの馬はそもそも空文字）
+  let epithetFull = '';
+  if(!epithetEl.hidden){
+    epithetFull = epithetEl.textContent;
+    epithetEl.textContent = '';
+  }
+
+  function typeEpithet(){
+    const textNode = document.createTextNode('');
+    epithetEl.appendChild(textNode);
+    const caret = document.createElement('span');
+    caret.className = 'today-caret';
+    epithetEl.appendChild(caret);
+    let i = 0;
+    (function step(){
+      if(i <= epithetFull.length){
+        textNode.textContent = epithetFull.slice(0, i);
+        i++;
+        setTimeout(step, 20 + Math.random()*20);
+      } else {
+        caret.remove(); // 打ち終わり次第すぐ消す
+        setTimeout(revealData, 150);
+      }
+    })();
+  }
+  function revealData(){
+    dataEls.forEach(el=>el.classList.add('today-in'));
+  }
+  function run(){
+    // 画面に入ってすぐではなく、一呼吸おいてから登場を始める（演出感のための間）
+    setTimeout(()=>{
+      scrim.classList.add('today-out'); // 画像：スクリムが晴れて暗い状態からゆっくり現れる（1.3s）
+      setTimeout(()=>scrim.remove(), 1400); // 透明になりきったら要素ごと片付ける
+      setTimeout(()=>{
+        nameEl.classList.add('today-in'); // 馬名：表示（.7s）
+        setTimeout(()=>{
+          if(epithetFull) typeEpithet(); else revealData();
+        }, 700 + 250);
+      }, 1300 + 250);
+    }, 300);
+  }
+
+  // #today全体（見出し・リード文込み）ではなく画像自体を監視対象にする。
+  // セクション全体だと、見出し部分が見えた時点で「画像がまだ画面外」でも閾値を満たしてしまい、
+  // スクロールで画像にたどり着く前に演出が終わっている（＝先に表示済みになる）不具合があった
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ run(); io.unobserve(en.target); }
+    });
+  }, {threshold:.2});
+  io.observe(visual);
+})();
+
 // 'glass'エフェクト：カーソル位置に応じて画像部分がわずかに傾く（perspective+rotateX/Y）。
 // 目標角度に対して現在角度を毎フレーム少しずつ追いつかせる減衰処理（curr += (target-curr)*0.1）を
 // 使うことで、上限に当たっても/カーソルが離れても、急停止せずゆっくり収束する。
@@ -953,15 +1080,60 @@ function setupGlassTilt(el){
   }
 })();
 
+// ヒーロー背景のゆっくりした寄り（試験導入）。#heroBg自体ではなくラッパー(#heroBgZoom)に
+// かけるので、スクロール連動処理や深夜の隠し切替（オーバーレイもこのラッパーの子）と独立して動く
+if(HERO_SLOW_ZOOM && !reducedMotion){
+  const heroZoomWrap = document.getElementById('heroBgZoom');
+  if(heroZoomWrap) heroZoomWrap.classList.add('hero-slow-zoom');
+}
+
+// ヒーロー見出しの打ち込み演出（試験導入）
+(function heroTypewriter(){
+  const h1 = document.querySelector('.hero-h1');
+  const typed = document.getElementById('heroTyped');
+  if(!h1 || !typed) return;
+  const ghost = h1.querySelector('.hero-h1-ghost');
+  const full = ghost.textContent;
+  const sub = document.querySelector('.hero-sub');
+  const desc = document.querySelector('.hero-desc');
+  if(!HERO_TYPEWRITER || reducedMotion){
+    typed.textContent = full; // 従来通り即時に全文表示
+    return;
+  }
+  if(sub) sub.classList.add('hero-reveal-pending');
+  if(desc) desc.classList.add('hero-reveal-pending');
+  const textNode = document.createTextNode('');
+  typed.appendChild(textNode);
+  const caret = document.createElement('span');
+  caret.className = 'hero-caret';
+  typed.appendChild(caret);
+  let i = 0;
+  (function step(){
+    if(i <= full.length){
+      textNode.textContent = full.slice(0, i);
+      i++;
+      setTimeout(step, 80 + Math.random()*40);
+    } else {
+      // 打ち終わり次第、説明文は静かにフェードイン。カーソルは数秒の余韻を置いてから消す
+      if(sub){ sub.classList.remove('hero-reveal-pending'); sub.classList.add('hero-reveal-in'); }
+      if(desc){ desc.classList.remove('hero-reveal-pending'); desc.classList.add('hero-reveal-in'); }
+      setTimeout(()=>{
+        caret.classList.add('hero-caret-off');
+        setTimeout(()=>caret.remove(), 400);
+      }, 2000);
+    }
+  })();
+})();
+
 // 特定条件での背景切替（試験導入）
 if(SHOW_RUINS_EASTER_EGG && HERO_MODE === 'image'){
   (function(){
-    const bg = document.getElementById('heroBg');
+    const zoomWrap = document.getElementById('heroBgZoom');
     const overlay = document.createElement('div');
     overlay.className = 'hero-bg hero-bg-fade';
     overlay.setAttribute('aria-hidden', 'true');
     overlay.style.setProperty('--hero-img', 'url("'+RUINS_EASTER_EGG_IMAGE+'")');
-    bg.insertAdjacentElement('afterend', overlay);
+    zoomWrap.appendChild(overlay);
     setTimeout(()=>{
       const h = new Date().getHours();
       if(h < HERO_MORNING_START){
