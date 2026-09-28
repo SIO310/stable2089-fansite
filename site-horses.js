@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-27時点、投稿済み62頭）
+// METAHORSE Dashboardからの自動書き出し（2026-09-28時点、投稿済み63頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -767,5 +767,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Ultramarineの体に青の蹄。時を刻む血統を持ちながら、この馬は時計の針に従うだけではない。冷静に機を窺い、差しの位置から、時の流れを追い越す一瞬を狙う。Lv12、3725戦を刻んできた牡馬。しなやかな身のこなしと強い精神力で、17%の勝率を積み重ねてきた。針が差す時刻と、勝負を決める一瞬。その間に生まれる時間差こそ、この馬の領域だ。時計の針が届かない場所へ。Beyond Time――時を超えて走る。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_016_02_01_02_03.png",
     xUrl: "https://x.com/SIO310meta/status/2104158124802543842?s=20"
+  },
+  {
+    serial: "No.063",
+    name: "GAIA SYMPHONY",
+    epithet: "風を譜面に、大地の交響を刻む",
+    blood: "Roberto",
+    style: "差し",
+    rank: "SSS",
+    date: "2026-09-28",
+    body: `Yellow Greenの馬体に青い蹄。風を纏う血統でありながら、彼の本質は気流の乱れではなく、根気強く続く旋律だ。差しの位置で構え、後方から粘り強く前を捉えにいく。Lv11、2612戦。SSSの速度とSSの精神力を備え、着実に前へ進んできた。大地を踏む蹄音、息を整えるリズム、最後の直線で響く詠唱。GAIA SYMPHONYは、疾風ではなく、風の中に響く交響曲だ。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_006_05_02_01_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2104579008314962226?s=20"
   }
 ];
