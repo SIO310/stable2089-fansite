@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-09-28時点、投稿済み63頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-03時点、投稿済み64頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -779,5 +779,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Yellow Greenの馬体に青い蹄。風を纏う血統でありながら、彼の本質は気流の乱れではなく、根気強く続く旋律だ。差しの位置で構え、後方から粘り強く前を捉えにいく。Lv11、2612戦。SSSの速度とSSの精神力を備え、着実に前へ進んできた。大地を踏む蹄音、息を整えるリズム、最後の直線で響く詠唱。GAIA SYMPHONYは、疾風ではなく、風の中に響く交響曲だ。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_006_05_02_01_03.png",
     xUrl: "https://x.com/SIO310meta/status/2104579008314962226?s=20"
+  },
+  {
+    serial: "No.064",
+    name: "Opera",
+    epithet: "夜は演目を変え、影が幕を閉じる",
+    blood: "Never Bend",
+    style: "差し",
+    rank: "SSS",
+    date: "2026-10-04",
+    body: `オペラ。舞台に立つ者は、仮面を被り、役を演じる。この牡馬もまた、Blackの体に🔵Blueの蹄という静かな装いで、差しの位置から出番を待つ。打たれ弱さを抱えながらも、3099戦を走り、11%の勝率を刻んできた。夜の帳に紛れ、観客が気づいたときには、もう最後の直線。そこから先は、彼の舞台だ。前を捉え、先頭でゴールを迎えたとき、舞台は完成する。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_005_03_03_05_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2106400958796198025?s=20"
   }
 ];
