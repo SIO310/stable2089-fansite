@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-03時点、投稿済み64頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-06時点、投稿済み65頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -791,5 +791,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `オペラ。舞台に立つ者は、仮面を被り、役を演じる。この牡馬もまた、Blackの体にBlueの蹄という静かな装いで、差しの位置から出番を待つ。打たれ弱さを抱えながらも、3099戦を走り、11%の勝率を刻んできた。夜の帳に紛れ、観客が気づいたときには、もう最後の直線。そこから先は、彼の舞台だ。前を捉え、先頭でゴールを迎えたとき、舞台は完成する。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_005_03_03_05_03.png",
     xUrl: "https://x.com/SIO310meta/status/2106400958796198025?s=20"
+  },
+  {
+    serial: "No.065",
+    name: "Moody Blues 4",
+    epithet: "紫煙を引く、孤高の逃げ馬",
+    blood: "Nureyev",
+    style: "逃げ",
+    rank: "SSS",
+    date: "2026-10-07",
+    body: `Violetの体に黄の蹄、冷静な青のバイザー。逃げの位置から淡々と前を行く、9900戦の古豪。Lv12、23%の勝率、58%の複勝率。SSSの速力と高い精神力を備え、長いキャリアを走り続けてきた。紫煙を纏うその姿には、どこかブルースの余韻がある。憂いは、走りを鈍らせない。むしろ雑音を消し、ただ前だけを見せる。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_012_05_01_02_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2107524045290050033?s=20"
   }
 ];
