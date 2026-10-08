@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-06時点、投稿済み65頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-08時点、投稿済み66頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -803,5 +803,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Violetの体に黄の蹄、冷静な青のバイザー。逃げの位置から淡々と前を行く、9900戦の古豪。Lv12、23%の勝率、58%の複勝率。SSSの速力と高い精神力を備え、長いキャリアを走り続けてきた。紫煙を纏うその姿には、どこかブルースの余韻がある。憂いは、走りを鈍らせない。むしろ雑音を消し、ただ前だけを見せる。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_012_05_01_02_01.png",
     xUrl: "https://x.com/SIO310meta/status/2107524045290050033?s=20"
+  },
+  {
+    serial: "No.066",
+    name: "Assassin",
+    epithet: "ただ正面から、刃を研ぐ",
+    blood: "Blushing Groom",
+    style: "先行",
+    rank: "SSS",
+    date: "2026-10-09",
+    body: `暗殺者の名を持つ者は、通常、影に潜む。だが彼は違った。打たれ弱いこの牡馬は、先行の位置から静かに前を見ている。Lv14、勝率29%、複勝率65%。影に潜むには、目立ちすぎる数字。天気すら気にせず、ただ前へ。刃を研ぐのは、闇の中ではない。誰もが見ている場所で、だ。常に「普通」でいる。何食わぬ顔で、今日も先頭を狙っている。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_014_01_01_05_02.png",
+    xUrl: "https://x.com/SIO310meta/status/2108241586073247878?s=20"
   }
 ];
