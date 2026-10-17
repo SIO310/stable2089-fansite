@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-08時点、投稿済み66頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-17時点、投稿済み66頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
