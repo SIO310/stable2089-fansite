@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-17時点、投稿済み66頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-20時点、投稿済み67頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -815,5 +815,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `暗殺者の名を持つ者は、通常、影に潜む。だが彼は違った。打たれ弱いこの牡馬は、先行の位置から静かに前を見ている。Lv14、勝率29%、複勝率65%。影に潜むには、目立ちすぎる数字。天気すら気にせず、ただ前へ。刃を研ぐのは、闇の中ではない。誰もが見ている場所で、だ。常に「普通」でいる。何食わぬ顔で、今日も先頭を狙っている。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_014_01_01_05_02.png",
     xUrl: "https://x.com/SIO310meta/status/2108241586073247878?s=20"
+  },
+  {
+    serial: "No.067",
+    name: "ll Crescent moon lll",
+    epithet: "月の光を集め、直線で散らす",
+    blood: "Native Dancer",
+    style: "先行",
+    rank: "SSS",
+    date: "2026-10-21",
+    body: `Lemon Yellowの馬体にPinkの蹄。三日月の名を冠した牝馬は、先行の位置から静かに。素直な気性のまま、ただ前だけを見つめて。6377戦を重ねてきたLv11の彼女。レース終盤、蹄が大地を蹴るたび、光が散る。その姿は、弓なりの月が夜空に描く、細く静かな光に似ている。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_018_04_02_06_02.png",
+    xUrl: "https://x.com/SIO310meta/status/2111288688630198742?s=20"
   }
 ];
