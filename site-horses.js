@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-20時点、投稿済み67頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-21時点、投稿済み68頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -827,5 +827,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `Lemon Yellowの馬体にPinkの蹄。三日月の名を冠した牝馬は、先行の位置から静かに。素直な気性のまま、ただ前だけを見つめて。6377戦を重ねてきたLv11の彼女。レース終盤、蹄が大地を蹴るたび、光が散る。その姿は、弓なりの月が夜空に描く、細く静かな光に似ている。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_018_04_02_06_02.png",
     xUrl: "https://x.com/SIO310meta/status/2111288688630198742?s=20"
+  },
+  {
+    serial: "No.068",
+    name: "xTIGER LILYx",
+    epithet: "花陰に潜み、直線を制す",
+    blood: "Stay Gold",
+    style: "差し",
+    rank: "SSS",
+    date: "2026-10-21",
+    body: `虎百合はただの花ではない。橙の体に青の蹄。差しの位置から機を窺うこの牝馬には、花の名に似合わぬ打撃がある。Stay Goldの血に宿る拳は、勝負どころで炸裂する。Lv12、3128戦。勝率28%、複勝率63%。その数字は、華やかな見た目の裏に潜む正確さと勝負強さの証だ。打たれ弱い彼女は、前の馬の後ろで機を待ち、ここぞという場面で踏み込む。鮮やかな花びらの奥に隠した牙が、終盤の直線で鋭く光る。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_002_05_03_05_03.png",
+    xUrl: "https://x.com/SIO310meta/status/2112740765608956360?s=20"
   }
 ];
