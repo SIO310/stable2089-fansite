@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-21時点、投稿済み68頭）
+// METAHORSE Dashboardからの自動書き出し（2026-10-22時点、投稿済み68頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -823,7 +823,7 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     blood: "Native Dancer",
     style: "先行",
     rank: "SSS",
-    date: "2026-10-21",
+    date: "2026-10-17",
     body: `Lemon Yellowの馬体にPinkの蹄。三日月の名を冠した牝馬は、先行の位置から静かに。素直な気性のまま、ただ前だけを見つめて。6377戦を重ねてきたLv11の彼女。レース終盤、蹄が大地を蹴るたび、光が散る。その姿は、弓なりの月が夜空に描く、細く静かな光に似ている。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_018_04_02_06_02.png",
     xUrl: "https://x.com/SIO310meta/status/2111288688630198742?s=20"
