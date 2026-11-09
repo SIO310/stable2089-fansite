@@ -1,5 +1,5 @@
 // STABLE 2089 ファンサイト用「今日の一頭」データ
-// METAHORSE Dashboardからの自動書き出し（2026-10-29時点、投稿済み69頭）
+// METAHORSE Dashboardからの自動書き出し（2026-11-09時点、投稿済み70頭）
 window.HORSE_POSTS = [
   {
     serial: "No.001",
@@ -851,5 +851,17 @@ Orangeの体色が拳の幻影をまとい駆け抜ける姿は、まさに焼�
     body: `永遠の愛など、幻想なのかもしれない。Grass Greenの体に青の蹄。差しの位置から前を追うこの牡馬は、雨の中で本領を発揮する。Lv10、2240戦。勝率11%、複勝率32%。華々しい戦績とは言い難い。それでも、打たれ弱さを抱えながら、彼は走ることをやめない。何度でも、雨の中から芽吹くように。永遠なんてないという世界に、それでも残るものがあるとしたら。それは、走り続けたこの馬の姿なのかもしれない。`,
     img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_004_05_02_05_03.png",
     xUrl: "https://x.com/SIO310meta/status/2115836641487237591?a=ANCGdj--FQZc1GaHmWU&s=20"
+  },
+  {
+    serial: "No.070",
+    name: "MORINO TO",
+    epithet: "森の静寂を破る、深紅の焔",
+    blood: "Halo",
+    style: "逃げ",
+    rank: "SSS",
+    date: "2026-11-10",
+    body: `深紅の体に黄の蹄。MORINO TO。その名から思い浮かぶ森の静けさとは裏腹に、この牡馬の走りは激しい。Haloの血を引く逃げ馬は、炎を引いて先頭を駆ける。Lv13、7566戦。勝率42%、複勝率73%。リーダーボード4位に名を連ねる、怪物級の実力者だ。打たれ弱さを抱えながらも、何度も先頭に立ち、後続を振り切ってきた。森に響くのは、木々のざわめきだけではない。深紅の焔が駆け抜ける、その蹄音もまた。`,
+    img: "https://mh-avatar.oss-ap-northeast-1.aliyuncs.com/_nft_avatar/m_001_04_01_03_01.png",
+    xUrl: "https://x.com/SIO310meta/status/2119835980127764524"
   }
 ];
